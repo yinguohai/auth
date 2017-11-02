@@ -29,11 +29,13 @@ require.config({
         'WdatePicker':'../libs/My97DatePicker/4.8/WdatePicker',
         'dataTables':'../libs/datatables/1.10.0/jquery.dataTables.min',
         'laypage':'../libs/laypage/1.2/laypage',
+        'toastr': '../libs/toastr/toastr',
     },
     // shim依赖配置
     shim: {
         'oss-upload':['oss-pload'],
         'huiadmin': ['jquery','hui'],
+        'layer':['css!../libs/layer/2.4/skin/layer.css', ]
 
     },
     baseUrl:'/static/js/', //资源基础路径
@@ -83,7 +85,6 @@ require(['jquery'], function ($, undefined) {
             });
             //加载相应模块
             if (Config.jsname) {
-                debugger;
                 require([Config.jsname], function (Controller) {
                     Controller[Config.actionname] != undefined && Controller[Config.actionname]();
                 }, function (e) {
