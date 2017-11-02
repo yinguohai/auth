@@ -12,6 +12,9 @@ class Articlelist  extends Backend
     {
        return $this->view->fetch();
     }
+    public function get_data_list(){
+    	
+    }
 
 
 

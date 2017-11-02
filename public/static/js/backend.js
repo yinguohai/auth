@@ -1,5 +1,6 @@
-define(['jquery','toastr','layer'], function ($, undefined,Toastr,Layer) {
-	var Backend = {
+define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
+	 debugger;
+    var Backend = {
         config: {
             //toastr默认配置
             toastr: {
@@ -63,6 +64,15 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr,Layer) {
                 $.ajax(options);
             },
             //查询Url参数
+            fixurl: function (url) {
+                if (url.substr(0, 1) !== "/") {
+                    var r = new RegExp('^(?:[a-z]+:)?//', 'i');
+                    if (!r.test(url)) {
+                        url = Config.moduleurl + "/" + url;
+                    }
+                }
+                return url;
+            },
             query: function (name, url) {
                 if (!url) {
                     url = window.location.href;
@@ -182,7 +192,6 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr,Layer) {
             //用于设定背景颜色方法
             sidebar: function (params) {
                 colorArr = ['red', 'green', 'yellow', 'blue', 'teal', 'orange', 'purple'];
-               
             },
             addtabs: function (url, title, icon) {
                 var dom = "a[url='{url}']"
@@ -236,7 +245,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr,Layer) {
                 }, type ? {} : options), callback);
             },
             toastr: Toastr,
-            layer: Layer
+            layer: layer
         },
         lang: function () {
             var args = arguments,
@@ -294,7 +303,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr,Layer) {
         }
     };
     //将Layer暴露到全局中去
-    window.Layer = Layer;
+    window.Layer = layer;
     //将Toastr暴露到全局中去
     window.Toastr = Toastr;
     //将Backend渲染至全局,以便于在子框架中调用

@@ -6,6 +6,7 @@ require.config({
             main: 'moment'
         }],
     //在打包压缩时将会把include中的模块合并到主文件中
+    include: ['css', 'layer', 'toastr', 'backend', 'table', 'form', 'dragsort', 'drag', 'drop', 'addtabs', 'selectpage'],
     paths: {
         'lang': "empty:",
         'form': 'require-form',
