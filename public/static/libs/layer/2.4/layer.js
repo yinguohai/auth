@@ -17,7 +17,8 @@ var isLayui = window.layui && layui.define, $, win, ready = {
     return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
   }(),
 
-  config: {}, end: {}, minIndex: 0, minLeft: [],
+  config: {open: '<%',
+  close: '%>'}, end: {}, minIndex: 0, minLeft: [],
   btn: ['&#x786E;&#x5B9A;', '&#x53D6;&#x6D88;'],
 
   //五种原始层模式

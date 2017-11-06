@@ -1,5 +1,4 @@
 define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
-	 debugger;
     var Backend = {
         config: {
             //toastr默认配置

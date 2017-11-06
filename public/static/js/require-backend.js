@@ -31,12 +31,13 @@ require.config({
         'dataTables':'../libs/datatables/1.10.0/jquery.dataTables.min',
         'laypage':'../libs/laypage/1.2/laypage',
         'toastr': '../libs/toastr/toastr',
+        'layui': '../libs/layui/layui',
     },
     // shim依赖配置
     shim: {
         'oss-upload':['oss-pload'],
         'huiadmin': ['jquery','hui'],
-        'layer':['css!../libs/layer/2.4/skin/layer.css', ]
+        'layui':['css!../libs/layui/css/layui.css' ]
 
     },
     baseUrl:'/static/js/', //资源基础路径
