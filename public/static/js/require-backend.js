@@ -1,5 +1,5 @@
 require.config({
-    urlArgs: "v=1252552",
+    urlArgs: "v="+Math.random(),
     packages: [{
             name: 'moment',
             location: '../libs/moment',

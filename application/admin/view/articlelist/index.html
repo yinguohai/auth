@@ -11,16 +11,12 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 资讯列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="text-l">
-	 <span class="select-box inline">
-		<select name="" class="select">
-			<option value="0">全部分类</option>
-			<option value="1">分类一</option>
-			<option value="2">分类二</option>
-		</select>
-		</span> 
-		<input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px" class="input-text">
-		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
+	<div class="demoTable">
+	  搜索ID：
+	  <div class="layui-inline">
+	    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+	  </div>
+	  <button class="layui-btn" data-type="reload">搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> 
 		<span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" data-title="添加资讯" data-href="article-add.html" onclick="Hui_admin_tab(this)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> 
@@ -30,7 +26,15 @@
 		</table>
 	</div>
 </div>
-<script type="text/javascript">
-</script> 
+<script type="text/html" id="toolbar">
+  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+  
+  <!-- 这里同样支持 laytpl 语法，如： -->
+  {{#  if(d.id >2){ }}
+    <a class="layui-btn layui-btn-mini" lay-event="check">审核</a>
+  {{#  } }}
+</script>
 </body>
 </html>

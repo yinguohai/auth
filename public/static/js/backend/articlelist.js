@@ -3,94 +3,53 @@ define(['jquery', 'backend','layer','hui','huiadmin','WdatePicker','dataTables',
         index: function () {
             debugger;
             layui.config({
-                          version: '1509633239420',
-                           base: '/static/js/libs/layui/' 
+                          version:Math.random(),
+                           dir: '/static/libs/layui/' 
                         })
-                        layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
-                          var laydate = layui.laydate //日期
-                          ,laypage = layui.laypage //分页
-                          layer = layui.layer //弹层
-                          ,table = layui.table //表格
-                          ,carousel = layui.carousel //轮播
-                          ,upload = layui.upload //上传
-                          ,element = layui.element; //元素操作
-                          
-                          //向世界问个好
-                          layer.msg('Hello World');
-                          
-                          //监听Tab切换
-                          element.on('tab(demo)', function(data){
-                            layer.msg('切换了：'+ this.innerHTML);
-                            console.log(data);
-                          });
-                          
-                          //监听工具条
-                          table.on('tool(demo)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                            var data = obj.data //获得当前行数据
-                            ,layEvent = obj.event; //获得 lay-event 对应的值
-                            if(layEvent === 'detail'){
-                              layer.msg('查看操作');
-                            } else if(layEvent === 'del'){
-                              layer.confirm('真的删除行么', function(index){
-                                obj.del(); //删除对应行（tr）的DOM结构
-                                layer.close(index);
-                                //向服务端发送删除指令
-                              });
-                            } else if(layEvent === 'edit'){
-                              layer.msg('编辑操作');
-                            }
-                          });
-                          
-                          //执行一个轮播实例
-                          carousel.render({
-                            elem: '#test1'
-                            ,width: '100%' //设置容器宽度
-                            ,height: 200
-                            ,arrow: 'none' //不显示箭头
-                            ,anim: 'fade' //切换动画方式
-                          });
-                          
-                          //将日期直接嵌套在指定容器中
-                          var dateIns = laydate.render({
-                            elem: '#laydateDemo'
-                            ,position: 'static'
-                            ,calendar: true //是否开启公历重要节日
-                            ,mark: { //标记重要日子
-                              '0-10-14': '生日'
-                              ,'2017-10-26': ''
-                              ,'2017-10-27': ''
-                            } 
-                            ,done: function(value, date, endDate){
-                              if(date.year == 2017 && date.month == 10 && date.date == 27){
-                                dateIns.hint('明天不上班');
-                              }
-                            }
-                            ,change: function(value, date, endDate){
-                              layer.msg(value)
-                            }
-                          });
-                          
-                          //分页
-                          laypage.render({
-                            elem: 'pageDemo' //分页容器的id
-                            ,count: 100 //总页数
-                            ,skin: '#1E9FFF' //自定义选中色值
-                            //,skip: true //开启跳页
-                            ,jump: function(obj, first){
-                              if(!first){
-                                layer.msg('第'+ obj.curr +'页');
-                              }
-                            }
-                          });
-                          
-                          //上传
-                          upload.render({
-                            elem: '#uploadDemo'
-                            ,url: '' //上传接口
-                            ,done: function(res){
-                              console.log(res)
-                            }
-                          });
+                        layui.use([ 'laypage', 'layer', 'table','element'], function(){
+                                var laypage = layui.laypage //分页
+                                    layer = layui.layer //弹层
+                                    ,table = layui.table //表格
+                                        //方法级渲染
+                                    table.render({
+                                      elem: '#tables'
+                                      ,url: '/admin/articlelist/get_data_list/'
+                                      ,cols: [[
+                                        {checkbox: true, width:100}
+                                        ,{field:'id', title: 'ID',width:'auto'}
+                                        ,{field:'username', title: '用户名', width:'auto'}
+                                        ,{field:'sex', title: '性别', width:'auto'}
+                                        ,{field:'city', title: '城市', width:'auto'}
+                                        ,{field:'sign', title: '签名',  width:'auto'}
+                                        ,{field:'experience', title: '积分',width:'auto'}
+                                        ,{field:'score', title: '评分',width:'auto'}
+                                        ,{field:'classify', title: '职业',  width:'auto'}
+                                        ,{field:'wealth', title: '财富', width:'auto'}
+                                        ,{fixed: 'right', title: '操作', width:'auto', align:'center', toolbar: '#toolbar'}
+                                        
+                                      ]]
+                                      ,id: 'testReload'
+                                      ,page: true
+                                      ,height: 'full-20'
+                                      ,even: true //开启隔行背景
+                                    });
+                                    var $ = layui.$, active = {
+                                      reload: function(){
+                                        var demoReload = $('#tables');
+                                        
+                                        table.reload('testReload', {
+                                          where: {
+                                            key: {
+                                              id: demoReload.val()
+                                            }
+                                          }
+                                        });
+                                      }
+                                    };                                    
+                                    $('.demoTable .layui-btn').on('click', function(){
+                                      var type = $(this).data('type');
+                                      active[type] ? active[type].call(this) : '';
+                                    });
                         });
 
         },
