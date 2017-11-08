@@ -1,11 +1,18 @@
-define(['jquery', 'backend','layer','hui','huiadmin','WdatePicker','dataTables','laypage','layui'], function ($, undefined) {
+define(['jquery', 'backend','layer','huiadmin','layui'], function ($, undefined) {
     var Controller = {
         index: function () {
             debugger;
             layui.config({
-                          version:Math.random(),
+                        /*
+
+                        */
+                        version:Math.random(),
                            dir: '/static/libs/layui/' 
                         })
+                        /*
+                            用于加载数据列表
+                            base on layui  插件
+                        */
                         layui.use([ 'laypage', 'layer', 'table','element'], function(){
                                 var laypage = layui.laypage //分页
                                     layer = layui.layer //弹层
@@ -32,7 +39,12 @@ define(['jquery', 'backend','layer','hui','huiadmin','WdatePicker','dataTables',
                                       ,page: true
                                       ,height: 'full-20'
                                       ,even: true //开启隔行背景
-                                    });
+                        });
+
+
+
+
+
                                     var $ = layui.$, active = {
                                       reload: function(){
                                         var demoReload = $('#tables');

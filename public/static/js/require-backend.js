@@ -1,25 +1,6 @@
 require.config({
     urlArgs: "v="+Math.random(),
-    packages: [{
-            name: 'moment',
-            location: '../libs/moment',
-            main: 'moment'
-        }],
-    //在打包压缩时将会把include中的模块合并到主文件中
-    include: ['css', 'layer', 'toastr', 'backend', 'table', 'form', 'dragsort', 'drag', 'drop', 'addtabs', 'selectpage'],
     paths: {
-        'lang': "empty:",
-        'form': 'require-form',
-        'table': 'require-table',
-        'upload': 'require-upload',
-        'validator': 'require-validator',
-        'drag': 'jquery.drag.min',
-        'drop': 'jquery.drop.min',
-        'echarts': 'echarts.min',
-        'echarts-theme': 'echarts-theme',
-        'adminlte': 'adminlte',
-        'bootstrap-table-commonsearch': 'bootstrap-table-commonsearch',
-        'bootstrap-table-template': 'bootstrap-table-template',
         //
         // 以下的包从bower的libs目录加载
         'jquery': '../libs/jquery/1.9.1/jquery.min',
@@ -29,13 +10,11 @@ require.config({
         'contextmenu':'../libs/jquery.contextsmenu/jquery.contextmenu.r2',
         'WdatePicker':'../libs/My97DatePicker/4.8/WdatePicker',
         'dataTables':'../libs/datatables/1.10.0/jquery.dataTables.min',
-        'laypage':'../libs/laypage/1.2/laypage',
         'toastr': '../libs/toastr/toastr',
         'layui': '../libs/layui/layui',
     },
     // shim依赖配置
     shim: {
-        'oss-upload':['oss-pload'],
         'huiadmin': ['jquery','hui'],
         'layui':['css!../libs/layui/css/layui.css' ]
 
