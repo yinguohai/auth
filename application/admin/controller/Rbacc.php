@@ -20,33 +20,29 @@ class Rbacc extends Backend
      * @return mixed
      */
     public static function getRbacl(){
-        if(! (Rbacc::$rbaclInstance instanceof Rbacl))
-            Rbacc::$rbaclInstance = new Rbacl();
-        return Rbacc::$rbaclInstance;
+        if(! (self::$rbaclInstance instanceof Rbacl))
+            self::$rbaclInstance = new Rbacl();
+        return self::$rbaclInstance;
     }
 
     /**
      * 获取User用户类实例
      */
     public static function getUser(){
-        if(! (Rbacc::$userInstance) instanceof User){
-            Rbacc::$userInstance=new User();
+        if(! (self::$userInstance) instanceof User){
+            self::$userInstance=new User();
         }
-        return Rbacc::$userInstance;
+        return self::$userInstance;
     }
     /**
      * 用户列表
      */
     public function listUser()
     {
-        $aa=['name'=>'ygh','age'=>20,'sex'=>'nan'];
-        required_attr($aa,['name','age']);
-        die;
-
         //获取用户信息
-        $result=Rbacc::getUser()->listUser();
+        $result=self::getUser()->listUser();
         //处理用户信息
-        Rbacc::getRbacl()->showUser($result);
+        self::getRbacl()->showUser($result);
     }
 
     /**
@@ -56,4 +52,10 @@ class Rbacc extends Backend
 
 //        Rbacc::getRbacl()->addUser();
     }
+
+    public function listRole(){
+
+
+    }
+
 }
