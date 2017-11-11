@@ -3,7 +3,7 @@
     <head>
         {include file="common/meta" /}
     </head>
-    {if !IS_ADDTABS}
+    {if !IS_ADDTABS AND !IS_DIALOG}
         {include file="common/header" /}
     {/if}
     <body class="inside-header inside-aside {:defined('IS_DIALOG') && IS_DIALOG ? 'is-dialog' : ''}">
@@ -12,7 +12,7 @@
                 <div id="content">
                     <div class="row">
                         <div class="">
-                            {if !IS_ADDTABS}
+                            {if !IS_ADDTABS AND !IS_DIALOG}
                                 <aside class="Hui-aside">
                                     <div class="menu_dropdown bk_2">
                                         <!--<dl id="menu-article">
@@ -107,7 +107,7 @@
                                             <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                                             <dd>
                                                 <ul>
-                                                    <li><a data-href="/admin/rbacc/listUser?addtabs=1" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+                                                    <li><a data-href="/admin/rbacc/index?addtabs=1" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
                                                     <li><a data-href="admin-permission.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
                                                     <li><a data-href="admin-list.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
                                                 </ul>

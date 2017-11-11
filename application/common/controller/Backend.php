@@ -35,7 +35,6 @@ class Backend extends Controller
      * @var string
      */
     protected $layout = 'default';
-
     public function _initialize()
     {
         $modulename = $this->request->module();
@@ -54,7 +53,7 @@ class Backend extends Controller
         !defined('IS_AJAX') && define('IS_AJAX', $this->request->isAjax());
 
         $lang = Lang::detect();
-
+       // die();
         // 非选项卡时重定向
         if (!$this->request->isPost() && !IS_AJAX && !IS_ADDTABS && !IS_DIALOG && input("ref") == 'addtabs')
         {
@@ -74,7 +73,7 @@ class Backend extends Controller
             'modulename'     => $modulename,
             'controllername' => $controllername,
             'actionname'     => $actionname,
-            'jsname'         => 'backend/' . str_replace('.', '/', $controllername),
+            'jsname'         => 'main/' . str_replace('.', '/', $controllername),
             'moduleurl'      => url("/{$modulename}", '', false),
             'language'       => $lang,
             'referer'        => Session::get("referer")
