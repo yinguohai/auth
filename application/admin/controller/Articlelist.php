@@ -14,8 +14,9 @@ class Articlelist  extends Backend
     }
     public function get_data_list(){
 
-    	$page=$this->request->get("page", '');
-    	$limit=$this->request->get("limit", '');
+    	$page=$this->request->request("page", '');
+    	$limit=$this->request->request("limit", '');
+        $params = $this->request->request('keys/a');
     	$d=$this->get_data($page,$limit);
     	$data=array(
     		"code"=>0,
@@ -27,7 +28,6 @@ class Articlelist  extends Backend
     	return json($data);
     	
     }
-
     private function get_data($page,$limit){
     		$data=array();
     		$o=($page-1)*$limit;
@@ -48,6 +48,9 @@ class Articlelist  extends Backend
     		return $data;
     }
 
+    public function add_data(){
+         return $this->view->fetch();
+    }
 
 
 }

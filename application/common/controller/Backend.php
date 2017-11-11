@@ -54,7 +54,7 @@ class Backend extends Controller
         !defined('IS_AJAX') && define('IS_AJAX', $this->request->isAjax());
 
         $lang = Lang::detect();
-
+       // die();
         // 非选项卡时重定向
         if (!$this->request->isPost() && !IS_AJAX && !IS_ADDTABS && !IS_DIALOG && input("ref") == 'addtabs')
         {
