@@ -1,4 +1,4 @@
-define(['jquery', 'backend','layer','huiadmin','layui'], function ($, undefined) {
+define(['jquery', 'main','layer','huiadmin','layui'], function ($, undefined) {
     var Controller = {
         config:{
             options:{

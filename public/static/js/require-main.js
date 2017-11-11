@@ -38,12 +38,12 @@ require(['jquery'], function ($, undefined) {
     var paths = {};
     paths['lang'] = Config.moduleurl + '/ajax/lang?callback=define&controllername=' + Config.controllername;
     // 避免目录冲突
-    paths['backend/'] = 'backend/';
+    paths['main/'] = 'main/';
     require.config({paths: paths});
 
     // 初始化
     $(function () {
-        require(['backend'], function (Module) {
+        require(['main'], function (Module) {
             // 对相对地址进行处理
             $.ajaxSetup({
                 beforeSend: function (xhr, setting) {

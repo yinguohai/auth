@@ -1,5 +1,5 @@
-define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
-    var Backend = {
+define(['jquery','toastr','layer',,'layui'], function ($, undefined,Toastr) {
+    var Main = {
         config: {
             //toastr默认配置
             toastr: {
@@ -22,12 +22,12 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
         },
         api: {
             ajax: function (options, success, failure,callback) {
-                var index = Backend.api.layer.load();
+                var index = Main.api.layer.load();
                 options = $.extend({
                     type: "POST",
                     dataType: 'json',
                     success: function (ret) {
-                        Backend.api.layer.close(index);
+                        Main.api.layer.close(index);
                         if(typeof callback == 'function'){
                             // debugger;
                             var onAfterResult = callback.call(undefined,ret);
@@ -56,7 +56,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                         }
                         
                     }, error: function () {
-                        Backend.api.layer.close(index);
+                        Main.api.layer.close(index);
                         Toastr.error(__('Network error'));
                     }
                 }, options);
@@ -87,7 +87,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
             },
             open: function (url, title, options,callback,location) {
                 title = title ? title : "";
-                url = Backend.api.fixurl(url);
+                url = Main.api.fixurl(url);
                 url = url + (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1";
                 if(location==undefined){
                      var area = [$(window).width() > 800 ? '800px' : '95%', $(window).height() > 600 ? '600px' : '95%'];
@@ -95,7 +95,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                 else{
                     var area=location;
                 }
-                Backend.api.layer.open($.extend({
+                Main.api.layer.open($.extend({
                     type: 2,
                     title: title,
                     shadeClose: true,
@@ -104,15 +104,15 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                     moveOut: true,
                     area: area,
                     content: url,
-                    zIndex: Backend.api.layer.zIndex,
+                    zIndex: Main.api.layer.zIndex,
                     skin: 'layui-layer-noborder',
                     success: function (layero, index) {
                         var that = this;
                         //$(layero).removeClass("layui-layer-border");
-                        Backend.api.layer.setTop(layero);
-                        var frame = Backend.api.layer.getChildFrame('html', index);
+                        Main.api.layer.setTop(layero);
+                        var frame = Main.api.layer.getChildFrame('html', index);
                         var layerfooter = frame.find(".layer-footer");
-                        Backend.api.layerfooter(layero, index, that);
+                        Main.api.layerfooter(layero, index, that);
 
                         //绑定事件
                         if (layerfooter.size() > 0) {
@@ -123,7 +123,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                             var target = layerfooter[0];
                             // 创建观察者对象
                             var observer = new MutationObserver(function (mutations) {
-                                Backend.api.layerfooter(layero, index, that);
+                                Main.api.layerfooter(layero, index, that);
                                 mutations.forEach(function (mutation) {
                                 });
                             });
@@ -149,7 +149,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                 return false;
             },
             layerfooter: function (layero, index, that) {
-                var frame = Backend.api.layer.getChildFrame('html', index);
+                var frame = Main.api.layer.getChildFrame('html', index);
                 var layerfooter = frame.find(".layer-footer");
                 if (layerfooter.size() > 0) {
                     $(".layui-layer-footer", layero).remove();
@@ -198,7 +198,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                 if (leftlink.size() > 0) {
                     leftlink.trigger("click");
                 } else {
-                    url = Backend.api.fixurl(url);
+                    url = Main.api.fixurl(url);
                     leftlink = top.window.$(dom.replace(/\{url\}/, url));
                     if (leftlink.size() > 0) {
                         var event = leftlink.parent().hasClass("active") ? "dblclick" : "click";
@@ -230,7 +230,7 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                 if (type) {
                     callback = options;
                 }
-                return Backend.api.layer.msg(__('Operation completed'), $.extend({
+                return Main.api.layer.msg(__('Operation completed'), $.extend({
                     offset: 0, icon: 1
                 }, type ? {} : options), callback);
             },
@@ -239,12 +239,61 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
                 if (type) {
                     callback = options;
                 }
-                return Backend.api.layer.msg(__('Operation failed'), $.extend({
+                return Main.api.layer.msg(__('Operation failed'), $.extend({
                     offset: 0, icon: 2
                 }, type ? {} : options), callback);
             },
             toastr: Toastr,
-            layer: layer
+            layer: layer,
+            table:function(options,callback){
+                    var _self=this,config={
+                            options:{
+                                index_url:'',
+                            },
+                            layui_patch:{
+                                url:'/static/libs/layui/',
+                                version:Math.random()
+                            },
+                            colum:{id:'table'},
+                            params:{},
+                            ele:'.demoTable .layui-btn'
+                    }
+                    config=$.extend(true,config,options);
+                    layui.config({
+                        //加载layui 相关的类库文件路径和随机参数
+                        version:config.layui_patch.version,
+                        dir:config.layui_patch.url 
+                    })
+                    //用于加载数据列表
+                    //base on layui  插件
+                    layui.use([ 'laypage', 'layer', 'table','element'], function(){
+                            var  laypage= layui.laypage //分页
+                                ,layer= layui.layer //弹层
+                                ,table=layui.table; //表格//方法级渲染
+                                config.colum.url=config.options.index_url;
+                                table.render(config.colum);
+                                
+                                config.laypage=laypage;config.layer =layer;config.table = table;
+                                //搜索重载数据的，where  为搜索栏的数据
+                                var $ = layui.$, active = {
+                                    reload: function(){                                     
+                                            table.reload(config.colum.id, {
+                                                where: {
+                                                    keys:config.params
+                                                }
+                                            });
+                                     }
+                                };
+                                //搜索按钮事件
+                                $(config.ele).on('click', function(){
+                                        var type = $(this).data('type');
+                                        active[type] ? active[type].call(this) : '';
+                                });
+                                if(typeof(callback)=='function'){
+                                    callback()
+                                } 
+                            });
+            }
         },
         lang: function () {
             var args = arguments,
@@ -295,9 +344,9 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
             //公共代码
             //配置Toastr的参数
             if (Config.controllername == 'index') {
-                Backend.config.toastr.positionClass = "toast-top-right-index";
+                Main.config.toastr.positionClass = "toast-top-right-index";
             }
-            Toastr.options = Backend.config.toastr;
+            Toastr.options = Main.config.toastr;
             //点击包含.btn-dialog的元素时弹出dialog   
         }
     };
@@ -305,9 +354,9 @@ define(['jquery','toastr','layer'], function ($, undefined,Toastr) {
     window.Layer = layer;
     //将Toastr暴露到全局中去
     window.Toastr = Toastr;
-    //将Backend渲染至全局,以便于在子框架中调用
-    window.Backend = Backend;
-    Backend.init();
-    return Backend;
+    //将Main渲染至全局,以便于在子框架中调用
+    window.Main = Main;
+    Main.init();
+    return Main;
 });
     

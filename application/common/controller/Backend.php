@@ -35,7 +35,6 @@ class Backend extends Controller
      * @var string
      */
     protected $layout = 'default';
-
     public function _initialize()
     {
         $modulename = $this->request->module();
@@ -74,7 +73,7 @@ class Backend extends Controller
             'modulename'     => $modulename,
             'controllername' => $controllername,
             'actionname'     => $actionname,
-            'jsname'         => 'backend/' . str_replace('.', '/', $controllername),
+            'jsname'         => 'main/' . str_replace('.', '/', $controllername),
             'moduleurl'      => url("/{$modulename}", '', false),
             'language'       => $lang,
             'referer'        => Session::get("referer")
