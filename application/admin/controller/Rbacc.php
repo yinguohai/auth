@@ -27,19 +27,19 @@ class Rbacc extends Backend
      * @return mixed
      */
     public static function getRbacl(){
-        if(! (Rbacc::$rbaclInstance instanceof Rbacl))
-            Rbacc::$rbaclInstance = new Rbacl();
-        return Rbacc::$rbaclInstance;
+        if(! (self::$rbaclInstance instanceof Rbacl))
+            self::$rbaclInstance = new Rbacl();
+        return self::$rbaclInstance;
     }
 
     /**
      * 获取User用户类实例
      */
     public static function getUser(){
-        if(! (Rbacc::$userInstance) instanceof User){
-            Rbacc::$userInstance=new User();
+        if(! (self::$userInstance) instanceof User){
+            self::$userInstance=new User();
         }
-        return Rbacc::$userInstance;
+        return self::$userInstance;
     }
     /**
      * 用户列表
@@ -49,9 +49,9 @@ class Rbacc extends Backend
         //搜索条件参数
         $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
         //获取用户信息
-        $result=Rbacc::getUser()->listUser($condition,$this->request->request("limit", ''),$this->request->request("page", ''));
+        $result=self::getUser()->listUser($condition,$this->request->request("limit", ''),$this->request->request("page", ''));
         //处理用户信息
-        Rbacc::getRbacl()->showUser($result);
+        self::getRbacl()->showUser($result);
     }
 
     /**
@@ -61,4 +61,10 @@ class Rbacc extends Backend
 
 //        Rbacc::getRbacl()->addUser();
     }
+
+    public function listRole(){
+
+
+    }
+
 }
