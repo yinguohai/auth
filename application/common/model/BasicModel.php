@@ -7,6 +7,7 @@
  */
 
 namespace app\common\model;
+use think\exception\ErrorException;
 use \think\Model;
 use \think\Db;
 
@@ -18,29 +19,47 @@ class BasicModel extends \think\Model
     }
 
     /**
-     * @param null|string $table  表名
+     * @param null|string $table  表对象
      * @param $field  所需查找的字段
      * @param $condition 附加条件  , 【 where  , order ,limit , group 】
      * @param $limit 每页显示条数 默认显示10条
      * @param $page 显示第几页  默认显示第一页
      */
-    public function getUserinfo($table,$field='*',$condition=[],$limit=10,$page=1){
-        $tablename=Db::name($table);
-        $tablename->field($field);
-        $result['count']=$tablename->count('*');
-        $info1=putlog();
-        $tablename->field($field);
+    public function getInfo($table,$field='*',$condition=[],$limit=10,$page=1){
+        $table->field($field);
+        $result['count']=$table->count('*');
+        $table->field($field);
         if(!empty($condition)){
             if(required_attr($condition,'where'))
-            $tablename->where($condition['where']);
+            $table->where($condition['where']);
             if(required_attr($condition,'group'))
-            $tablename->group($condition['group']);
+            $table->group($condition['group']);
         }
         //计算总条数
-        $tablename->limit(($page-1)* $limit , $page*$limit );
+        $table->limit(($page-1)* $limit , $page*$limit );
 
-        $result['data']=Collection( $tablename->select())->toArray();
-        $info2=putlog();
+        $result['data']=Collection( $table->select())->toArray();
         return $result;
+    }
+
+    /**
+     * 保存数据， 包括“更新”和“新增”
+     * @param $table  表对象
+     * @param $data   需要存储的数据,如果是二维数组，则表示批量更新
+     * @param $where   更新条件
+     */
+    public function saveInfo($table,$data,$where=[]){
+        try{
+            if(empty($where)){
+                $result=$table->save($data);
+            }else{
+                $result=$table->save($data,$where);
+            }
+        }catch(ErrorException $e){
+            return false;
+        }
+        if(empty($result))
+            return false;
+        return true;
     }
 }
