@@ -1,4 +1,4 @@
-define(['jquery','toastr','layer',,'layui'], function ($, undefined,Toastr) {
+define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
     var Main = {
         config: {
             //toastr默认配置
@@ -85,11 +85,12 @@ define(['jquery','toastr','layer',,'layui'], function ($, undefined,Toastr) {
                     return '';
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             },
-            open: function (url, title, options,callback,location) {
+            open: function (url, title, options,complete,callback,location) {
+                var _self=this;
                 title = title ? title : "";
                 url = Main.api.fixurl(url);
                 url = url + (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1";
-                if(location==undefined){
+                if(typeof(location)=='undefined'){
                      var area = [$(window).width() > 800 ? '800px' : '95%', $(window).height() > 600 ? '600px' : '95%'];
                 }
                 else{
@@ -99,7 +100,7 @@ define(['jquery','toastr','layer',,'layui'], function ($, undefined,Toastr) {
                     type: 2,
                     title: title,
                     shadeClose: true,
-                    shade: false,
+                    shade: 0.7,
                     maxmin: true,
                     moveOut: true,
                     area: area,
@@ -135,6 +136,9 @@ define(['jquery','toastr','layer',,'layui'], function ($, undefined,Toastr) {
                             // observer.disconnect();
                         }
                         //自定义确认事件
+                         if(complete!=undefined&&typeof complete=='function'){
+                              complete();
+                        }
                         if(callback!=undefined&&typeof callback=='function'){
                             $(layero).find('.btn-success').off('click').on('click',function (event) {
                               var event = event || window.event;
@@ -290,9 +294,21 @@ define(['jquery','toastr','layer',,'layui'], function ($, undefined,Toastr) {
                                         active[type] ? active[type].call(this) : '';
                                 });
                                 if(typeof(callback)=='function'){
-                                    callback()
-                                } 
-                            });
+                                    callback(config);
+                                }
+                                _self.events(config); 
+                    });
+            },
+            events:function(){
+
+            },
+            form:function(url,data){
+                var that = this;
+                var option = {url:url+'?dialog=1',data:data};
+                that.ajax(option,function (data) {
+                        Toastr.success(__('Operation completed'));
+                        Main.api.layer.closeAll('iframe');
+                });    
             }
         },
         lang: function () {

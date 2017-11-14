@@ -57,13 +57,19 @@ class Rbacc extends Backend
     /**
      * 添加管理员
      */
-    public function addUser(){
+    public function addUser($ids=NULL){
+          $params = $this->request->post();
+          if ($this->request->isPost()){
+            var_dump($params);
+            die();
 
-//        Rbacc::getRbacl()->addUser();
+
+          }
+          return $this->view->fetch();
+            //  Rbacc::getRbacl()->addUser();
     }
 
     public function listRole(){
-
 
     }
 
