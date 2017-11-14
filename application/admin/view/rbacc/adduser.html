@@ -19,20 +19,20 @@
       <div class="layui-form-item">
           <label class="layui-form-label">用户邮箱:</label>
           <div class="layui-input-block">
-            <input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="请输入用户邮箱" class="layui-input" style="width:50%">
+            <input type="text" name="u_email" lay-verify="email" autocomplete="off" placeholder="请输入用户邮箱" class="layui-input" style="width:50%">
           </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">用户密码:</label>
         <div class="layui-input-inline">
-          <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" >
+          <input type="password" name="u_password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" >
         </div>
         <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">所属部门:</label>
         <div class="layui-input-block" style="width:50%">
-            <select name="modules" lay-verify="required" lay-search="">
+            <select name="g_id" lay-verify="required" lay-search="">
                 <option value="">直接选择或搜索选择</option>
                 <option value="1">layer</option>
                 <option value="2">form</option>
@@ -60,7 +60,7 @@
        <div class="layui-form-item">
         <label class="layui-form-label">所属角色:</label>
         <div class="layui-input-block" style="width:50%">
-            <select name="modules" lay-verify="required" lay-search="">
+            <select name="r_id" lay-verify="required" lay-search="">
                 <option value="">直接选择或搜索选择</option>
                 <option value="1">layer</option>
                 <option value="2">form</option>
@@ -88,8 +88,8 @@
       <div class="layui-form-item">
         <label class="layui-form-label">用户状态</label>
         <div class="layui-input-block">
-          <input type="radio" name="sex" value="1" title="启用" checked="">
-          <input type="radio" name="sex" value="0" title="停用 ">
+          <input type="radio" name="u_status" value="2" title="启用" checked="">
+          <input type="radio" name="u_status" value="1" title="停用 ">
         </div>
       </div>
       <div class="layui-form-item">

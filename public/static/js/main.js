@@ -27,6 +27,7 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
                     type: "POST",
                     dataType: 'json',
                     success: function (ret) {
+                        debugger;
                         Main.api.layer.close(index);
                         if(typeof callback == 'function'){
                             // debugger;
@@ -46,18 +47,19 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
                                             return false;
                                         }
                                     }
-                                    Toastr.success(msg ? msg : __('Operation completed'));
+                                    Toastr.success(msg ? msg : 'Operation completed');
                                 } else {
-                                    Toastr.error(msg ? msg : __('Operation failed'));
+                                    Toastr.error(msg ? msg : 'Operation failed');
                                 }
                             } else {
-                                Toastr.error(__('Unknown data format'));
+                                Toastr.error('Unknown data format');
                             }
                         }
                         
                     }, error: function () {
+                         debugger;
                         Main.api.layer.close(index);
-                        Toastr.error(__('Network error'));
+                        Toastr.error('Network error');
                     }
                 }, options);
                 $.ajax(options);

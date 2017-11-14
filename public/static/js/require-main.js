@@ -1,5 +1,6 @@
 require.config({
     urlArgs: "v="+Math.random(),
+    include: ['css', 'layer', 'toastr'],
     paths: {
         //
         // 以下的包从bower的libs目录加载

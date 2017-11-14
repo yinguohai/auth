@@ -23,7 +23,7 @@ function p($arr,$flag=FALSE)
 
 /**
  * API打印函数
- * @param $code   状态码：   -2  ：失败 ，-1 ：  超时 ，1   ： 成功
+ * @param $code   状态码：   -2  ：失败 ，-1 ：  超时 ，1   ： 成功 , -3 没权限
  * @param $msg
  * @param $count
  * @param $data
