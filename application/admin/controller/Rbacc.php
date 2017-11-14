@@ -86,6 +86,18 @@ class Rbacc extends Backend
      *      2.修改用户
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加用户  ；  type=='edit'-----修改用户
      */
+
+    public function addUser($ids=NULL){
+          $params = $this->request->post();
+          if ($this->request->isPost()){
+            var_dump($params);
+            die();
+
+
+          }
+          return $this->view->fetch();
+            //  Rbacc::getRbacl()->addUser();
+    }      
     public function saveUser(){
 
     }
@@ -133,6 +145,7 @@ class Rbacc extends Backend
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
      */
     public function addOrganize(){
+
 
     }
     public function editOrganize(){

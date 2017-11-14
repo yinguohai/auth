@@ -1,19 +1,22 @@
-define(['jquery', 'main','layer','huiadmin'], function ($, undefined) {
+define(['jquery', 'main','layer','huiadmin','layui'], function ($, undefined) {
     var Controller = {
             config:{
                 options:{
-                    index_url:'/admin/rbacc/listUser/',
+                    index_url:'/admin/rbacc/listUser',
+                    add_url:'/admin/rbacc/addUser',
                 },  
             },
+            //用户列表入口函数
             index: function () {
+                var _this=this;
+                this.events._self=this;
                 this.config.colum={
                         elem: '#tables'
                         ,url:''
                         ,cols: [[
-                            {checkbox: true, width:100}
-                            ,{field:'u_id', title: 'ID',width:'auto'}
-                            ,{field:'u_name', title: '用户名', width:'auto'}
-                            ,{fixed: 'right', title: '操作', width:'auto', align:'center', toolbar: '#toolbar'}
+                            {field:'u_id', title: 'ID'}
+                            ,{field:'u_name', title: '用户名',width:150}
+                            ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
                         ]]
                         ,method:'POST'
                         ,id: 'tables'
@@ -31,32 +34,22 @@ define(['jquery', 'main','layer','huiadmin'], function ($, undefined) {
 
                         }
                 }
-                Main.api.table(this.config);
+                Main.api.table(this.config,function(config){
+                    _this.events.toolsmenu();
+
+                });
             },
-            events: function(table){//绑定导航栏的事件函数 如  新增、删除、导入、导出 等功能模块
-                        var that=this;
+            //菜单栏事件函数
+            events: {
+                _self:null,
+                toolsmenu:function(){//绑定导航栏的事件函数 如  新增、删除、导入、导出 等功能模块
+                        var that=this._self;
                         $(".content #menu").on('click', '.add',function(event){
                             var e = $(this);
                             event.stopPropagation();
                             var options = that.config.options;
-                            Backend.api.open(options.add_url,'add',{},function(formobj){
-                                debugger;
-                                var str=formobj.find("#c-send_time").val();
-
-                                str = str.replace(/-/g,'/')
-                                    var d={
-                                            logistics_name:formobj.find("#c-logistics_name").val(),
-                                            logistics_num:formobj.find("#c-logistics_num").val(),
-                                            transit_logistics:formobj.find("#c-transit_logistics").val(),
-                                            send_time:Date.parse(new Date(str))/1000,
-                                            status:3,
-                                        };
-                                    var option = {url:options.extend.fahuo_url+'?dialog=1',data:{action:'fahuo',ids:row['order_id'],params:d}};
-                                    Backend.api.ajax(option,function (data) {
-                                        Toastr.success(__('Operation completed'));
-                                        table.bootstrapTable('refresh');
-                                        Backend.api.layer.closeAll('iframe');
-                                    });
+                            Main.api.open(options.add_url,'添加用户',{},function(){
+                            },function(formobj){
                             });
                         })
                         $(".content #menu").on('click', '.batch-dell',function(e, value, row, index){
@@ -84,9 +77,32 @@ define(['jquery', 'main','layer','huiadmin'], function ($, undefined) {
                                             }
                                     );
                         })
+                },
+                operate:function(){
+
+                }
             },
-            meunevent:function(table){
-                this.events(table);
+            //增加用户入口函数
+            adduser:function(){
+                    var _self=this;
+                    layui.config({
+                        //加载layui 相关的类库文件路径和随机参数
+                        version:Math.random(),
+                        dir:'/static/libs/layui/',
+                    })
+                    layui.use(['element','form'], function(){
+                          var form = layui.form,element=layui.element;
+                          form.render();
+                          element.init();
+                          form.verify({
+                            pass: [/(.+){6,20}$/, '密码必须6到20位']
+                          });
+                          form.on('submit(adduser)', function(data){
+                                Main.api.form(_self.config.options.add_url,data.field);
+                                return false;
+                          });
+  
+                    });        
             }
     };
 
