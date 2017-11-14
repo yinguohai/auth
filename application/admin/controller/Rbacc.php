@@ -129,14 +129,16 @@ class Rbacc extends Backend
         self::getRbacl()->showOrganize($result);
     }
     /**
-     * 保存角色
-     *      1.添加角色
-     *      2.修改角色
+     * 添加角色
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
      */
-    public function saveOrganize(){
+    public function addOrganize(){
 
     }
+    public function editOrganize(){
+
+    }
+
 
     /**
      * 组列表
