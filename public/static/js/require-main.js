@@ -5,6 +5,7 @@ require.config({
         //
         // 以下的包从bower的libs目录加载
         'jquery': '../libs/jquery/1.9.1/jquery.min',
+        'bootstrap': '../libs/bootstrap/dist/js/bootstrap.min',
         'layer':'../libs/layer/2.4/layer',
         'hui':'../libs/Hu/hui/js/H-ui.min',
         'huiadmin':'../libs/Hu/huiadmin/js/H-ui.admin',
@@ -13,11 +14,13 @@ require.config({
         'dataTables':'../libs/datatables/1.10.0/jquery.dataTables.min',
         'toastr': '../libs/toastr/toastr',
         'layui': '../libs/layui/layui',
-    },
+            },
     // shim依赖配置
     shim: {
         'huiadmin': ['jquery','hui'],
-        'layui':['css!../libs/layui/css/layui.css' ]
+        'layui':['css!../libs/layui/css/layui.css' ],
+        'bootstrap': ['jquery'],
+        'toastr':['css!../libs/toastr/toastr.css' ],
 
     },
     baseUrl:'/static/js/', //资源基础路径

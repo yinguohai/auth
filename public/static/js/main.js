@@ -1,9 +1,9 @@
-define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
+define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,Toastr,Layer) {
     var Main = {
         config: {
             //toastr默认配置
             toastr: {
-                "closeButton": true,
+                "closeButton": false,
                 "debug": false,
                 "newestOnTop": false,
                 "progressBar": false,
@@ -21,14 +21,12 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
             }
         },
         api: {
-            ajax: function (options, success, failure,callback) {
-                var index = Main.api.layer.load();
+            ajax: function (options,type,callback) {
+                //var index = Main.api.layer.open();
                 options = $.extend({
                     type: "POST",
                     dataType: 'json',
                     success: function (ret) {
-                        debugger;
-                        Main.api.layer.close(index);
                         if(typeof callback == 'function'){
                             // debugger;
                             var onAfterResult = callback.call(undefined,ret);
@@ -37,29 +35,45 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
                             }
                         }
                         else{
-                                if (ret.hasOwnProperty("code")) {
+                            if (ret.hasOwnProperty("code")) {
                                 var data = ret.hasOwnProperty("data") && ret.data != "" ? ret.data : null;
                                 var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
                                 if (ret.code === 1) {
-                                    if (typeof success == 'function') {
-                                        var onAfterResult = success.call(undefined, data);
-                                        if (!onAfterResult) {
-                                            return false;
-                                        }
+                                    if(type=='iframe'){
+                                        parent.Toastr.success(msg ? msg : 'Operation completed');
                                     }
-                                    Toastr.success(msg ? msg : 'Operation completed');
+                                    else{
+                                        Toastr.success(msg ? msg : 'Operation completed');
+                                    }
+                                    
                                 } else {
-                                    Toastr.error(msg ? msg : 'Operation failed');
+                                    if(type=='iframe'){
+                                        parent.Toastr.error(msg ? msg : 'Operation failed');
+                                    }
+                                    else{
+                                        Toastr.error(msg ? msg : 'Operation failed');
+                                    }                                    
                                 }
                             } else {
-                                Toastr.error('Unknown data format');
+                                
+                                    if(type=='iframe'){
+                                        parent.Toastr.error('Unknown data format');
+                                    }
+                                    else{
+                                        Toastr.error('Unknown data format');
+                                    }
                             }
-                        }
-                        
+                        }   
                     }, error: function () {
-                         debugger;
-                        Main.api.layer.close(index);
-                        Toastr.error('Network error');
+                        if(type=='iframe'){
+                              parent.Toastr.error('Network error');
+                              var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                              parent.layer.close(index);
+                        }
+                        else{
+                            Toastr.error('Network error');
+                            Main.api.layer.closeAll();   
+                        }  
                     }
                 }, options);
                 $.ajax(options);
@@ -186,49 +200,15 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
                     layero.find("iframe").css({height: heg});
                 }
                 if (layerfooter.size() > 0) {
+                    //layerfooter.hide();
+                    debugger;
                     footer.on("click", ".btn", function () {
+                        
                         if ($(this).hasClass("disabled") || $(this).parent().hasClass("disabled")) {
                             return;
                         }
                         $(".btn:eq(" + $(this).index() + ")", layerfooter).trigger("click");
                     });
-                }
-            },
-            //用于设定背景颜色方法
-            sidebar: function (params) {
-                colorArr = ['red', 'green', 'yellow', 'blue', 'teal', 'orange', 'purple'];
-            },
-            addtabs: function (url, title, icon) {
-                var dom = "a[url='{url}']"
-                var leftlink = top.window.$(dom.replace(/\{url\}/, url));
-                if (leftlink.size() > 0) {
-                    leftlink.trigger("click");
-                } else {
-                    url = Main.api.fixurl(url);
-                    leftlink = top.window.$(dom.replace(/\{url\}/, url));
-                    if (leftlink.size() > 0) {
-                        var event = leftlink.parent().hasClass("active") ? "dblclick" : "click";
-                        leftlink.trigger(event);
-                    } else {
-                        var baseurl = url.substr(0, url.indexOf("?") > -1 ? url.indexOf("?") : url.length);
-                        leftlink = top.window.$(dom.replace(/\{url\}/, baseurl));
-                        //能找到相对地址
-                        if (leftlink.size() > 0) {
-                            icon = typeof icon != 'undefined' ? icon : leftlink.find("i").attr("class");
-                            title = typeof title != 'undefined' ? title : leftlink.find("span:first").text();
-                            leftlink.trigger("fa.event.toggleitem");
-                        }
-                        var navnode = $(".nav-tabs ul li a[node-url='" + url + "']");
-                        if (navnode.size() > 0) {
-                            navnode.trigger("click");
-                        } else {
-                            //追加新的tab
-                            var id = Math.floor(new Date().valueOf() * Math.random());
-                            icon = typeof icon != 'undefined' ? icon : 'fa fa-circle-o';
-                            title = typeof title != 'undefined' ? title : '';
-                            top.window.$("<a />").append('<i class="' + icon + '"></i> <span>' + title + '</span>').prop("href", url).attr({url: url, addtabs: id}).addClass("hide").appendTo(top.window.document.body).trigger("click");
-                        }
-                    }
                 }
             },
             success: function (options, callback) {
@@ -276,9 +256,7 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
                             var  laypage= layui.laypage //分页
                                 ,layer= layui.layer //弹层
                                 ,table=layui.table; //表格//方法级渲染
-                                config.colum.url=config.options.index_url;
                                 table.render(config.colum);
-                                
                                 config.laypage=laypage;config.layer =layer;config.table = table;
                                 //搜索重载数据的，where  为搜索栏的数据
                                 var $ = layui.$, active = {
@@ -298,65 +276,71 @@ define(['jquery','toastr','layer','layui'], function ($, undefined,Toastr) {
                                 if(typeof(callback)=='function'){
                                     callback(config);
                                 }
-                                _self.events(config); 
+                                table.on('tool(tables)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                                      var data = obj.data; //获得当前行数据
+                                      var layEvent = obj.event; //获得 lay-event 对应的值
+                                      var tr = obj.tr; //获得当前行 tr 的DOM对象
+                                      if(layEvent === 'detail'){ //查看
+                                        _self.events.detail(config,data,obj); 
+                                      } else if(layEvent === 'del'){ //删除
+                                        _self.events.del(config,data,obj);
+                                      } else if(layEvent === 'edit'){ //编辑
+                                        _self.events.edit(config,data,obj);
+                                      }
+                                      else if(layEvent === 'confirm'){ //删除
+                                        _self.events.confirm(config,data,obj);
+                                      } 
+                                })          
                     });
             },
-            events:function(){
+            events:{
+                detail:function(config,data,obj){
 
+                },
+                del:function(config,data,obj){
+                    var options={
+                        url:config.options['del_'+config.colum.id]+'/ids/'+data[config.colum.key],
+                        obj:obj,
+                    }
+                    Main.api.confirm('确定删除当前数据吗?',options); 
+                },
+                edit:function(config,data,obj){
+
+                },
+                confirm:function(config,data,obj){
+
+                }
             },
             form:function(url,data){
                 var that = this;
                 var option = {url:url+'?dialog=1',data:data};
-                that.ajax(option,function (data) {
-                        Toastr.success(__('Operation completed'));
-                        Main.api.layer.closeAll('iframe');
+                that.ajax(option,'iframe',function (data) {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.Main.api.layer.close(index);
+                        parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
+                       // parent.location.replace(parent.location.href);
                 });    
+            },
+            confirm:function(msg,options){
+                var that = this,option = {url:options.url};
+                Main.api.layer.confirm(msg?msg:'真的要执行当前数据吗', function(index){
+                    that.ajax(options,'confirm',function(ret){
+                        if(ret.hasOwnProperty("code")) {
+                                var data = ret.hasOwnProperty("data") && ret.data != "" ? ret.data : null;
+                                var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
+                                if (ret.code === 1) {
+                                    Toastr.success(msg ? msg : 'Operation completed');
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                } else {
+                                    Toastr.error(msg ? msg : 'Operation failed');                                  
+                                }
+                        }else{
+                                Toastr.error('Unknown data format');
+
+                        }
+                    });
+                });
             }
-        },
-        lang: function () {
-            var args = arguments,
-                    string = args[0],
-                    i = 1;
-            string = string.toLowerCase();
-            //string = typeof Lang[string] != 'undefined' ? Lang[string] : string;
-            if (typeof Lang[string] != 'undefined') {
-                if (typeof Lang[string] == 'object')
-                    return Lang[string];
-                string = Lang[string];
-            } else if (string.indexOf('.') !== -1 && false) {
-                var arr = string.split('.');
-                var current = Lang[arr[0]];
-                for (var i = 1; i < arr.length; i++) {
-                    current = typeof current[arr[i]] != 'undefined' ? current[arr[i]] : '';
-                    if (typeof current != 'object')
-                        break;
-                }
-                if (typeof current == 'object')
-                    return current;
-                string = current;
-            } else {
-                string = args[0];
-            }
-            return string.replace(/%((%)|s|d)/g, function (m) {
-                // m is the matched format, e.g. %s, %d
-                var val = null;
-                if (m[2]) {
-                    val = m[2];
-                } else {
-                    val = args[i];
-                    // A switch statement so that the formatter can be extended. Default is %s
-                    switch (m) {
-                        case '%d':
-                            val = parseFloat(val);
-                            if (isNaN(val)) {
-                                val = 0;
-                            }
-                            break;
-                    }
-                    i++;
-                }
-                return val;
-            });
         },
         init: function () {
             //公共代码

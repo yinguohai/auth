@@ -1,0 +1,29 @@
+<form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">角色名称:</label>
+        <div class="layui-input-block">
+          <input type="text" name="r_name" value="{$row.r_name}" lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input" style="width:50%">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">角色状态</label>
+        <div class="layui-input-block">
+            {if condition="$row.r_status==2"}
+                <input type="radio" name="r_status" value="1" title="启用">
+                <input type="radio" name="r_status" value="2" title="停用 " checked>
+            {else}        
+                <input type="radio" name="r_status" value="1" title="启用" checked>
+                <input type="radio" name="r_status" value="2" title="停用 " >
+            {/if}
+         
+        </div>
+        <input type="hidden" name="type" value="edit">
+        <input type="hidden" name="r_id" value="{$row.r_id}">
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn btn-success" lay-submit="" lay-filter="editrole">立即提交</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+</form>
