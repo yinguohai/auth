@@ -54,31 +54,18 @@ class Rbacl extends Backend
      *      2.修改角色
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
      */
-    public function RoleHandle()
+    public function RoleHandle($data)
     {
-        $type = $this->request->request('type', '');
-        /*********************************测试新增***********************************/
-        //$r_id = $this->request->request('r_id', '2');
-        $r_id = $this->request->request('r_id', '');
-        /***********************************************测试编辑******************************************/
-
         $roleValidate = new RbacValidate();
-        $data = [
-            'r_name' => '老夫子',
-            'r_status' => 1
-        ];
         //如果type不正确，则直接返回错误结果
-        if (!in_array($type, ['add', 'edit']) or !$roleValidate->scene('Role')->check($data))
+        if (!in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Role')->check($data))
             $this->commonHandle();
         //模拟数据
-        if ($type == 'add') {
+        if ($data['type'] == 'add') {
             $data['r_addtime'] = time();
-            $data['type'] = 'add';
         } else {
             //更新，则需要带上条件
             $data['r_updatetime'] = time();
-            $data['type'] = 'edit';
-            $data['r_id'] = $r_id;
         }
         return $data;
     }

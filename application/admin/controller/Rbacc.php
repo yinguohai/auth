@@ -62,6 +62,16 @@ class Rbacc extends Backend
    }
 
     /**
+     * 获取组织实例
+     * @return $organizeInstance|string
+     */
+    public static function getOrganize(){
+        if(! (self::$organizeInstance) instanceof Organize){
+            self::$organizeInstance=new Organize();
+        }
+        return self::$organizeInstance;
+    }
+    /**
      * 用户列表
      */
     public function listUser()
@@ -76,6 +86,7 @@ class Rbacc extends Backend
     /**
      * 保存用户
      *      1.添加用户
+     *      2.修改用户
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加用户  ；  type=='edit'-----修改用户
      */
 
@@ -84,6 +95,8 @@ class Rbacc extends Backend
           if ($this->request->isPost()){
             var_dump($params);
             die();
+
+
           }
           return $this->view->fetch();
             //  Rbacc::getRbacl()->addUser();
@@ -96,13 +109,44 @@ class Rbacc extends Backend
      * 角色列表
      */
     public function listRole(){
-        //搜索条件参数
-        $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
-        //获取用户信息
-        $result=self::getModel('Role')->listRole($condition,$this->request->request("limit", ''),$this->request->request("page", ''));
-        //处理用户信息
-        self::getRbacl()->showRole($result);
+        if ($this->request->isPost()){
+            //搜索条件参数
+            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
+            //获取用户信息
+            $result=self::getModel('Role')->listRole($condition,$this->request->request("limit", ''),$this->request->request("page", ''));
+            //处理用户信息
+            self::getRbacl()->showRole($result);
+        }
+        return $this->view->fetch();
     }
+
+    /*************
+      @添加角色接口
+    *************/
+    public function addRole(){
+          $params = $this->request->post();
+          if ($this->request->isPost()){
+              $this->saveRole($params);
+          }
+          return $this->view->fetch();
+    }
+      /*****
+      @ 编辑角色接口
+      *****************/
+    public function editRole($ids=NULL){
+          $condition['where']=array('r_id'=>$ids);
+          $rows=self::getRole()->listRole($condition);
+          if(!$rows){
+              outputJson('-2','No Results were found');
+          }
+          $this->view->assign("row", $rows['data'][0]);
+          if($this->request->isAjax()){
+              $params = $this->request->post();
+              $this->saveRole($params);
+          }
+          return $this->view->fetch();
+    }
+
     /**
      * 保存角色
      *      1.添加角色
@@ -113,7 +157,7 @@ class Rbacc extends Backend
         //获取role的相关信息，
         $roleInfo=self::getRbacl()->RoleHandle();
         //存储角色信息
-        $result=self::getModel('Role')->saveRole($roleInfo);
+        $result=self::getRole()->saveRole($roleInfo);
         if(empty($result))
             outputJson('-2','保存失败');
         putlog('角色保存成功');
@@ -123,6 +167,7 @@ class Rbacc extends Backend
      * 组织列表
      */
     public function listOrganize(){
+        if ($this->request->isPost()){
         //搜索条件参数
         $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
         //分页信息
@@ -133,6 +178,8 @@ class Rbacc extends Backend
         $result=self::getModel('Organize')->listOrganize($condition,$limit,$page);
         //处理用户信息
         self::getRbacl()->showOrganize($result);
+        }
+        return $this->view->fetch();
     }
     /**
      * 保存组织
