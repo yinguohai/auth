@@ -37,4 +37,8 @@ class Organize extends BasicModel
         //新增
         return $this->saveInfo($this,$data);
     }
+
+    public function getallOrganize($condition){
+        return $this->getAllInfo($this,$condition);
+    }
 }

@@ -1,1 +1,1 @@
-2017-11-16 10:12:55	ygh	组保存成功	INSERT INTO `er_group` (`g_name` , `g_description` , `g_status` , `g_addtime`) VALUES ('W32' , '343' , 1 , 1510798375)
+2017-11-16 13:44:09	ygh	组保存成功	UPDATE `er_group`  SET `g_name`='A组',`g_description`='111',`g_status`=1,`g_updatetime`=1510811049  WHERE  `g_id` = 1

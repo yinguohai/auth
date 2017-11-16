@@ -8,7 +8,7 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20" id="menu">
         <span>
-            <a class="btn btn-primary radius add" data-title="添加组织" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加组织</a>
+            <a class="btn btn-primary radius add" data-title="添加部门" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加部门</a>
         </span>
     </div>
     <div class="mt-20">
@@ -19,4 +19,11 @@
 <script type="text/html" id="toolbar">
     <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="sexTpl">
+  {{#  if(d.r_status =='1'){ }}
+    启用
+  {{#  } else { }}
+    停用
+  {{#  } }}
 </script>

@@ -6,7 +6,7 @@ use app\admin\logical\Rbacl;
 use app\admin\model\rbac\User;
 use app\admin\model\rbac\Role;
 use think\exception\ErrorException;
-
+use erp\Tree;
 class Rbacc extends Backend
 {
     //Rbacl类的实例
@@ -164,16 +164,13 @@ class Rbacc extends Backend
      */
     public function listOrganize(){
         if ($this->request->isPost()){
-        //搜索条件参数
-        $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
-        //分页信息
-        $limit=$this->request->request("limit", '10');
-        $page=$this->request->request("page", '1');
-
-        //获取用户信息
-        $result=self::getModel('Organize')->listOrganize($condition,$limit,$page);
-        //处理用户信息
-        self::getRbacl()->showOrganize($result);
+            //搜索条件参数
+            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
+            $condition['where']['o_status']=1;
+            //获取所有的组织部门全部数据
+            $result=self::getModel('Organize')->getallOrganize($condition);
+            //处理用户信息
+            self::getRbacl()->showOrganizeTree($result);
         }
         return $this->view->fetch();
     }
@@ -226,15 +223,15 @@ class Rbacc extends Backend
       @ 编辑权限分组接口
     *****************/
     public function editGroup($ids=NULL){
-          $condition['where']=array('r_id'=>$ids);
-          $rows=self::getModel('Role')->listRole($condition);
+          $condition['where']=array('g_id'=>$ids);
+          $rows=self::getModel('Group')->listGroup($condition);
           if(!$rows){
               outputJson('-2','No Results were found');
           }
           $this->view->assign("row", $rows['data'][0]);
           if($this->request->isAjax()){
               $params = $this->request->post();
-              $this->saveRole($params);
+              $this->saveGroup($params);
           }
           return $this->view->fetch();
     }
