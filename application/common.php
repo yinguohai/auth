@@ -93,6 +93,37 @@ function required_attr($arr=[],$attr='*',$type=true){
 }
 
 /**
+ * @param $data   需要循环的数据
+ * @param int $pid  父级id
+ * @param int $level  子id
+ * @param string $pidname  父参考栏
+ * @param string $id   参考栏
+ * @return array|void
+ */
+function nodeChild($data,$pid=0,$level=0,$pidname='pid',$id='id'){
+    if(empty($data))
+        return ;
+    if(empty($level)){
+        static $arr=array();
+    }else{
+        $arr=array();
+    }
+    foreach ($data as $k=>$v){
+        if($v[$pidname]!=$pid)continue;
+        if(empty($level)){
+            $arr[]=$v;
+            unset($data[$k]);
+            nodeChild($data,$v['o_id'],$level,$pidname);
+        }else{
+            unset($data[$k]);//淘汰出筛选出的数据
+            $v['child']=nodeChild($data,$v['o_id'],$level,$pidname);
+            $arr[]=$v;
+        }
+    }
+    return $arr;
+}
+
+/**
  * 日志记录函数
  * @param $msg
  */
