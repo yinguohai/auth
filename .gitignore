@@ -1,3 +1,4 @@
 .idea/*
 log/*
 application/database.php
+log/access.log

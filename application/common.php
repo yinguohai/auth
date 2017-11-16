@@ -95,12 +95,12 @@ function required_attr($arr=[],$attr='*',$type=true){
 /**
  * @param $data   需要循环的数据
  * @param int $pid  父级id
- * @param int $level  子id
+ * @param int $level  true---分层级显示， 水平显示
  * @param string $pidname  父参考栏
  * @param string $id   参考栏
  * @return array|void
  */
-function nodeChild($data,$pid=0,$level=0,$pidname='pid',$id='id'){
+function nodeChild($data,$pid=0,$level=0,$pidname='pid',$sid=''){
     if(empty($data))
         return ;
     if(empty($level)){
@@ -113,10 +113,11 @@ function nodeChild($data,$pid=0,$level=0,$pidname='pid',$id='id'){
         if(empty($level)){
             $arr[]=$v;
             unset($data[$k]);
-            nodeChild($data,$v['o_id'],$level,$pidname);
+            nodeChild($data,$v[$sid],$level,$pidname,$sid);
+
         }else{
             unset($data[$k]);//淘汰出筛选出的数据
-            $v['child']=nodeChild($data,$v['o_id'],$level,$pidname);
+            $v['child']=nodeChild($data,$v[$sid],$level,$pidname,$sid);
             $arr[]=$v;
         }
     }

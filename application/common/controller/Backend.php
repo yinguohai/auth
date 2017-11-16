@@ -35,6 +35,8 @@ class Backend extends Controller
      * @var string
      */
     protected $layout = 'default';
+    //过滤函数
+    protected static $filterArray=['strip_tags','htmlspecialchars'];
     public function _initialize()
     {
         $modulename = $this->request->module();

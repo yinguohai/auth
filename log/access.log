@@ -1,1 +1,1 @@
-2017-11-16 13:44:09	ygh	组保存成功	UPDATE `er_group`  SET `g_name`='A组',`g_description`='111',`g_status`=1,`g_updatetime`=1510811049  WHERE  `g_id` = 1
+2017-11-16 20:32:47	ygh	角色保存成功	UPDATE `er_role`  SET `r_name`='管理员',`r_status`=2,`r_updatetime`=1510835567  WHERE  `r_id` = 1

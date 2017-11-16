@@ -152,7 +152,7 @@ define(['jquery', 'main'], function ($, undefined) {
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
                           form.on('submit(editrole)', function(data){
-                                Main.api.form(_self.config.options.edit_role+'/ids/'+data.field.r_id,data.field);
+                                Main.api.form(_self.config.options.edit_role,data.field);
                                 return false;
                           });
   
@@ -231,7 +231,7 @@ define(['jquery', 'main'], function ($, undefined) {
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
                           form.on('submit(editgroup)', function(data){
-                                Main.api.form(_self.config.options.edit_group+'/ids/'+data.field.g_id,data.field);
+                                Main.api.form(_self.config.options.edit_group,data.field);
                                 return false;
                           });
   
@@ -311,7 +311,7 @@ define(['jquery', 'main'], function ($, undefined) {
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
                           form.on('submit(editgroup)', function(data){
-                                Main.api.form(_self.config.options.edit_group+'/ids/'+data.field.g_id,data.field);
+                                Main.api.form(_self.config.options.edit_group,data.field);
                                 return false;
                           });
   
@@ -350,7 +350,7 @@ define(['jquery', 'main'], function ($, undefined) {
 
                         },
                         edit:function(config,data,obj){
-                           Main.api.open(config.options['edit_'+config.colum.id]+'/ids/'+data[config.colum.key],'编辑',{},function(){
+                           Main.api.open(config.options['edit_'+config.colum.id]+'/'+config.colum.key+'/'+data[config.colum.key],'编辑',{},function(){
                             },function(formobj){
                             });
                         },
