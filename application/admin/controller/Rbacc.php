@@ -181,8 +181,6 @@ class Rbacc extends Backend
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
      */
     public function saveOrganize(){
-
-
     }
 
     /**
