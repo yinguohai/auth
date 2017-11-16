@@ -1,1 +1,1 @@
-2017-11-16 09:18:38	ygh	角色保存成功	UPDATE `er_role`  SET `r_name`='222',`r_status`=1,`r_updatetime`=1510795118  WHERE  `r_id` = 9
+2017-11-16 10:12:55	ygh	组保存成功	INSERT INTO `er_group` (`g_name` , `g_description` , `g_status` , `g_addtime`) VALUES ('W32' , '343' , 1 , 1510798375)

@@ -1,0 +1,29 @@
+<div class="page-container">
+    <div class="demoTable">
+        搜索ID：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20" id="menu">
+        <span>
+            <a class="btn btn-primary radius add" data-title="添加权限分组" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加权限分组</a>
+        </span>
+    </div>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive" id="tables" lay-filter="tables">
+        </table>
+    </div>
+</div>
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="sexTpl">
+  {{#  if(d.r_status =='1'){ }}
+    启用
+  {{#  } else { }}
+    停用
+  {{#  } }}
+</script>

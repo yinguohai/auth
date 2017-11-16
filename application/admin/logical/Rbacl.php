@@ -124,29 +124,18 @@ class Rbacl extends Backend
      * 保存组
      * @param $group
      */
-    public function saveGroup($group){
-        $type = $this->request->request('type', '');
-        /**
-         * 测试数据
-         */
-        $o_id = $this->request->request('g_id', '2');
-        //获取前台提交过来的数据
-        $data= $this->request->request();
+    public function groupHandle($data){
         $roleValidate = new RbacValidate();
-
-        //模拟数据
-        if ($type == 'add'){
+           //如果type不正确，则直接返回错误结果
+        if (!in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Group')->check($data)){
+            $this->commonHandle();
+        }
+        if ($data['type'] == 'add'){
             $data['g_addtime'] = time();
-            $data['type'] = 'add';
         } else {
             //更新，则需要带上条件
             $data['g_updatetime'] = time();
-            $data['type'] = 'edit';
-            $data['g_id'] = $o_id;
         }
-        //如果type不正确，则直接返回错误结果
-        if ($roleValidate->scene('Group')->check($data))
-            $this->commonHandle();
         return $data;
     }
 

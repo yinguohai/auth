@@ -198,23 +198,52 @@ class Rbacc extends Backend
      @权限分组 部分代码
      */
     public function listGroup(){
-        //搜索条件参数
-        $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
-        //分页信息
-        $limit=$this->request->request("limit", '10');
-        $page=$this->request->request("page", '1');
+      if ($this->request->isPost()){  
+            //搜索条件参数
+            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
+            //分页信息
+            $limit=$this->request->request("limit", '10');
+            $page=$this->request->request("page", '1');
 
-        //获取用户信息
-        $result=self::getModel('Group')->listGroup($condition,$limit,$page);
-        //处理用户信息
-        self::getRbacl()->showGroup($result);
+            //获取用户信息
+            $result=self::getModel('Group')->listGroup($condition,$limit,$page);
+            //处理用户信息
+            self::getRbacl()->showGroup($result);
+      }
+      return $this->view->fetch();
+    }
+      /*************
+      @添加权限分组接口
+    *************/
+    public function addGroup(){
+          $params = $this->request->post();
+          if ($this->request->isPost()){
+              $this->saveGroup($params);
+          }
+          return $this->view->fetch();
+    }
+    /*****
+      @ 编辑权限分组接口
+    *****************/
+    public function editGroup($ids=NULL){
+          $condition['where']=array('r_id'=>$ids);
+          $rows=self::getModel('Role')->listRole($condition);
+          if(!$rows){
+              outputJson('-2','No Results were found');
+          }
+          $this->view->assign("row", $rows['data'][0]);
+          if($this->request->isAjax()){
+              $params = $this->request->post();
+              $this->saveRole($params);
+          }
+          return $this->view->fetch();
     }
     /**
      * 保存组
      */
-    public function saveGroup(){
+    private function saveGroup($data){
         //获取role的相关信息，
-        $organizeInfo=self::getRbacl()->groupHandle();
+        $organizeInfo=self::getRbacl()->groupHandle($data);
         //存储角色信息
         $result=self::getModel('Group')->saveGroup($organizeInfo);
         if(empty($result))

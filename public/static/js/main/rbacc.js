@@ -4,11 +4,15 @@ define(['jquery', 'main'], function ($, undefined) {
                 options:{
                     list_user:'/admin/rbacc/listUser',
                     add_user:'/admin/rbacc/addUser',
-                    edit_url:'/admin/rbacc/addUser',
+                    edit_user:'/admin/rbacc/addUser',
                     add_role:'/admin/rbacc/addRole',
                     edit_role:'/admin/rbacc/editRole',
                     list_role:'/admin/rbacc/listRole',
                     del_role:'/admin/rbacc/delRole',
+                    add_group:'/admin/rbacc/addGroup',
+                    edit_group:'/admin/rbacc/editGroup',
+                    list_group:'/admin/rbacc/listGroup',
+                    del_group:'/admin/rbacc/delGroup',
                 },  
             },
             //用户列表入口函数--------------------------------------------/
@@ -135,6 +139,85 @@ define(['jquery', 'main'], function ($, undefined) {
             },
             //编辑角色入口函数
             editrole:function(){
+                var _self=this;
+                layui.config({
+                        //加载layui 相关的类库文件路径和随机参数
+                        version:Math.random(),
+                        dir:'/static/libs/layui/',
+                    })
+                    layui.use(['element','form'], function(){
+                          var form = layui.form,element=layui.element;
+                          form.on('submit(editrole)', function(data){
+                                Main.api.form(_self.config.options.edit_role+'/ids/'+data.field.r_id,data.field);
+                                return false;
+                          });
+  
+                    });        
+            },
+                /**************************************
+            角色列表页面入口js函数--------------------------------------------------------------------------------------------------------
+            ********************************************/
+            listgroup:function(){
+                var _this=this;
+                this.events._self=this;
+                this.config.colum={
+                        elem: '#tables'
+                        ,url:''
+                        ,cols: [[
+                            {field:'g_id', title: 'ID'}
+                            ,{field:'g_name', title: '组名'}
+                            ,{field:'g_description', title: '组描述'}
+                            ,{field:'g_status', title: '状态',templet: '#sexTpl'}
+                            ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
+                        ]]
+                        ,method:'POST'
+                        ,id: 'group'/*URL 路径前置标识符*/
+                        ,page: true
+                        ,limit: 20
+                        ,height: 'full-20'
+                        ,even: true //开启隔行背景
+                        ,response: {
+                           statusName: 'code' //数据状态的字段名称，默认：code
+                          ,statusCode: 1 //成功的状态码，默认：0
+                          ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                          ,countName: 'count' //数据总数的字段名称，默认：count
+                          ,dataName: 'data' //数据列表的字段名称，默认：data
+                        } 
+                        ,done:function(res, curr, count){
+
+                        },
+                        key:'g_id'/*当前列表数据的主键*/
+                }
+                this.config.colum.url=_this.config.options.list_group;
+                config=$.extend(true,Main.api.events,_this.events.operate);
+                Main.api.table(this.config,function(config){
+                    _this.events.toolsmenu({
+                            add:{
+                                    'url':_this.config.options.add_group,
+                                    "title":'添加权限分组'
+                            }
+                    });
+                });
+            },
+            //增加角色入口函数
+            addgroup:function(){
+                    var _self=this;
+                    layui.config({
+                        //加载layui 相关的类库文件路径和随机参数
+                        version:Math.random(),
+                        dir:'/static/libs/layui/',
+                    })
+                    layui.use(['element','form'], function(){
+                          var form = layui.form,element=layui.element;
+                          form.on('submit(addgroup)', function(data){
+                                Main.api.form(_self.config.options.add_group,data.field);
+                                return false;
+                          });
+  
+                    });        
+            },
+            //编辑角色入口函数
+            editgroup:function(){
                 var _self=this;
                 layui.config({
                         //加载layui 相关的类库文件路径和随机参数
