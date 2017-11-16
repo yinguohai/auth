@@ -1,1 +1,1 @@
-2017-11-16 09:18:38	ygh	角色保存成功	UPDATE `er_role`  SET `r_name`='222',`r_status`=1,`r_updatetime`=1510795118  WHERE  `r_id` = 9
+2017-11-15 17:26:09	ygh	角色保存成功	UPDATE `er_role`  SET `r_name`='管理员',`r_status`=1,`r_updatetime`=1510737969  WHERE  `r_id` = 1
