@@ -3,7 +3,7 @@ namespace app\admin\model\rbac;
 use app\common\model\BasicModel;
 use think\Validate;
 
-class RoleAccess extends BasicModel
+class UserAccess extends BasicModel
 {
     protected $table=[
 
@@ -20,24 +20,25 @@ class RoleAccess extends BasicModel
      * @param string $fileds
      * @return mixed
      */
-    public function listRoleAccess($condition=[],$limit=10,$page=1,$fileds='*'){
+    public function listUserAccess($condition=[],$limit=10,$page=1,$fileds='*'){
         return $this->getInfo($this,$fileds,$condition,$limit,$page);
     }
 
     /**
-     * 角色数据保存
-     * @param array $data  角色信息
+     * 个人特殊权限数据保存
+     * @param array $data  个人特殊权限信息
      *                  里面的type属性  add----新增，  edit----编辑
+     *                  新增操作必须要带有 ua_id属性
      * @return bool
      */
-    public function saveRoleAccess($data){
+    public function saveUserAccess($data){
         if(empty($data['type']))
             return false;
         $type=$data['type'];
         unset($data['type']);
         //编辑
         if($type=='edit')
-            return $this->saveInfo($this,$data,['ar_id'=>$data['ar_id']]);
+            return $this->saveInfo($this,$data,['ua_id'=>$data['ua_id']]);
         //新增
         return $this->saveInfo($this,$data);
     }

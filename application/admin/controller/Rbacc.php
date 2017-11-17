@@ -25,6 +25,8 @@ class Rbacc extends Backend
     private static $accessInstance;
     //权限角色实例
     private static $roleAccessInstance;
+    //用户权限实例
+    private static $userAccessInstance;
     //model路径
     private static $modelpath='app\admin\model\rbac\\';
    public function _initialize()
@@ -146,9 +148,9 @@ class Rbacc extends Backend
               outputJson('-2','No Results were found');
           }
           $this->view->assign("row", $rows['data'][0]);
-//          if($this->request->isAjax()){
+          if($this->request->isAjax()){
               $this->saveRole();
-//          }
+          }
           return $this->view->fetch();
     }
     /**
@@ -159,6 +161,33 @@ class Rbacc extends Backend
      */
     private function saveRole(){
         $this->saveCommon('Role','角色');
+    }
+    /*************
+    @添加组织接口
+     *************/
+    public function addOrganize(){
+        if ($this->request->isPost()){
+            $this->saveOrganize();
+        }
+        return $this->view->fetch();
+    }
+    /*****
+    @ 编辑角色接口
+     *****************/
+    public function editOrganize(){
+        $ids=$this->request->request('o_id','');
+        if(empty($ids))
+            outputJson('-2','No Results were found');
+        $condition['where']=array('o_id'=>$ids);
+        $rows=self::getModel('Organize')->listOrganize($condition);
+        if(!$rows['data']){
+            outputJson('-2','No Results were found');
+        }
+        $this->view->assign("row", $rows['data'][0]);
+        if($this->request->isAjax()){
+            $this->saveOrganize();
+        }
+        return $this->view->fetch();
     }
     /**
      * @组织列表   *****部门组织列表部分代码
@@ -185,7 +214,7 @@ class Rbacc extends Backend
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加组织  ；  type=='edit'-----修改组织
      */
     public function saveOrganize(){
-        $this->saveCommon('','Organize','组织');
+        $this->saveCommon('Organize','组织');
     }
     /**
      * @组列表*********************************
@@ -219,18 +248,18 @@ class Rbacc extends Backend
       @ 编辑权限分组接口
     *****************/
     public function editGroup(){
-        $ids=$this->request->request('r_id','');
+        $ids=$this->request->request('g_id','');
         if(empty($ids))
             outputJson('-2','No Results were found');
-          $condition['where']=array('r_id'=>$ids);
-          $rows=self::getModel('Role')->listRole($condition);
+          $condition['where']=array('g_id'=>$ids);
+          $rows=self::getModel('Group')->listGroup($condition);
           if(!$rows){
               outputJson('-2','No Results were found');
           }
           $this->view->assign("row", $rows['data'][0]);
-          if($this->request->isAjax()){
-              $this->saveRole();
-          }
+//          if($this->request->isAjax()){
+              $this->saveGroup();
+//          }
           return $this->view->fetch();
     }
     /**
@@ -271,7 +300,7 @@ class Rbacc extends Backend
     @ 编辑权限分组接口
      *****************/
     public function editAccess(){
-        $ids=$this->request->request('r_id','');
+        $ids=$this->request->request('a_id','');
         if(empty($ids))
             outputJson('-2','No Results were found');
         $condition['where']=array('a_id'=>$ids);
@@ -297,4 +326,11 @@ class Rbacc extends Backend
     public function roleAccessSave(){
         $this->saveCommon('RoleAccess','角色权限');
     }
+    /**
+     * 个人特色权限分配
+     */
+    public function userAccessSave(){
+        $this->saveCommon('UserAccess','个人特殊权限分配');
+    }
+
 }

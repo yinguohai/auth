@@ -59,8 +59,9 @@ class Rbacl extends Backend
         $data=$this->request->request();
         $roleValidate = new RbacValidate();
         //如果type不正确，则直接返回错误结果
-        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Role')->check($data))
+        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit']))
             $this->commonHandle();
+        if($data['type']=='add' && !$roleValidate->scene('Group')->check($data)){}
         //模拟数据
         if ($data['type'] == 'add') {
             $data['r_addtime'] = time();
@@ -93,7 +94,7 @@ class Rbacl extends Backend
         /**
          * 测试数据
          */
-        $o_id = $this->request->request('o_id', '2');
+        $o_id = $this->request->request('o_id', '');
         //获取前台提交过来的数据
         $data= $this->request->request();
         $roleValidate = new RbacValidate();
@@ -102,6 +103,7 @@ class Rbacl extends Backend
         if ($type == 'add'){
             $data['o_addtime'] = time();
             $data['type'] = 'add';
+
         } else {
             //更新，则需要带上条件
             $data['o_updatetime'] = time();
@@ -109,8 +111,8 @@ class Rbacl extends Backend
             $data['o_id'] = $o_id;
         }
         //如果type不正确，则直接返回错误结果
-        if ($roleValidate->scene('Organize')->check($data))
-        $this->commonHandle();
+        if (!$roleValidate->scene('Organize')->check($data))
+            $this->commonHandle();
         return $data;
     }
     /**
@@ -141,17 +143,19 @@ class Rbacl extends Backend
         }
         return $data;
     }
-
     /**
      * 显示规则
+     * @param $rules  规则列表
+     * @var  type  显示类型， 0---平级显示  ，   1----分类显示
+     * @return bool
      */
     public function showAccess($rules){
+        $type = $this->request->request('type','0');
         if(empty($rules['data']))
             return false;
-        $rules['data']=nodeChild($rules['data'],0,0,'a_pid','a_id');
+        $rules['data']=nodeChild($rules['data'],0,$type,'a_pid','a_id');
         $this->commonHandle($rules);
     }
-
     /**
      * 保存规则
      */
@@ -189,6 +193,21 @@ class Rbacl extends Backend
         } else {
             //更新，则需要带上条件
             $data['g_updatetime'] = time();
+        }
+        return $data;
+    }
+    /**
+     * 角色权限信息处理
+     * 必要参数：
+     *          type: 处理类型
+     *          r_id: 角色id
+     *          a_id: 权限id
+     */
+    public function userAccessHandle(){
+        $data=$this->request->request();
+        //如果type不正确，则直接返回错误结果
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
         }
         return $data;
     }

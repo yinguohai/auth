@@ -24,6 +24,5 @@ class RbacValidate extends Validate
         'Organize'=>['o_name'],
         'Group'=>['g_name'],
         'Access'=>['a_tilte'],
-        ''
     ];
 }
