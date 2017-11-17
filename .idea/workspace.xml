@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/application/admin/controller/Rbacc.php" line="274" />
+    <bookmark url="file://$PROJECT_DIR$/application/admin/controller/Rbacc.php" line="245" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35ef43fa-013e-481a-b0a9-61e6702c19f7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/model/rbac/UserAccess.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extend/erp/Tree.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extend/.gitignore" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Rbacc.php" afterPath="$PROJECT_DIR$/application/admin/controller/Rbacc.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/logical/Rbacl.php" afterPath="$PROJECT_DIR$/application/admin/logical/Rbacl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" afterPath="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/validate/rbac/RbacValidate.php" afterPath="$PROJECT_DIR$/application/admin/validate/rbac/RbacValidate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/config.php" afterPath="$PROJECT_DIR$/application/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/model/rbac/Organize.php" afterPath="$PROJECT_DIR$/application/admin/model/rbac/Organize.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/rbacc/editgroup.html" afterPath="$PROJECT_DIR$/application/admin/view/rbacc/editgroup.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/rbacc/listorganize.html" afterPath="$PROJECT_DIR$/application/admin/view/rbacc/listorganize.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/common/model/BasicModel.php" afterPath="$PROJECT_DIR$/application/common/model/BasicModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/access.log" afterPath="$PROJECT_DIR$/log/access.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/main/rbacc.js" afterPath="$PROJECT_DIR$/public/static/js/main/rbacc.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +29,8 @@
       <file leaf-file-name="Rbacc.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/admin/controller/Rbacc.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="334" column="0" lean-forward="false" selection-start-line="334" selection-start-column="0" selection-end-line="334" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="317" column="41" lean-forward="true" selection-start-line="317" selection-start-column="41" selection-end-line="317" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -76,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1102">
-              <caret line="39" column="71" lean-forward="true" selection-start-line="39" selection-start-column="71" selection-end-line="39" selection-end-column="71" />
+              <caret line="39" column="71" lean-forward="false" selection-start-line="39" selection-start-column="71" selection-end-line="39" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -86,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/application/common/model/BasicModel.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="101">
-              <caret line="29" column="44" lean-forward="true" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+              <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -96,8 +100,30 @@
         <entry file="file://$PROJECT_DIR$/application/admin/logical/Rbacl.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="244">
-              <caret line="205" column="39" lean-forward="true" selection-start-line="205" selection-start-column="39" selection-end-line="205" selection-end-column="39" />
-              <folding />
+              <caret line="222" column="39" lean-forward="false" selection-start-line="222" selection-start-column="39" selection-end-line="222" selection-end-column="39" />
+              <folding>
+                <marker date="1510901087624" expanded="true" signature="2644:2747" ph=" @param $data ..." />
+                <marker date="1510901087624" expanded="true" signature="2787:3484" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="2853:2879" ph=" 测试数据 ..." />
+                <marker date="1510901087624" expanded="true" signature="3087:3173" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="3181:3330" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="3493:3510" ph=" 组列表 ..." />
+                <marker date="1510901087624" expanded="true" signature="3558:3610" ph="{...}" />
+                <marker date="1510901087624" expanded="true" signature="3619:3657" ph=" 保存组 ..." />
+                <marker date="1510901087624" expanded="true" signature="3694:4190" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="3944:3988" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="4026:4076" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="4084:4162" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="4199:4313" ph=" 显示规则 ..." />
+                <marker date="1510901087624" expanded="true" signature="4355:4583" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="4592:4610" ph=" 保存规则 ..." />
+                <marker date="1510901087624" expanded="true" signature="4646:5137" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="4891:4935" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="4973:5023" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="5031:5109" ph="..." />
+                <marker date="1510901087624" expanded="true" signature="5147:5263" ph=" 角色权限信息处理 ..." />
+                <marker date="1510901087624" expanded="true" signature="5457:5501" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -136,8 +162,6 @@
       <find>editRole</find>
       <find>ids</find>
       <find>$ids</find>
-      <find>default_fil</find>
-      <find>check</find>
       <find>addOr</find>
     </findStrings>
   </component>
@@ -179,6 +203,7 @@
         <option value="$PROJECT_DIR$/application/common/model/BasicModel.php" />
         <option value="$PROJECT_DIR$/application/database.php" />
         <option value="$PROJECT_DIR$/application/admin/view/rbacc/aa.html" />
+        <option value="$PROJECT_DIR$/application/config.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Group.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Organize.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Role.php" />
@@ -188,13 +213,11 @@
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Access.php" />
         <option value="$PROJECT_DIR$/thinkphp/library/think/Error.php" />
         <option value="$PROJECT_DIR$/application/common.php" />
-        <option value="$PROJECT_DIR$/application/common/controller/Backend.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" />
+        <option value="$PROJECT_DIR$/application/common/controller/Backend.php" />
         <option value="$PROJECT_DIR$/application/admin/validate/rbac/RbacValidate.php" />
-        <option value="$PROJECT_DIR$/application/admin/logical/Rbacl.php" />
-        <option value="$PROJECT_DIR$/application/config.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/rbac/UserAccess.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/Rbacc.php" />
+        <option value="$PROJECT_DIR$/application/admin/logical/Rbacl.php" />
       </list>
     </option>
   </component>
@@ -387,6 +410,11 @@
               <item name="validate" type="cbb8eebc:String" user="validate" />
               <item name="rbac" type="cbb8eebc:String" user="rbac" />
             </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="extend" type="cbb8eebc:String" user="extend" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -477,12 +505,12 @@
       <workItem from="1510795388467" duration="9408000" />
       <workItem from="1510812046068" duration="1151000" />
       <workItem from="1510814860237" duration="37000" />
-      <workItem from="1510814962921" duration="17694000" />
+      <workItem from="1510814962921" duration="11844000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168403000" />
+    <option name="totallyTimeSpent" value="162570000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -503,20 +531,31 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46875" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4125" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4125" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3630435" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11354167" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16044776" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="696" y="171" width="292" height="525" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25833333" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -537,7 +576,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25833333" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.453125" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -578,23 +617,32 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/application/admin/controller/Rbacc.php</url>
-          <line>332</line>
-          <option name="timeStamp" value="72" />
+          <line>160</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/application/admin/controller/Rbacc.php</url>
+          <line>73</line>
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="73" />
+      <option name="time" value="64" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="index.php">
+        <watch expression="$_POST" language="PHP" />
         <watch expression="$modelname" />
-        <watch expression="$msg" />
-        <watch expression="$method" />
-        <watch expression="$save" />
-        <watch expression="Db::name('Due')-&gt;getLastSql()" language="PHP" />
+        <watch expression="self::$modelpath" />
+        <watch expression="self::$modelpath.ucfirst($objstr)" />
+        <watch expression="$data" />
+        <watch expression="$data" />
+        <watch expression="$this-&gt;request-&gt;request()" language="PHP" />
+        <watch expression="$this-&gt;request-&gt;request('ids')" language="PHP" />
         <watch expression="$commonData" />
+        <watch expression="$data" />
       </configuration>
     </watches-manager>
   </component>
@@ -617,7 +665,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -700,6 +747,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/Request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="775" column="0" lean-forward="false" selection-start-line="775" selection-start-column="0" selection-end-line="775" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
@@ -764,6 +819,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="232" column="26" lean-forward="true" selection-start-line="232" selection-start-column="26" selection-end-line="232" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/view/common/header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-174">
@@ -812,6 +875,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Organize.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="217">
@@ -828,46 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Group.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-696">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/common/controller/Backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Role.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Organize.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/Request.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="775" column="0" lean-forward="false" selection-start-line="775" selection-start-column="0" selection-end-line="775" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Access.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="449">
@@ -876,10 +907,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/common/model/BasicModel.php">
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Group.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="29" column="44" lean-forward="true" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+        <state relative-caret-position="-696">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -892,18 +923,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php">
+    <entry file="file://$PROJECT_DIR$/application/common/model/BasicModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1102">
-          <caret line="39" column="71" lean-forward="true" selection-start-line="39" selection-start-column="71" selection-end-line="39" selection-end-column="71" />
+        <state relative-caret-position="101">
+          <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/config.php">
+    <entry file="file://$PROJECT_DIR$/application/common/controller/Backend.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="45" column="62" lean-forward="true" selection-start-line="45" selection-start-column="62" selection-end-line="45" selection-end-column="62" />
+        <state relative-caret-position="483">
+          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1102">
+          <caret line="39" column="71" lean-forward="false" selection-start-line="39" selection-start-column="71" selection-end-line="39" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Role.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -911,31 +958,52 @@
     <entry file="file://$PROJECT_DIR$/application/admin/logical/Rbacl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
-          <caret line="205" column="39" lean-forward="true" selection-start-line="205" selection-start-column="39" selection-end-line="205" selection-end-column="39" />
-          <folding />
+          <caret line="222" column="39" lean-forward="false" selection-start-line="222" selection-start-column="39" selection-end-line="222" selection-end-column="39" />
+          <folding>
+            <marker date="1510901087624" expanded="true" signature="2644:2747" ph=" @param $data ..." />
+            <marker date="1510901087624" expanded="true" signature="2787:3484" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="2853:2879" ph=" 测试数据 ..." />
+            <marker date="1510901087624" expanded="true" signature="3087:3173" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="3181:3330" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="3493:3510" ph=" 组列表 ..." />
+            <marker date="1510901087624" expanded="true" signature="3558:3610" ph="{...}" />
+            <marker date="1510901087624" expanded="true" signature="3619:3657" ph=" 保存组 ..." />
+            <marker date="1510901087624" expanded="true" signature="3694:4190" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="3944:3988" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="4026:4076" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="4084:4162" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="4199:4313" ph=" 显示规则 ..." />
+            <marker date="1510901087624" expanded="true" signature="4355:4583" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="4592:4610" ph=" 保存规则 ..." />
+            <marker date="1510901087624" expanded="true" signature="4646:5137" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="4891:4935" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="4973:5023" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="5031:5109" ph="..." />
+            <marker date="1510901087624" expanded="true" signature="5147:5263" ph=" 角色权限信息处理 ..." />
+            <marker date="1510901087624" expanded="true" signature="5457:5501" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/thinkphp/library/think/Error.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="290">
+          <caret line="36" column="43" lean-forward="false" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserAccess.php">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="30" column="41" lean-forward="false" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/controller/Rbacc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="334" column="0" lean-forward="false" selection-start-line="334" selection-start-column="0" selection-end-line="334" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="317" column="41" lean-forward="true" selection-start-line="317" selection-start-column="41" selection-end-line="317" selection-end-column="41" />
           <folding />
         </state>
       </provider>

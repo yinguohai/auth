@@ -12,7 +12,11 @@ define(['jquery', 'main'], function ($, undefined) {
                     add_group:'/admin/rbacc/addGroup',
                     edit_group:'/admin/rbacc/editGroup',
                     list_group:'/admin/rbacc/listGroup',
-                    del_group:'/admin/rbacc/delGroup',
+                    del_organize:'/admin/rbacc/delOrganize',
+                    add_organize:'/admin/rbacc/addOrganize',
+                    edit_organize:'/admin/rbacc/editOrganize',
+                    list_organize:'/admin/rbacc/listOrganize',
+                    del_organize:'/admin/rbacc/delOrganize',
                 },  
             },
             //用户列表入口函数--------------------------------------------/
@@ -148,14 +152,14 @@ define(['jquery', 'main'], function ($, undefined) {
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
                           form.on('submit(editrole)', function(data){
-                                Main.api.form(_self.config.options.edit_role+'/ids/'+data.field.r_id,data.field);
+                                Main.api.form(_self.config.options.edit_role,data.field);
                                 return false;
                           });
   
                     });        
             },
-                /**************************************
-            角色列表页面入口js函数--------------------------------------------------------------------------------------------------------
+            /**************************************
+            权限分组页面入口js函数--------------------------------------------------------------------------------------------------------
             ********************************************/
             listgroup:function(){
                 var _this=this;
@@ -199,7 +203,7 @@ define(['jquery', 'main'], function ($, undefined) {
                     });
                 });
             },
-            //增加角色入口函数
+            //增加权限分组入口函数
             addgroup:function(){
                     var _self=this;
                     layui.config({
@@ -216,7 +220,7 @@ define(['jquery', 'main'], function ($, undefined) {
   
                     });        
             },
-            //编辑角色入口函数
+            //编辑权限分组入口函数
             editgroup:function(){
                 var _self=this;
                 layui.config({
@@ -226,14 +230,97 @@ define(['jquery', 'main'], function ($, undefined) {
                     })
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
-                          form.on('submit(editrole)', function(data){
-                                Main.api.form(_self.config.options.edit_role+'/ids/'+data.field.r_id,data.field);
+                          form.on('submit(editgroup)', function(data){
+                                Main.api.form(_self.config.options.edit_group,data.field);
                                 return false;
                           });
   
                     });        
             },
-            //菜单栏事件函数公共函数部分----------------------------------------------------------------------------------/
+              /**************************************
+            部门组织页面入口js函数--------------------------------------------------------------------------------------------------------
+            ********************************************/
+            listorganize:function(){
+                var _this=this;
+                this.events._self=this;
+                this.config.colum={
+                        elem: '#tables'
+                        ,url:''
+                        ,cols: [[
+                            {field:'o_id', title: 'ID'}
+                            ,{field:'o_pid', title: 'PID'}
+                            ,{field:'o_name', title: '组名'}
+                            ,{field:'o_remark', title: '组描述'}
+                            ,{field:'o_status', title: '状态',templet: '#sexTpl'}
+                            ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
+                        ]]
+                        ,method:'POST'
+                        ,id: 'organize'/*URL 路径前置标识符*/
+                        ,page: false
+                        ,limit: 20
+                        ,height: 'full-20'
+                        ,even: true //开启隔行背景
+                        ,response: {
+                           statusName: 'code' //数据状态的字段名称，默认：code
+                          ,statusCode: 1 //成功的状态码，默认：0
+                          ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                          ,countName: 'count' //数据总数的字段名称，默认：count
+                          ,dataName: 'data' //数据列表的字段名称，默认：data
+                        } 
+                        ,done:function(res, curr, count){
+
+                        },
+                        key:'o_id'/*当前列表数据的主键*/
+                };
+                this.config.colum.url=_this.config.options.list_organize;
+                config=$.extend(true,Main.api.events,_this.events.operate);
+                Main.api.table(this.config,function(config){
+                    _this.events.toolsmenu({
+                            add:{
+                                    'url':_this.config.options.add_organize,
+                                    "title":'添加部门'
+                            }
+                    });
+                });
+            },
+            //增加部门组织入口函数
+            addorganize:function(){
+                    var _self=this;
+                    layui.config({
+                        //加载layui 相关的类库文件路径和随机参数
+                        version:Math.random(),
+                        dir:'/static/libs/layui/',
+                    })
+                    layui.use(['element','form'], function(){
+                          var form = layui.form,element=layui.element;
+                          form.on('submit(addgroup)', function(data){
+                                Main.api.form(_self.config.options.add_group,data.field);
+                                return false;
+                          });
+  
+                    });        
+            },
+            //编辑部门组织入口函数
+            editorganize:function(){
+                var _self=this;
+                layui.config({
+                        //加载layui 相关的类库文件路径和随机参数
+                        version:Math.random(),
+                        dir:'/static/libs/layui/',
+                    })
+                    layui.use(['element','form'], function(){
+                          var form = layui.form,element=layui.element;
+                          form.on('submit(editgroup)', function(data){
+                                Main.api.form(_self.config.options.edit_group,data.field);
+                                return false;
+                          });
+  
+                    });        
+            },
+            /************************************
+            @菜单栏事件函数公共函数部分
+            ***********************************
+            */
             events: {
                 _self:null,
                 toolsmenu:function(options){//绑定导航栏的事件函数 如  新增、删除、导入、导出 等功能模块
@@ -263,7 +350,7 @@ define(['jquery', 'main'], function ($, undefined) {
 
                         },
                         edit:function(config,data,obj){
-                           Main.api.open(config.options['edit_'+config.colum.id]+'/ids/'+data[config.colum.key],'编辑',{},function(){
+                           Main.api.open(config.options['edit_'+config.colum.id]+'/'+config.colum.key+'/'+data[config.colum.key],'编辑',{},function(){
                             },function(formobj){
                             });
                         },

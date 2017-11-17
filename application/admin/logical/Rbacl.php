@@ -3,7 +3,7 @@ namespace app\admin\logical;
 use think\Request;
 use app\common\controller\Backend;
 use app\admin\validate\rbac\RbacValidate;
-
+use erp\Tree;
 class Rbacl extends Backend
 {
     public function _initialize()
@@ -83,6 +83,23 @@ class Rbacl extends Backend
         $result= $this->commonHandle($organize);
     }
 
+    /**
+     * 组织列表
+     * @param $organize
+     */
+    public function showOrganizeTree($organize = [])
+    {
+        $objlist = [];
+        /*获取全部列表数据,依据上下级关系进行排序展示json数据列表  
+        */
+        $childrenlist = Tree::instance()->init($organize['data'],'o_pid','o_id')->getChildren(1, TRUE);
+        //获取树状数组数据列表
+        $obj = Tree::instance()->init($childrenlist,'o_pid','o_id')->getTreeArray(0);
+        $objlist = array_merge($objlist, Tree::instance()->getTreeList($obj,'o_name'));
+        $organize['data']=$objlist;
+        $organize['count']=count($organize['data']);
+        $result= $this->commonHandle($organize);
+    }
     /**
      * @param $data
      *          $data['type']   add--添加 ，  edit---编辑

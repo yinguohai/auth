@@ -62,4 +62,22 @@ class BasicModel extends \think\Model
             return false;
         return true;
     }
+
+    /**
+     * @param  获取所有的表数据
+     * @param null|string $table  表对象
+     * @param $field  所需查找的字段
+     * @param $condition 附加条件  , 【 where  , order ,limit , group 】
+     * @param $limit 每页显示条数 默认显示10条
+     * @param $page 显示第几页  默认显示第一页
+     */
+    public function getAllInfo($table,$condition=[]){
+        $table->field("*");
+        if(!empty($condition)){
+            if(required_attr($condition,'where'))
+            $table->where($condition['where']);
+        }
+        $result['data']=Collection( $table->select())->toArray();
+        return $result;
+    }
 }
