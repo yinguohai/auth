@@ -138,3 +138,18 @@ function putlog($msg='')
     $content=date('Y-m-d H:i:s',time())."\t".$executor."\t".$msg."\t".$info.PHP_EOL;
     file_put_contents(LOG_PATH,$content);
 }
+
+/**
+ * 过滤数组$arr中前缀非$pre 的元素
+ * @param array $arr
+ * @param string $pre
+ */
+function modelfiler($arr=[],$pre=''){
+    if(empty($arr) or empty($pre)) return false;
+    foreach($arr as $k => $v){
+        if(substr($k,0,strlen($pre),$pre)===0)
+            continue;
+        unset($arr[$k]);
+    }
+    return $arr;
+}

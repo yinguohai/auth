@@ -14,11 +14,11 @@ class Rbacl extends Backend
     /**
      * @param array $info 显示信息
      */
-    private function commonHandle($info = [])
+    private function commonHandle($info = [],$msg='')
     {
         if (empty($info['count']) or empty($info['data']))
-            outputJson(-2, '失败');
-        outputJson(1, '成功', $info['count'], $info['data']);
+            outputJson(-2, empty($msg)?'失败':$msg);
+        outputJson(1, empty($msg)?'失败':$msg, $info['count'], $info['data']);
     }
 
     /**
@@ -34,9 +34,24 @@ class Rbacl extends Backend
      * 添加用户
      * @param $userInfo，用户信息
      */
-    public function addUser()
+    public function userHandle()
     {
-
+        $data=$this->request->request();
+        $roleValidate = new RbacValidate();
+        //如果type不正确，则直接返回错误结果
+        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
+        }elseif(!($roleValidate->scene('User')->check($data))){
+            $this->commonHandle([],$roleValidate->getError());
+        }
+        //模拟数据
+        if ($data['type'] == 'add') {
+            $data['u_addtime'] = time();
+        } else {
+            //更新，则需要带上条件
+            $data['u_updatetime'] = time();
+        }
+        return $data;
     }
 
     /**
@@ -54,14 +69,16 @@ class Rbacl extends Backend
      *      2.修改角色
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
      */
-    public function RoleHandle()
+    public function roleHandle()
     {
         $data=$this->request->request();
         $roleValidate = new RbacValidate();
         //如果type不正确，则直接返回错误结果
-        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit']))
+        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
-        if($data['type']=='add' && !$roleValidate->scene('Group')->check($data)){}
+        }elseif(!$roleValidate->scene('Group')->check($data)){
+            $this->commonHandle([],$roleValidate->getError());
+        }
         //模拟数据
         if ($data['type'] == 'add') {
             $data['r_addtime'] = time();
@@ -129,7 +146,7 @@ class Rbacl extends Backend
         }
         //如果type不正确，则直接返回错误结果
         if (!$roleValidate->scene('Organize')->check($data))
-            $this->commonHandle();
+            $this->commonHandle([],$roleValidate->getError());
         return $data;
     }
     /**
@@ -149,8 +166,10 @@ class Rbacl extends Backend
 
         $roleValidate = new RbacValidate();
            //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Group')->check($data)){
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
+        }elseif(!$roleValidate->scene('Group')->check($data)){
+            $this->commonHandle($roleValidate->getError());
         }
         if ($data['type'] == 'add'){
             $data['g_addtime'] = time();
@@ -180,8 +199,10 @@ class Rbacl extends Backend
         $data=$this->request->request();
         $roleValidate = new RbacValidate();
         //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Access')->check($data)){
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
+        }elseif(!$roleValidate->scene('Access')->check($data)){
+            $this->commonHandle($roleValidate->getError());
         }
         if ($data['type'] == 'add'){
             $data['a_addtime'] = time();
@@ -221,6 +242,44 @@ class Rbacl extends Backend
      *          a_id: 权限id
      */
     public function userAccessHandle(){
+        $data=$this->request->request();
+        //如果type不正确，则直接返回错误结果
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
+        }
+        return $data;
+    }
+
+    /**
+     * 用户-角色关联处理
+     * @return mixed
+     */
+    public function userRoleHandle(){
+        $data=$this->request->request();
+        //如果type不正确，则直接返回错误结果
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
+        }
+        return $data;
+    }
+
+    /**
+     * 用户-组关联关系处理
+     * @return mixed
+     */
+    public function userGroupHandle(){
+        $data=$this->request->request();
+        //如果type不正确，则直接返回错误结果
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
+        }
+        return $data;
+    }
+
+    /**
+     * 用户-组织关系处理
+     */
+    public function userOrganizeHandle(){
         $data=$this->request->request();
         //如果type不正确，则直接返回错误结果
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){

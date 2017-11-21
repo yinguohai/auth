@@ -6,6 +6,7 @@ use app\admin\logical\Rbacl;
 use app\admin\model\rbac\User;
 use app\admin\model\rbac\Role;
 use think\exception\ErrorException;
+use think\Db;
 use erp\Tree;
 class Rbacc extends Backend
 {
@@ -13,6 +14,14 @@ class Rbacc extends Backend
     private static $rbaclInstance='';
     //用户实例
     private static $userInstance='';
+    //用户权限实例
+    private static $userAccessInstance;
+    //用户角色实例
+    private static $userRoleInstance;
+    //用户-组实例
+    private static $userGroupInstance;
+    //用户-组织实例
+    private static $userOrganizeInstance;
     //角色实例
     private static $roleInstance='';
     //组实例
@@ -25,8 +34,8 @@ class Rbacc extends Backend
     private static $accessInstance;
     //权限角色实例
     private static $roleAccessInstance;
-    //用户权限实例
-    private static $userAccessInstance;
+
+
     //model路径
     private static $modelpath='app\admin\model\rbac\\';
    public function _initialize()
@@ -70,18 +79,29 @@ class Rbacc extends Backend
     /**
      * @param $modelname    模型名称
      * @param string $msg   附加信息
+     * @param boolean $type 是否返回值，默认否false ---直接exit , true----return true
+     * @param array $attach 附加额外数据
      */
-    private function saveCommon($modelname='',$msg=''){
+    private function saveCommon($modelname='',$msg='',$type=false,$attach=[]){
         // 获取操作方法
         $method=lcfirst($modelname).'Handle';
         //获取保存数据方法
         $save='save'.$modelname;
-        $commonData=self::getRbacl()->$method();
+
+        $commonData=array_merge(self::getRbacl()->$method(),$attach);
+
         $result=self::getModel($modelname)->$save($commonData);
-        if(empty($result))
-            outputJson('-2','保存失败');
-        putlog($msg.'保存成功');
-        outputJson('1','保存成功');
+        if($type){
+            if(empty($result))
+                return false;
+            putlog($msg.'保存成功');
+            return $result;
+        }else{
+            if(empty($result))
+                outputJson('-2','保存失败');
+            putlog($msg.'保存成功');
+            outputJson('1','保存成功');
+        }
     }
 
     /**
@@ -104,13 +124,63 @@ class Rbacc extends Backend
      */
     public function addUser(){
           if ($this->request->isPost()){
+              $flag=true;
+              Db::startTrans();
+              try {
+                  $userId = $this->saveCommon('User','添加用户',true);
+                  //删除用户与角色之间已存在的映射关系
+                  $flag = $this->saveCommon('UserRole','添加用户-角色映射关系',true,['u_id'=>$userId]) && $flag;
 
+                  $flag = $this->saveCommon('UserGroup','添加用户-组映射关系' , true ,['u_id'=>$userId]) && $flag;
+
+                  $flag = $this->saveCommon('UserOrganize','添加用户-组织映射关系',true ,['u_id'=>$userId]) && $flag;
+              } catch (\Exception $e) {
+                  Db::rollback();
+                 return  $e->getMessage();
+              }catch(\Error $e){
+                  // 回滚事务
+                  Db::rollback();
+               return   $e->getMessage();
+              }
+              if($flag){
+                  //提交事件
+                  Db::commit();
+              }else{
+                  Db::rollback();
+              }
+             return true;
           }
           return $this->view->fetch();
     }
+    //编辑用户
     public function editUser(){
-
+        $flag=true;
+        Db::startTrans();
+        try {
+            $userId = $this->saveCommon('User','编辑用户',true);
+            //删除用户与角色之间已存在的映射关系
+            $flag = $this->getModel('UserRole')->deleteInfo(['u_id'=>$userId]);
+            $flag = $this->saveCommon('UserRole','添加用户-角色映射关系',true,['u_id'=>$userId]) && $flag;
+            $flag = $this->getModel('UserGroup')->deleteInfo(['u_id'=>$userId]) && $flag;
+            $flag = $this->saveCommon('UserGroup','添加用户-组映射关系' , true ,['u_id'=>$userId]) && $flag;
+            $flag = $this->getModel('UserOrganize')->deleteInfo(['u_id'=>$userId]) && $flag;
+            $flag = $this->saveCommon('UserOrganize','添加用户-组织映射关系',true ,['u_id'=>$userId]) && $flag;
+        } catch (\Exception $e) {
+            Db::rollback();
+            return  $e->getMessage();
+        }catch(\Error $e){
+            // 回滚事务
+            Db::rollback();
+            return    $e->getMessage();
+        }
+         if($flag){
+             //提交事件
+             Db::commit();
+         }else{
+             Db::rollback();
+         }
     }
+
     /**
      * @角色部分代码
      ***********
@@ -254,9 +324,9 @@ class Rbacc extends Backend
               outputJson('-2','No Results were found');
           }
           $this->view->assign("row", $rows['data'][0]);
-//          if($this->request->isAjax()){
+          if($this->request->isAjax()){
               $this->saveGroup();
-//          }
+          }
           return $this->view->fetch();
     }
     /**
@@ -330,4 +400,10 @@ class Rbacc extends Backend
         $this->saveCommon('UserAccess','个人特殊权限分配');
     }
 
+    /**
+     * 用户角色权限保存
+     */
+    public function userRoleSave(){
+        $this->saveCommon('UserRole','用户角色权限分配');
+    }
 }

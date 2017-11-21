@@ -55,12 +55,16 @@ class BasicModel extends \think\Model
             }else{
                 $result=$table->save($data,$where);
             }
-        }catch(ErrorException $e){
+        }catch(\Exception $e){
+            return false;
+        }catch(\Error $e){
             return false;
         }
         if(empty($result))
             return false;
-        return true;
+        $lastId=$table->getLastInsId();
+        //获取自增属性ID值或者更新的结果值
+        return empty($lastId)?$result:$lastId;
     }
 
     /**
@@ -79,5 +83,17 @@ class BasicModel extends \think\Model
         }
         $result['data']=Collection( $table->select())->toArray();
         return $result;
+    }
+
+    /**
+     * 删除指定数据
+     * @param $table
+     * @param $condition
+     */
+    public function deleteInfo($table,$condition=[]){
+        if(empty($condition))
+            return false;
+        return $table->where($condition)->delete();
+
     }
 }
