@@ -37,7 +37,6 @@ class BasicModel extends \think\Model
         }
         //计算总条数
         $table->limit(($page-1)* $limit , $page*$limit );
-
         $result['data']=Collection( $table->select())->toArray();
         return $result;
     }

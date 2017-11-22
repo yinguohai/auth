@@ -16,12 +16,6 @@ class Rbacc extends Backend
     private static $userInstance='';
     //用户权限实例
     private static $userAccessInstance;
-    //用户角色实例
-    private static $userRoleInstance;
-    //用户-组实例
-    private static $userGroupInstance;
-    //用户-组织实例
-    private static $userOrganizeInstance;
     //角色实例
     private static $roleInstance='';
     //组实例
@@ -34,8 +28,6 @@ class Rbacc extends Backend
     private static $accessInstance;
     //权限角色实例
     private static $roleAccessInstance;
-
-
     //model路径
     private static $modelpath='app\admin\model\rbac\\';
    public function _initialize()
@@ -110,9 +102,11 @@ class Rbacc extends Backend
     public function listUser()
     {
         //搜索条件参数
-        $condition['where'] = empty($this->request->request('keys/a','',self::$filterArray))?array():$this->request->request('keys/a','',self::$filterArray);
+        $condition=$this->getRbacl()->getCondition('keys/a',true);
         //获取用户信息
-        $result=self::getModel('User')->listUser($condition,$this->request->request("limit", '',self::$filterArray),$this->request->request("page", '',self::$filterArray));
+        $limit=$this->request->request("limit", 10);
+        $page=$this->request->request("page", 1);
+        $result=self::getModel('User')->listUser($condition,$limit,$page);
         //处理用户信息
         self::getRbacl()->showUser($result);
     }
@@ -123,62 +117,19 @@ class Rbacc extends Backend
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加用户  ；  type=='edit'-----修改用户
      */
     public function addUser(){
-          if ($this->request->isPost()){
-              $flag=true;
-              Db::startTrans();
-              try {
-                  $userId = $this->saveCommon('User','添加用户',true);
-                  //删除用户与角色之间已存在的映射关系
-                  $flag = $this->saveCommon('UserRole','添加用户-角色映射关系',true,['u_id'=>$userId]) && $flag;
-
-                  $flag = $this->saveCommon('UserGroup','添加用户-组映射关系' , true ,['u_id'=>$userId]) && $flag;
-
-                  $flag = $this->saveCommon('UserOrganize','添加用户-组织映射关系',true ,['u_id'=>$userId]) && $flag;
-              } catch (\Exception $e) {
-                  Db::rollback();
-                 return  $e->getMessage();
-              }catch(\Error $e){
-                  // 回滚事务
-                  Db::rollback();
-               return   $e->getMessage();
-              }
-              if($flag){
-                  //提交事件
-                  Db::commit();
-              }else{
-                  Db::rollback();
-              }
-             return true;
-          }
-          return $this->view->fetch();
+        if($this->request->isPost()){
+            $this->saveCommon('User','添加用户');
+        }
+        return $this->view->fetch();
     }
     //编辑用户
     public function editUser(){
-        $flag=true;
-        Db::startTrans();
-        try {
-            $userId = $this->saveCommon('User','编辑用户',true);
-            //删除用户与角色之间已存在的映射关系
-            $flag = $this->getModel('UserRole')->deleteInfo(['u_id'=>$userId]);
-            $flag = $this->saveCommon('UserRole','添加用户-角色映射关系',true,['u_id'=>$userId]) && $flag;
-            $flag = $this->getModel('UserGroup')->deleteInfo(['u_id'=>$userId]) && $flag;
-            $flag = $this->saveCommon('UserGroup','添加用户-组映射关系' , true ,['u_id'=>$userId]) && $flag;
-            $flag = $this->getModel('UserOrganize')->deleteInfo(['u_id'=>$userId]) && $flag;
-            $flag = $this->saveCommon('UserOrganize','添加用户-组织映射关系',true ,['u_id'=>$userId]) && $flag;
-        } catch (\Exception $e) {
-            Db::rollback();
-            return  $e->getMessage();
-        }catch(\Error $e){
-            // 回滚事务
-            Db::rollback();
-            return    $e->getMessage();
+        if($this->request->isPost()){
+            $this->saveCommon('User','编辑用户');
         }
-         if($flag){
-             //提交事件
-             Db::commit();
-         }else{
-             Db::rollback();
-         }
+        //加载用户信息
+        $data = $this->getModel('User')->listUser();
+        return $this->view->fetch();
     }
 
     /**
@@ -188,9 +139,12 @@ class Rbacc extends Backend
     public function listRole(){
         if ($this->request->isPost()){
             //搜索条件参数
-            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
+
+            $condition = $this->getRbacl()->getCondition('keys/a',true);
             //获取用户信息
-            $result=self::getModel('Role')->listRole($condition,$this->request->request("limit", ''),$this->request->request("page", ''));
+            $limit=$this->request->request("limit", '');
+            $page=$this->request->request("page", '');
+            $result=self::getModel('Role')->listRole($condition,$limit,$page);
             //处理用户信息
             self::getRbacl()->showRole($result);
         }
@@ -201,7 +155,7 @@ class Rbacc extends Backend
     *************/
     public function addRole(){
           if ($this->request->isPost()){
-              $this->saveRole();
+              $this->saveCommon('Role','添加角色');
           }
           return $this->view->fetch();
     }
@@ -209,35 +163,24 @@ class Rbacc extends Backend
     @编辑角色接口
     *****************/
     public function editRole(){
-          $ids=$this->request->request('r_id','');
-          if(empty($ids))
-              outputJson('-2','No Results were found');
-          $condition['where']=array('r_id'=>$ids);
-          $rows=self::getModel('Role')->listRole($condition);
-          if(!$rows['data']){
-              outputJson('-2','No Results were found');
-          }
-          $this->view->assign("row", $rows['data'][0]);
-          if($this->request->isAjax()){
-              $this->saveRole();
-          }
-          return $this->view->fetch();
+        if($this->request->isAjax())
+            $this->saveCommon('Role','编辑角色');
+
+        $condition= $this->getRbacl()->getCondition('r_id');
+        $rows=self::getModel('Role')->listRole($condition);
+        if(!$rows['data']){
+            outputJson('-2','No Results were found');
+        }
+        $this->view->assign("row", $rows['data'][0]);
+        return $this->view->fetch();
     }
-    /**
-     * 保存角色
-     *      1.添加角色
-     *      2.修改角色
-     * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
-     */
-    private function saveRole(){
-        $this->saveCommon('Role','角色');
-    }
+
     /*************
     @添加组织接口
      *************/
     public function addOrganize(){
         if ($this->request->isPost()){
-            $this->saveOrganize();
+            $this->saveCommon('Organize','添加组织');
         }
         return $this->view->fetch();
     }
@@ -245,18 +188,17 @@ class Rbacc extends Backend
     @ 编辑角色接口
      *****************/
     public function editOrganize(){
-        $ids=$this->request->request('o_id','');
-        if(empty($ids))
-            outputJson('-2','No Results were found');
-        $condition['where']=array('o_id'=>$ids);
+        if($this->request->isAjax()){
+            $this->saveCommon('Organize','编辑组织');
+        }
+
+        $condition = $this->getRbacl()->getCondition('o_id');
+
         $rows=self::getModel('Organize')->listOrganize($condition);
         if(!$rows['data']){
             outputJson('-2','No Results were found');
         }
         $this->view->assign("row", $rows['data'][0]);
-        if($this->request->isAjax()){
-            $this->saveOrganize();
-        }
         return $this->view->fetch();
     }
     /**
@@ -265,8 +207,8 @@ class Rbacc extends Backend
     public function listOrganize(){
         if ($this->request->isPost()){
             //搜索条件参数
-            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
-            $condition['where']['o_status']=1;
+
+            $condition=$this->getRbacl()->getCondition('keys/a',true);
             //获取所有的组织部门全部数据
             $result=self::getModel('Organize')->getallOrganize($condition);
             //处理用户信息
@@ -274,15 +216,7 @@ class Rbacc extends Backend
         }
         return $this->view->fetch();
     }
-    /**
-     * 保存组织
-     *      1.添加组织
-     *      2.修改组织
-     * 注意： 判断依据，提交过来的type决定，type=='add'----添加组织  ；  type=='edit'-----修改组织
-     */
-    public function saveOrganize(){
-        $this->saveCommon('Organize','组织');
-    }
+
     /**
      * @组列表*********************************
      @权限分组 部分代码
@@ -290,7 +224,7 @@ class Rbacc extends Backend
     public function listGroup(){
       if ($this->request->isPost()){  
             //搜索条件参数
-            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
+            $condition=$this->getRbacl()->getCondition('keys/a',true);
             //分页信息
             $limit=$this->request->request("limit", '10');
             $page=$this->request->request("page", '1');
@@ -307,7 +241,7 @@ class Rbacc extends Backend
     *************/
     public function addGroup(){
           if($this->request->isPost()){
-              $this->saveGroup();
+              $this->saveGroup();$this->saveCommon('Group','保存用户组');
           }
           return $this->view->fetch();
     }
@@ -315,25 +249,17 @@ class Rbacc extends Backend
       @ 编辑权限分组接口
     *****************/
     public function editGroup(){
-        $ids=$this->request->request('g_id','');
-        if(empty($ids))
+        $condition = $this->getRbacl()->getCondition('g_id');
+        $rows=self::getModel('Group')->listGroup($condition);
+
+        if(!$rows){
             outputJson('-2','No Results were found');
-          $condition['where']=array('g_id'=>$ids);
-          $rows=self::getModel('Group')->listGroup($condition);
-          if(!$rows){
-              outputJson('-2','No Results were found');
-          }
-          $this->view->assign("row", $rows['data'][0]);
-          if($this->request->isAjax()){
-              $this->saveGroup();
-          }
-          return $this->view->fetch();
-    }
-    /**
-     * 保存组
-     */
-    private function saveGroup(){
-        $this->saveCommon('Group','角色权限');
+        }
+        $this->view->assign("row", $rows['data'][0]);
+        if($this->request->isAjax()){
+            $this->saveCommon('Group','保存用户组');
+        }
+        return $this->view->fetch();
     }
     /**
      * @组列表*********************************
@@ -342,7 +268,8 @@ class Rbacc extends Backend
     public function listAccess(){
         if ($this->request->isPost()){
             //搜索条件参数
-            $condition['where'] = empty($this->request->request('keys/a'))?array():$this->request->request('keys/a');
+
+            $condition = $this->getRbacl()->getCondition('keys/a',true);
             //分页信息
             $limit=$this->request->request("limit", '10');
             $page=$this->request->request("page", '1');
@@ -359,7 +286,7 @@ class Rbacc extends Backend
      *************/
     public function addAccess(){
         if ($this->request->isPost()){
-            $this->saveAccess();
+            $this->saveCommon('Access','添加权限');
         }
         return $this->view->fetch();
     }
@@ -367,43 +294,35 @@ class Rbacc extends Backend
     @ 编辑权限分组接口
      *****************/
     public function editAccess(){
-        $ids=$this->request->request('a_id','');
-        if(empty($ids))
-            outputJson('-2','No Results were found');
-        $condition['where']=array('a_id'=>$ids);
+        if($this->request->isAjax()){
+            $this->saveCommon('Access','编辑权限');
+        }
+
+        $condition = $this->getRbacl()->getCondition('a_id');
         $rows=self::getModel('Access')->listAccess($condition);
         if(!$rows){
             outputJson('-2','No Results were found');
         }
         $this->view->assign("row", $rows['data'][0]);
-        if($this->request->isAjax()){
-            $this->saveAccess();
-        }
         return $this->view->fetch();
-    }
-    /**
-     * 保存权限
-     */
-    private function saveAccess(){
-        $this->saveCommon('Access','权限');
     }
     /**
      * 角色权限分配
      */
     public function roleAccessSave(){
-        $this->saveCommon('RoleAccess','角色权限');
-    }
-    /**
-     * 个人特色权限分配
-     */
-    public function userAccessSave(){
-        $this->saveCommon('UserAccess','个人特殊权限分配');
+        //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
+        $this->saveCommon('RoleAccess','角色权限',true);
     }
 
     /**
-     * 用户角色权限保存
+     * 获取用户权限
      */
-    public function userRoleSave(){
-        $this->saveCommon('UserRole','用户角色权限分配');
+    public function getAccess(){
+        //角色权限
+
+        //组权限
+
+        //个人权限
+
     }
 }

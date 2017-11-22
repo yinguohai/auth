@@ -18,7 +18,7 @@ class Rbacl extends Backend
     {
         if (empty($info['count']) or empty($info['data']))
             outputJson(-2, empty($msg)?'失败':$msg);
-        outputJson(1, empty($msg)?'失败':$msg, $info['count'], $info['data']);
+        outputJson(1, empty($msg)?'成功':$msg, $info['count'], $info['data']);
     }
 
     /**
@@ -88,7 +88,6 @@ class Rbacl extends Backend
         }
         return $data;
     }
-
     /**
      * 组织列表
      * @param $organize
@@ -218,20 +217,33 @@ class Rbacl extends Backend
      * 必要参数：
      *          type: 处理类型
      *          r_id: 角色id
-     *          a_id: 权限id
+     *          a_ids: 权限id , 多个权限id之间用逗号隔开
+     * @return $data  , 返回一个二维数组，arvalues----拼接好的数据 ，  type ----操作类型  ， r_id----角色id
      */
     public function roleAccessHandle(){
         $data=$this->request->request();
+        $tmp_ids=[];
         //如果type不正确，则直接返回错误结果
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
-        if ($data['type'] == 'add'){
-            $data['g_addtime'] = time();
-        } else {
-            //更新，则需要带上条件
-            $data['g_updatetime'] = time();
+        if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
+            $tmp_ids=explode(',',$data['a_ids']);
+        //拼接，组装  ‘角色-权限’对应关系映射
+        if(!empty($tmp_ids)){
+            foreach($tmp_ids as $v){
+                $data['arvalues'][]=[
+                    'r_id'=>$data['r_id'],
+                    'a_id'=>$v
+                ];
+            }
+        }else{
+            $data['arvalues'][]=[
+                'r_id'=>$data['r_id'],
+                'a_id'=>''
+            ];
         }
+
         return $data;
     }
     /**
@@ -251,40 +263,19 @@ class Rbacl extends Backend
     }
 
     /**
-     * 用户-角色关联处理
-     * @return mixed
+     * 条件判断获取
+     * @param $index  获取自定下标的值
+     * @param $flag  true ---获取的值本身就是一组条件，无需再根据$index来组装条件 , 默认false
      */
-    public function userRoleHandle(){
-        $data=$this->request->request();
-        //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
-            $this->commonHandle();
+    public function getCondition($index='',$flag = false){
+        if($flag){
+            $condition['where']=$this->request->request($index,[]);
+        }else{
+            $filter_index=$this->request->request($index,'');
+            if(empty($filter_index))
+                outputJson('-2','No Results were found');
+            $condition['where']=array($index=>$filter_index);
         }
-        return $data;
-    }
-
-    /**
-     * 用户-组关联关系处理
-     * @return mixed
-     */
-    public function userGroupHandle(){
-        $data=$this->request->request();
-        //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
-            $this->commonHandle();
-        }
-        return $data;
-    }
-
-    /**
-     * 用户-组织关系处理
-     */
-    public function userOrganizeHandle(){
-        $data=$this->request->request();
-        //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
-            $this->commonHandle();
-        }
-        return $data;
+        return $condition;
     }
 }

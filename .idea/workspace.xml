@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="35ef43fa-013e-481a-b0a9-61e6702c19f7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/model/rbac/UserGroup.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/model/rbac/UserRole.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/application/admin/model/rbac/UserGroup.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/application/admin/model/rbac/UserRole.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Rbacc.php" afterPath="$PROJECT_DIR$/application/admin/controller/Rbacc.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/logical/Rbacl.php" afterPath="$PROJECT_DIR$/application/admin/logical/Rbacl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/model/rbac/User.php" afterPath="$PROJECT_DIR$/application/admin/model/rbac/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/validate/rbac/RbacValidate.php" afterPath="$PROJECT_DIR$/application/admin/validate/rbac/RbacValidate.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/common.php" afterPath="$PROJECT_DIR$/application/common.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" afterPath="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/common/model/BasicModel.php" afterPath="$PROJECT_DIR$/application/common/model/BasicModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/config.php" afterPath="$PROJECT_DIR$/application/config.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,8 +45,8 @@
       <file leaf-file-name="Rbacc.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/admin/controller/Rbacc.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10">
-              <caret line="181" column="5" lean-forward="true" selection-start-line="181" selection-start-column="5" selection-end-line="181" selection-end-column="5" />
+            <state relative-caret-position="178">
+              <caret line="319" column="32" lean-forward="true" selection-start-line="319" selection-start-column="32" selection-end-line="319" selection-end-column="32" />
               <folding>
                 <element signature="e#38#72#0#PHP" expanded="true" />
               </folding>
@@ -55,91 +54,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/thinkphp/library/think/App.php">
+      <file leaf-file-name="Group.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Group.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="146" column="0" lean-forward="false" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Backend.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/common/controller/Backend.php">
+      <file leaf-file-name="RoleAccess.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserRole.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserRole.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="3" column="30" lean-forward="false" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserGroup.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserGroup.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
-              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserOrganize.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="30" column="44" lean-forward="true" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="29" column="36" lean-forward="true" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BasicModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/common/model/BasicModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="92" column="53" lean-forward="true" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rbacl.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/logical/Rbacl.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/common.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-728">
-              <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+            <state relative-caret-position="145">
+              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -165,7 +94,6 @@
       <find>script</find>
       <find>script.html</find>
       <find>saveOrganize</find>
-      <find>saveCommon</find>
       <find>editRole</find>
       <find>ids</find>
       <find>$ids</find>
@@ -175,6 +103,8 @@
       <find>Db::</find>
       <find>Handle</find>
       <find>user</find>
+      <find>saveCommon</find>
+      <find>parse_str</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -214,7 +144,6 @@
         <option value="$PROJECT_DIR$/application/validate/rbac/RbacValidate.php" />
         <option value="$PROJECT_DIR$/application/database.php" />
         <option value="$PROJECT_DIR$/application/admin/view/rbacc/aa.html" />
-        <option value="$PROJECT_DIR$/application/config.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Group.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Organize.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Role.php" />
@@ -222,17 +151,18 @@
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Rule.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/Access.php" />
         <option value="$PROJECT_DIR$/thinkphp/library/think/Error.php" />
-        <option value="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" />
         <option value="$PROJECT_DIR$/application/common/controller/Backend.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0ac61dbd-e113-4042-80b5-396dc728c477/console.sql" />
         <option value="$PROJECT_DIR$/application/common.php" />
         <option value="$PROJECT_DIR$/application/admin/validate/rbac/RbacValidate.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/UserGroup.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php" />
-        <option value="$PROJECT_DIR$/application/admin/logical/Rbacl.php" />
-        <option value="$PROJECT_DIR$/application/common/model/BasicModel.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/UserRole.php" />
         <option value="$PROJECT_DIR$/application/admin/model/rbac/User.php" />
+        <option value="$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php" />
+        <option value="$PROJECT_DIR$/application/config.php" />
+        <option value="$PROJECT_DIR$/application/admin/logical/Rbacl.php" />
+        <option value="$PROJECT_DIR$/application/common/model/BasicModel.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/Rbacc.php" />
       </list>
     </option>
@@ -283,83 +213,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Changed Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-              <item name="admin" type="cbb8eebc:String" user="admin" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-              <item name="admin" type="cbb8eebc:String" user="admin" />
-              <item name="model" type="cbb8eebc:String" user="model" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-              <item name="admin" type="cbb8eebc:String" user="admin" />
-              <item name="model" type="cbb8eebc:String" user="model" />
-              <item name="rbac" type="cbb8eebc:String" user="rbac" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="extend" type="cbb8eebc:String" user="extend" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Default">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="application" type="cbb8eebc:String" user="application" />
-              <item name="admin" type="cbb8eebc:String" user="admin" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -441,6 +294,90 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Changed Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+              <item name="admin" type="cbb8eebc:String" user="admin" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+              <item name="admin" type="cbb8eebc:String" user="admin" />
+              <item name="controller" type="cbb8eebc:String" user="controller" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+              <item name="admin" type="cbb8eebc:String" user="admin" />
+              <item name="model" type="cbb8eebc:String" user="model" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+              <item name="admin" type="cbb8eebc:String" user="admin" />
+              <item name="model" type="cbb8eebc:String" user="model" />
+              <item name="rbac" type="cbb8eebc:String" user="rbac" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="public" type="cbb8eebc:String" user="public" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Default">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erp" type="cbb8eebc:String" user="erp" />
+              <item name="application" type="cbb8eebc:String" user="application" />
+              <item name="admin" type="cbb8eebc:String" user="admin" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -509,12 +446,14 @@
       <workItem from="1510814860237" duration="37000" />
       <workItem from="1510814962921" duration="11844000" />
       <workItem from="1511164228760" duration="7724000" />
-      <workItem from="1511235192818" duration="18258000" />
+      <workItem from="1511235192818" duration="18374000" />
+      <workItem from="1511313753727" duration="8890000" />
+      <workItem from="1511339985401" duration="8481000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188643000" />
+    <option name="totallyTimeSpent" value="206130000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -530,7 +469,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.123667374" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="696" y="171" width="292" height="525" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21215352" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="696" y="171" width="292" height="525" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3630435" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -559,20 +498,20 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3630435" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11304348" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11304348" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36354166" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24147122" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="696" y="171" width="292" height="525" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21002132" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="696" y="171" width="292" height="525" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25833333" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4054348" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -611,15 +550,20 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php</url>
-          <line>30</line>
-          <option name="timeStamp" value="79" />
+          <url>file://$PROJECT_DIR$/application/admin/controller/Rbacc.php</url>
+          <line>126</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/application/admin/logical/Rbacl.php</url>
+          <line>29</line>
+          <option name="timeStamp" value="84" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="80" />
+      <option name="time" value="86" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="index.php">
@@ -645,13 +589,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/view/rbacc/listuser.html" />
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="15" column="51" lean-forward="true" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/thinkphp/base.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-969">
@@ -732,14 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="232" column="26" lean-forward="true" selection-start-line="232" selection-start-column="26" selection-end-line="232" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/view/common/header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-174">
@@ -763,14 +692,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/access.log">
-      <provider selected="true" editor-type-id="LogFileEditorProvider">
-        <state relative-caret-position="29">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="29">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -785,22 +714,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1044">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Group.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-696">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1102">
-          <caret line="39" column="71" lean-forward="false" selection-start-line="39" selection-start-column="71" selection-end-line="39" selection-end-column="71" />
           <folding />
         </state>
       </provider>
@@ -883,7 +796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-24">
           <caret line="978" column="35" lean-forward="false" selection-start-line="978" selection-start-column="23" selection-end-line="978" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -891,7 +803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="113">
           <caret line="81" column="15" lean-forward="true" selection-start-line="81" selection-start-column="15" selection-end-line="81" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -907,86 +818,95 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
           <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserGroup.php" />
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php" />
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserRole.php" />
+    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/App.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="146" column="0" lean-forward="false" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="15" column="51" lean-forward="true" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/common.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-728">
+        <state relative-caret-position="439">
           <caret line="42" column="9" lean-forward="false" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="29" column="36" lean-forward="true" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/logical/Rbacl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/common/controller/Backend.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserGroup.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/App.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="146" column="0" lean-forward="false" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserOrganize.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="30" column="44" lean-forward="true" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/UserRole.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="3" column="30" lean-forward="false" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+        <state relative-caret-position="136">
+          <caret line="271" column="67" lean-forward="true" selection-start-line="271" selection-start-column="67" selection-end-line="271" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/common/model/BasicModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="92" column="53" lean-forward="true" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
+        <state relative-caret-position="406">
+          <caret line="35" column="47" lean-forward="true" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/common/controller/Backend.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="38" column="68" lean-forward="false" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="240" column="30" lean-forward="true" selection-start-line="240" selection-start-column="30" selection-end-line="240" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/RoleAccess.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/model/rbac/Group.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/controller/Rbacc.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10">
-          <caret line="181" column="5" lean-forward="true" selection-start-line="181" selection-start-column="5" selection-end-line="181" selection-end-column="5" />
+        <state relative-caret-position="178">
+          <caret line="319" column="32" lean-forward="true" selection-start-line="319" selection-start-column="32" selection-end-line="319" selection-end-column="32" />
           <folding>
             <element signature="e#38#72#0#PHP" expanded="true" />
           </folding>
