@@ -93,6 +93,5 @@ class BasicModel extends \think\Model
         if(empty($condition))
             return false;
         return $table->where($condition)->delete();
-
     }
 }

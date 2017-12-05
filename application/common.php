@@ -153,3 +153,21 @@ function modelfiler($arr=[],$pre=''){
     }
     return $arr;
 }
+
+/**
+ * 将数组中的元素值都转换为小写
+ * @param array $arr
+ * @return array 返回过滤了空的并且将元素值转换为小写的数组
+ */
+function lowFilterArray($arr=[]){
+    array_walk($arr,function(&$v,$k){
+        if(!empty($v))
+            $v=strtolower($v);
+    });
+    $result=array_filter($arr,function($v,$k){
+        if(empty($v))
+            return false;
+        return true;
+    },ARRAY_FILTER_USE_BOTH);
+    return $result;
+}

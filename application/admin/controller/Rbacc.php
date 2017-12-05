@@ -6,6 +6,7 @@ use app\admin\logical\Rbacl;
 use app\admin\model\rbac\User;
 use app\admin\model\rbac\Role;
 use think\exception\ErrorException;
+use \Memcached;
 use think\Db;
 use erp\Tree;
 class Rbacc extends Backend
@@ -44,12 +45,12 @@ class Rbacc extends Backend
     /**
      * 获取指定实例
      * @param $objstr
-     * @return mixed
+     * @return Object
      */
-   public function getModel($objstr=''){
-       if(empty($objstr))
+    public function getModel($objstr=''){
+        if(empty($objstr))
            return false;
-       $obj=lcfirst($objstr).'Instance';
+        $obj=lcfirst($objstr).'Instance';
         if(empty(self::$obj)){
             $tmpObj = new \ReflectionClass(self::$modelpath.ucfirst($objstr));
             self::$$obj=new $tmpObj->name();
@@ -69,10 +70,11 @@ class Rbacc extends Backend
    }
 
     /**
-     * @param $modelname    模型名称
+     * @param string $modelname1    模型名称
      * @param string $msg   附加信息
      * @param boolean $type 是否返回值，默认否false ---直接exit , true----return true
      * @param array $attach 附加额外数据
+     * @return array
      */
     private function saveCommon($modelname='',$msg='',$type=false,$attach=[]){
         // 获取操作方法
@@ -122,7 +124,7 @@ class Rbacc extends Backend
         }
         return $this->view->fetch();
     }
-    //编辑用户
+    //编辑用户，u_id必须存在
     public function editUser(){
         if($this->request->isPost()){
             $this->saveCommon('User','编辑用户');
@@ -207,7 +209,6 @@ class Rbacc extends Backend
     public function listOrganize(){
         if ($this->request->isPost()){
             //搜索条件参数
-
             $condition=$this->getRbacl()->getCondition('keys/a',true);
             //获取所有的组织部门全部数据
             $result=self::getModel('Organize')->getallOrganize($condition);
@@ -312,17 +313,5 @@ class Rbacc extends Backend
     public function roleAccessSave(){
         //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
         $this->saveCommon('RoleAccess','角色权限',true);
-    }
-
-    /**
-     * 获取用户权限
-     */
-    public function getAccess(){
-        //角色权限
-
-        //组权限
-
-        //个人权限
-
     }
 }
