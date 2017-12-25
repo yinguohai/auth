@@ -14,11 +14,11 @@ class Rbacl extends Backend
     /**
      * @param array $info 显示信息
      */
-    private function commonHandle($info = [])
+    private function commonHandle($info = [],$msg='')
     {
         if (empty($info['count']) or empty($info['data']))
-            outputJson(-2, '失败');
-        outputJson(1, '成功', $info['count'], $info['data']);
+            outputJson(-2, empty($msg)?'失败':$msg);
+        outputJson(1, empty($msg)?'成功':$msg, $info['count'], $info['data']);
     }
 
     /**
@@ -34,9 +34,28 @@ class Rbacl extends Backend
      * 添加用户
      * @param $userInfo，用户信息
      */
-    public function addUser()
+    public function userHandle()
     {
-
+        $data=$this->request->request();
+        $roleValidate = new RbacValidate();
+        //如果type不正确，则直接返回错误结果
+        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
+        }
+        //模拟数据
+        if ($data['type'] == 'add') {
+            if(!($roleValidate->scene('addUser')->check($data))){
+                $this->commonHandle([],$roleValidate->getError());
+            }
+            $data['u_addtime'] = time();
+        } else {
+            if(!($roleValidate->scene('editUser')->check($data))){
+                $this->commonHandle([],$roleValidate->getError());
+            }
+            //更新，则需要带上条件
+            $data['u_updatetime'] = time();
+        }
+        return $data;
     }
 
     /**
@@ -54,23 +73,29 @@ class Rbacl extends Backend
      *      2.修改角色
      * 注意： 判断依据，提交过来的type决定，type=='add'----添加角色  ；  type=='edit'-----修改角色
      */
-    public function RoleHandle()
+    public function roleHandle()
     {
         $data=$this->request->request();
         $roleValidate = new RbacValidate();
         //如果type不正确，则直接返回错误结果
-        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Role')->check($data))
+        if ( !isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
+        }
         //模拟数据
         if ($data['type'] == 'add') {
+            if(!$roleValidate->scene('addRole')->check($data)){
+                $this->commonHandle([],$roleValidate->getError());
+            }
             $data['r_addtime'] = time();
         } else {
+            if(!$roleValidate->scene('editRole')->check($data)){
+                $this->commonHandle([],$roleValidate->getError());
+            }
             //更新，则需要带上条件
             $data['r_updatetime'] = time();
         }
         return $data;
     }
-
     /**
      * 组织列表
      * @param $organize
@@ -105,29 +130,31 @@ class Rbacl extends Backend
      * 组织信息保存，方法同角色保存相同
      */
     public function organizeHandle(){
-
         $type = $this->request->request('type', '');
         /**
          * 测试数据
          */
-        $o_id = $this->request->request('o_id', '2');
+        $o_id = $this->request->request('o_id', '');
         //获取前台提交过来的数据
         $data= $this->request->request();
         $roleValidate = new RbacValidate();
 
         //模拟数据
         if ($type == 'add'){
+            if (!$roleValidate->scene('addOrganize')->check($data))
+                $this->commonHandle([],$roleValidate->getError());
             $data['o_addtime'] = time();
             $data['type'] = 'add';
+
         } else {
+            if (!$roleValidate->scene('editOrganize')->check($data))
+                $this->commonHandle([],$roleValidate->getError());
             //更新，则需要带上条件
             $data['o_updatetime'] = time();
             $data['type'] = 'edit';
             $data['o_id'] = $o_id;
         }
         //如果type不正确，则直接返回错误结果
-        if ($roleValidate->scene('Organize')->check($data))
-        $this->commonHandle();
         return $data;
     }
     /**
@@ -147,41 +174,55 @@ class Rbacl extends Backend
 
         $roleValidate = new RbacValidate();
            //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Group')->check($data)){
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
         if ($data['type'] == 'add'){
+            if(!$roleValidate->scene('addGroup')->check($data)){
+                $this->commonHandle($roleValidate->getError());
+            }
             $data['g_addtime'] = time();
         } else {
+            if(!$roleValidate->scene('editGroup')->check($data)){
+                $this->commonHandle($roleValidate->getError());
+            }
             //更新，则需要带上条件
             $data['g_updatetime'] = time();
         }
         return $data;
     }
-
     /**
      * 显示规则
+     * @param $rules  规则列表
+     * @var  type  显示类型， 0---平级显示  ，   1----分类显示
+     * @return bool
      */
     public function showAccess($rules){
+        $type = $this->request->request('type','0');
         if(empty($rules['data']))
             return false;
-        $rules['data']=nodeChild($rules['data'],0,0,'a_pid','a_id');
+        $rules['data']=nodeChild($rules['data'],0,$type,'a_pid','a_id');
         $this->commonHandle($rules);
     }
-
     /**
      * 保存规则
      */
-    public function saveAccess(){
+    public function accessHandle(){
         $data=$this->request->request();
         $roleValidate = new RbacValidate();
         //如果type不正确，则直接返回错误结果
-        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit']) or !$roleValidate->scene('Access')->check($data)){
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
         if ($data['type'] == 'add'){
+            if(!$roleValidate->scene('addAccess')->check($data)){
+                $this->commonHandle($roleValidate->getError());
+            }
             $data['a_addtime'] = time();
         } else {
+            if(!$roleValidate->scene('editAccess')->check($data)){
+                $this->commonHandle($roleValidate->getError());
+            }
             //更新，则需要带上条件
             $data['a_updatetime'] = time();
         }
@@ -193,20 +234,68 @@ class Rbacl extends Backend
      * 必要参数：
      *          type: 处理类型
      *          r_id: 角色id
-     *          a_id: 权限id
+     *          a_ids: 权限id , 多个权限id之间用逗号隔开
+     * @return $data  , 返回一个二维数组，arvalues----拼接好的数据 ，  type ----操作类型  ， r_id----角色id
      */
     public function roleAccessHandle(){
+        $data=$this->request->request();
+        $tmp_ids=[];
+        //如果type不正确，则直接返回错误结果
+        if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
+            $this->commonHandle();
+        }
+        if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
+            $tmp_ids=explode(',',$data['a_ids']);
+        //拼接，组装  ‘角色-权限’对应关系映射
+        if(!empty($tmp_ids)){
+            foreach($tmp_ids as $v){
+                $data['arvalues'][]=[
+                    'r_id'=>$data['r_id'],
+                    'a_id'=>$v
+                ];
+            }
+        }else{
+            $data['arvalues'][]=[
+                'r_id'=>$data['r_id'],
+                'a_id'=>''
+            ];
+        }
+
+        return $data;
+    }
+    /**
+     * 角色权限信息处理
+     * 必要参数：
+     *          type: 处理类型
+     *          r_id: 角色id
+     *          a_id: 权限id
+     */
+    public function userAccessHandle(){
         $data=$this->request->request();
         //如果type不正确，则直接返回错误结果
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
-        if ($data['type'] == 'add'){
-            $data['g_addtime'] = time();
-        } else {
-            //更新，则需要带上条件
-            $data['g_updatetime'] = time();
-        }
         return $data;
+    }
+
+    /**
+     * 条件判断获取
+     * @param $index  获取自定下标的值
+     * @param $flag  true ---获取的值本身就是一组条件，无需再根据$index来组装条件 , 默认false
+     * @param $alias 表别名，连表查询中起作用
+     */
+    public function getCondition($index='',$flag = false,$alias=''){
+        if($flag){
+            $condition['where']=$this->request->request($index,[]);
+        }else{
+            $index = empty($alias)?$index:$alias.'.'.$index;
+
+            $filter_index=$this->request->request($index,'');
+            if(empty($filter_index))
+                outputJson('-2','No Results were found');
+            $condition['where']=array($index=>$filter_index);
+        }
+        return $condition;
     }
 }

@@ -28,6 +28,7 @@ class RoleAccess extends BasicModel
      * 角色数据保存
      * @param array $data  角色信息
      *                  里面的type属性  add----新增，  edit----编辑
+     *                  arvalues 属性   r_id  和  a_id  的对应关系
      * @return bool
      */
     public function saveRoleAccess($data){
@@ -35,10 +36,27 @@ class RoleAccess extends BasicModel
             return false;
         $type=$data['type'];
         unset($data['type']);
-        //编辑
-        if($type=='edit')
-            return $this->saveInfo($this,$data,['a_id'=>$data['a_id']]);
+        //编辑，
+        if($type=='edit'){
+            return
+            $flag=true;
+            Db::startTrans();
+            try{
+                $flag =  $this->deleteInfo($this,['r_id'=>$data['r_id']]) && $flag;
+                $flag =  $this->saveInfo($this,$data['arvalues'],['r_id'=>$data['r_id']]) && $flag;
+            }catch(\Error $e){
+                Db::rollback();
+            }catch(\Exception $e){
+                Db::rollback();
+            }
+            if($flag){
+                Db::commit();
+            }else{
+                Db::rollback();
+            }
+            return $flag;
+        }
         //新增
-        return $this->saveInfo($this,$data);
+        return $this->saveInfo($this,$data['arvalues']);
     }
 }

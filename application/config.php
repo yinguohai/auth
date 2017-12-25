@@ -43,7 +43,7 @@ return [
     // 是否开启多语言
     'lang_switch_on'         => false,
     // 默认全局过滤方法 用逗号分隔多个
-    'default_filter'         => '',
+    'default_filter'         => 'htmlspecialchars,strip_tags,trim',
     // 默认语言
     'default_lang'           => 'zh-cn',
     // 应用类库后缀
@@ -241,4 +241,9 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    'Memcached'=>[
+        'port'=>11211,
+        'host'=>'127.0.0.1',
+        'expire'=>3600
+    ]
 ];
