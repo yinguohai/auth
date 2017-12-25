@@ -134,7 +134,7 @@ class Rbacc extends Backend
     *****************/
     public function editRole($r_id=NULL){
           if(empty($r_id))
-            outputJson('-2','No Results were found');
+            ;outputJson('-2','No Results were found');
           $condition['where']=array('r_id'=>$r_id);
           $rows=self::getModel('Role')->listRole($condition);
           if(!$rows['data']){
