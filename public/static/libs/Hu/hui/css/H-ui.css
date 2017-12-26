@@ -1898,7 +1898,7 @@ label,.placeholder{font-size:14px}
 .Validform_right{background:url(../images/validform/iconpic-right.png) no-repeat 0 center}
 /*警告*/
 .Validform_warning{background:url(../images/validform/iconpic-warning.png) no-repeat 0 center;color:#777}
-label.error{ position: absolute; right: 18px; top: 5px;color:#ef392b; font-size: 12px}
+label.error{ position: absolute; right: 40px; top: 10px;color:#ef392b; font-size: 12px}
 .check-box label.error,
 .radio-box label.error{ right:auto; width:150px; left:210px;top:-2px}
 /*密码等级*/
