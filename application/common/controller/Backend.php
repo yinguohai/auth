@@ -3,11 +3,13 @@
 namespace app\common\controller;
 use app\common\model\Configvalue;
 use app\admin\model\rbac\Access;
+use app\admin\model\rbac\User;
 use think\cache\driver\Memcached;
 use think\Config;
 use think\Controller;
 use think\Lang;
 use think\Session;
+use think\Cookie;
 /**
  * 后台控制器基类
  */
@@ -24,7 +26,7 @@ class Backend extends Controller
      * 返回内容,默认为null,当设置了该值后将输出json数据
      * @var mixed
      */
-    protected $data = null;
+    protected $data = array();
 
     /**
      * 返回文本,默认为空
@@ -83,22 +85,28 @@ class Backend extends Controller
             exit;
         }
         // 检测是否需要登录，并且验证相关权限
-        if (!1)
+        if (!in_array($actionname,$this->noNeedLogin))
         {
             //检测是否登录
-            if (!$this->auth->isLogin())
-            {
-                $url = Session::get('referer');
-                $url = $url ? $url : $this->request->url();
-                $this->error(__('Please login first'), url('index/login', ['url' => $url]));
-            }
-            // 判断是否需要验证权限
-            if (!$this->auth->match($this->noNeedRight))
+            if ($this->isLogin()&&$this->autologin())
             {
                 // 判断控制器和方法判断是否有对应权限
-                if (!$this->auth->check($path))
-                {
-                    $this->error(__('You have no permission'), NULL);
+                //if(!$this->checkPower($modulename.'/'.$controllername.'/'.$actionname))
+               // {
+                    
+               // }
+            }
+            // 判断是否需要验证权限
+            else if(!in_array($actionname,$this->noNeedRight))
+            {
+                $url =  $this->request->url();
+                $url=$url=='/'?'/admin/index':$url;
+                if(!IS_AJAX){
+                    $this->redirect("/admin/login/index",["url"=>$url]);
+                }
+                else{
+                    $this->code=-1;
+                    $this->outputJson();
                 }
             }
         }
@@ -184,17 +192,75 @@ class Backend extends Controller
         Lang::load(APP_PATH . $this->request->module() . '/lang/' . Lang::detect() . '/' . str_replace('.', '/', $name) . '.php');
     }
 
+    public function outputJson(){
+        die(json_encode(array('code'=>$this->code,'msg'=>$this->msg,'data'=>$this->data)));
+    }
+
+
+
     /**
-     * 析构方法
-     *
+     * 自动登录
+     * @return boolean
      */
-    public function __destruct()
+    public function autologin()
     {
-        //判断是否设置code值,如果有则变动response对象的正文
-        if (!is_null($this->code))
+        $keeplogin = Cookie::get('keeplogin');
+        if (!$keeplogin)
         {
-           //var_dump(IS_DIALOG);
-           $this->result($this->data, $this->code, $this->msg, 'json');
+            return false;
+        }
+        list($id, $keeptime, $expiretime, $key) = explode('|', $keeplogin);
+        if ($id && $keeptime && $expiretime && $key && $expiretime > time())
+        {
+            $User= new User();
+            $condition['where']=array('u_id'=>$id);
+            $admin=$User->listUser($condition);
+           // var_dump(count($admin['data']));
+            //die();
+            if (count($admin['data'])==0)
+            {
+                return false;
+            }
+            //刷新自动登录的时效
+            $userinfo=Session::get('userinfo');
+            $this->keeplogin(168000,$userinfo);
+            //刷新自动登录的时效
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
+
+    /**
+     * 刷新保持登录的Cookie
+     * @param int $keeptime
+     * @return boolean
+     */
+    public function keeplogin($keeptime = 0,$userinfo)
+    {
+        if ($keeptime)
+        {
+            $expiretime = time() + $keeptime;
+            $key = md5(md5($userinfo['u_id']) . md5($keeptime) . md5($expiretime));
+            $data = [$userinfo['u_id'], $keeptime, $expiretime, $key];
+            Cookie::set('keeplogin', implode('|', $data));
+            return true;
+        }
+        return false;
+    }
+     /**
+     * 检测是否登录
+     *
+     * @return boolean
+     */
+    public function isLogin()
+    {
+       
+        //var_dump(Session::get());
+       // die();
+        return Session::get('userinfo') ? true : false;
+    }
+
 }

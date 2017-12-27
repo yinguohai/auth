@@ -35,14 +35,14 @@
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
         <div class="formControls col-xs-8">
-          <input id="" name="password" type="password" placeholder="密码" class="input-text size-L" required>
+          <input id="password" name="password" type="password" placeholder="密码" class="input-text size-L" required>
         </div>
       </div>
-      <div class="row cl">
+      <!-- <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3 code">
           <input name="code" class="input-text size-L" type="text" placeholder="验证码"  required  style="width:150px;">
           <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
-      </div>
+      </div> -->
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <label for="online">
@@ -52,8 +52,8 @@
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
-          <input name="" type="submit" class="btn btn-success radius size-L"  value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-          <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+          <input name="" style="position:absolute;left:30%" type="submit" class="btn btn-success radius size-L"  value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+          <input type="hidden" name="__token__" id="__token__" value="{$Request.token}" 
         </div>
       </div>
     </form>
@@ -69,36 +69,10 @@ http://www.runoob.com/jquery/jquery-plugin-validate.html
  -->
 <script type="text/javascript" src="/static/libs/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="/static/libs/jquery.validation/1.14.0/messages_zh.js"></script>
-<script type="text/javascript">
-$(function(){
-    //jquery.validate
-	 var validator=$("#jsForm").validate({
-		rules:{
-				password: {
-				  	required: true,
-				  	minlength:8
-				},
-				username:{
-				  	required: true,
-				},
-				code:{
-				  	required: true,
-				},
-		},
-		messages: {
-			  username: "请输入用户名",
-	      	  code: "请输入验证码",
-		      password: {
-		        required: "请输入密码",
-		        minlength: "密码长度不能小于 8 个字符"
-		      },
-     	},
-		submitHandler: function() {
-			alert();
-			//验证通过后 的js代码写在这里
-		}
-	})	
-})
-</script>
+<script type="text/javascript" src="/static/js/form-validate.js"></script>
+<script type="text/javascript" src="/static/libs/jquery.md5.js"></script>
+<!--  -->
+<script type="text/javascript" src="/static/js/common.js"></script>
+<script type="text/javascript" src="/static/js/login.js"></script>
 </body>
 </html>
