@@ -36,11 +36,23 @@ class Backend extends Controller
      * memcached 的对象
      */
     protected static $mem=null;
+     /**
+     * 无需登录的方法,同时也就不需要鉴权了
+     * @var array
+     */
+    protected $noNeedLogin = [];
+
+    /**
+     * 无需鉴权的方法,但需要登录
+     * @var array
+     */
+    protected $noNeedRight = [];
     /**
      * 布局模板
      * @var string
      */
     protected $layout = 'default';
+
     //过滤函数
     protected static $filterArray=['strip_tags','htmlspecialchars'];
     public function _initialize()
@@ -48,20 +60,19 @@ class Backend extends Controller
         $modulename = $this->request->module();
         $controllername = strtolower($this->request->controller());
         $actionname = strtolower($this->request->action());
-
         $path = '/' . $modulename . '/' . str_replace('.', '/', $controllername) . '/' . $actionname;
-
+        /*
+        @网站 前台有三种页面形式,这些页面只需要引入相关的js， css 文件，无需模板侧面菜单功能
+        @这几种场景则需要这些常量来判断
+        */
         // 定义是否Addtabs请求
         !defined('IS_ADDTABS') && define('IS_ADDTABS', input("addtabs") ? TRUE : FALSE);
-
         // 定义是否Dialog请求
         !defined('IS_DIALOG') && define('IS_DIALOG', input("dialog") ? TRUE : FALSE);
-
         // 定义是否AJAX请求
         !defined('IS_AJAX') && define('IS_AJAX', $this->request->isAjax());
-
+        /*语言检测函数*/
         $lang = Lang::detect();
-       // die();
         // 非选项卡时重定向
         if (!$this->request->isPost() && !IS_AJAX && !IS_ADDTABS && !IS_DIALOG && input("ref") == 'addtabs')
         {
@@ -71,12 +82,35 @@ class Backend extends Controller
             $this->redirect('index/index', [], 302, ['referer' => $url]);
             exit;
         }
-          // 如果有使用模板布局
+        // 检测是否需要登录，并且验证相关权限
+        if (!1)
+        {
+            //检测是否登录
+            if (!$this->auth->isLogin())
+            {
+                $url = Session::get('referer');
+                $url = $url ? $url : $this->request->url();
+                $this->error(__('Please login first'), url('index/login', ['url' => $url]));
+            }
+            // 判断是否需要验证权限
+            if (!$this->auth->match($this->noNeedRight))
+            {
+                // 判断控制器和方法判断是否有对应权限
+                if (!$this->auth->check($path))
+                {
+                    $this->error(__('You have no permission'), NULL);
+                }
+            }
+        }
+        // 如果有使用模板布局
         if ($this->layout)
         {
             $this->view->engine->layout('layout/' . $this->layout);
         }
-           // 配置信息
+        else{
+             $this->view->engine->layout(false);
+        }
+        // 配置信息送至前台做所有页面的公共参数使用
         $config = [
             'modulename'     => $modulename,
             'controllername' => $controllername,
@@ -87,13 +121,9 @@ class Backend extends Controller
             'referer'        => Session::get("referer")
         ];
         /********权限检测******/
-//        $this->checkPower($modulename.'/'.$controllername.'/'.$actionname);
-
-        // 如果有使用模板布局
-
-        // 语言检测
+        //$this->checkPower($modulename.'/'.$controllername.'/'.$actionname);
         $this->assign('config', $config);
-        $lang = Lang::detect();
+        // 语言加载，后期如果需要处理语言问题，此处扩展
         $this->loadlang($controllername);
     }
     protected static function getMem(){
@@ -103,7 +133,6 @@ class Backend extends Controller
         }
         return self::$mem;
     }
-
     /**
      * 检测权限
      * @param $path 访问路径
