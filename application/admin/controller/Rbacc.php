@@ -184,7 +184,8 @@ class Rbacc extends Backend
         if ($this->request->isPost()){
             $this->saveCommon('Organize','添加组织');
         }
-        return $this->view->fetch();
+        $data['list'] = self::getModel('Organize')->getallOrganize($condition=[]);//获取全部部门
+        return $this->view->fetch('rbacc/addorganize',$data);
     }
     /*****
     @ 编辑角色接口
@@ -193,15 +194,14 @@ class Rbacc extends Backend
         if($this->request->isAjax()){
             $this->saveCommon('Organize','编辑组织');
         }
-
+        $data['list'] = self::getModel('Organize')->getallOrganize($condition=[]);//获取全部部门
         $condition = $this->getRbacl()->getCondition('o_id');
-
         $rows=self::getModel('Organize')->listOrganize($condition);
         if(!$rows['data']){
             outputJson('-2','No Results were found');
         }
-        $this->view->assign("row", $rows['data'][0]);
-        return $this->view->fetch();
+        $data['row'] = $rows['data'][0];
+        return $this->view->fetch('rbacc/editorganize',$data);
     }
     /**
      * @组织列表   *****部门组织列表部分代码

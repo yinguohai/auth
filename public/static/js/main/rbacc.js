@@ -249,8 +249,8 @@ define(['jquery', 'main'], function ($, undefined) {
                         ,cols: [[
                             {field:'o_id', title: 'ID'}
                             ,{field:'o_pid', title: 'PID'}
-                            ,{field:'o_name', title: '组名'}
-                            ,{field:'o_remark', title: '组描述'}
+                            ,{field:'o_name', title: '部门名称'}
+                            ,{field:'o_remark', title: '部门描述'}
                             ,{field:'o_status', title: '状态',templet: '#sexTpl'}
                             ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
                         ]]
@@ -293,8 +293,8 @@ define(['jquery', 'main'], function ($, undefined) {
                     })
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
-                          form.on('submit(addgroup)', function(data){
-                                Main.api.form(_self.config.options.add_group,data.field);
+                          form.on('submit(addorganize)', function(data){
+                                Main.api.form(_self.config.options.add_organize,data.field);
                                 return false;
                           });
   
@@ -310,8 +310,8 @@ define(['jquery', 'main'], function ($, undefined) {
                     })
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
-                          form.on('submit(editgroup)', function(data){
-                                Main.api.form(_self.config.options.edit_group,data.field);
+                          form.on('submit(editorganize)', function(data){
+                                Main.api.form(_self.config.options.edit_organize,data.field);
                                 return false;
                           });
   
@@ -350,7 +350,7 @@ define(['jquery', 'main'], function ($, undefined) {
 
                         },
                         edit:function(config,data,obj){
-                           Main.api.open(config.options['edit_'+config.colum.id]+'/'+config.colum.key+'/'+data[config.colum.key],'编辑',{},function(){
+                           Main.api.open(config.options['edit_'+config.colum.id]+'?'+config.colum.key+'='+data[config.colum.key],'编辑',{},function(){
                             },function(formobj){
                             });
                         },

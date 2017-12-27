@@ -1,1 +1,1 @@
-2017-11-16 20:32:47	ygh	角色保存成功	UPDATE `er_role`  SET `r_name`='管理员',`r_status`=2,`r_updatetime`=1510835567  WHERE  `r_id` = 1
+2017-12-27 17:44:18	ygh	编辑组织保存成功	UPDATE `er_organize`  SET `o_pid`=1,`o_name`='华南城66',`o_remark`='777',`o_status`=2  WHERE  `o_id` = 3

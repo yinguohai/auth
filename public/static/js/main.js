@@ -299,7 +299,7 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                 },
                 del:function(config,data,obj){
                     var options={
-                        url:config.options['del_'+config.colum.id]+'/ids/'+data[config.colum.key],
+                        url:config.options['del_'+config.colum.id]+'?ids/'+data[config.colum.key],
                         obj:obj,
                     }
                     Main.api.confirm('确定删除当前数据吗?',options); 
@@ -313,12 +313,12 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
             },
             form:function(url,data){
                 var that = this;
-                var option = {url:url+'?dialog=1',data:data};
+                var option = {url:url,data:data};
                 that.ajax(option,'iframe',function (data) {
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.Main.api.layer.close(index);
                         parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
-                       // parent.location.replace(parent.location.href);
+                        parent.location.replace(parent.location.href);
                 });    
             },
             confirm:function(msg,options){
