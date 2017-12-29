@@ -84,6 +84,33 @@ class BasicModel extends \think\Model
         return $result;
     }
 
+    /*
+     * 获取表数据
+     */
+    public function getAlllist($table,$condition=[]){
+        $table->field("*");
+        if(!empty($condition)){
+            if(required_attr($condition,'where'))
+                $table->where($condition['where']);
+        }
+        $result['data']=Collection( $table->select())->toArray();
+        return $result;
+    }
+
+    /*
+     * 查询一个列的值
+     * $table 表对象
+     * $condition 条件
+     * $field 要查询的字段
+     */
+    public function getField($table,$condition=[],$field){
+        if(!empty($condition)){
+            $table->where($condition);
+        }
+        $result = Collection($table->select())->toArray();
+        return $result[0][$field];
+    }
+
     /**
      * 删除指定数据
      * @param $table

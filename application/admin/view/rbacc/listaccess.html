@@ -8,7 +8,7 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20" id="menu">
         <span>
-            <a class="btn btn-primary radius add" data-title="添加权限分组" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加权限分组</a>
+            <a class="btn btn-primary radius add" data-title="添加部门" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加部门</a>
         </span>
     </div>
     <div class="mt-20">
@@ -20,8 +20,19 @@
     <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
+
+<script type="text/html" id="classTpl">
+    {{#  if(d.a_class =='1'){ }}
+      页面元素
+    {{#  } else if(d.a_class =='2'){ }}
+      菜单
+    {{#  } else{ }}
+       公用权限
+    {{#  } }}
+</script>
+
 <script type="text/html" id="sexTpl">
-  {{#  if(d.g_status =='1'){ }}
+  {{#  if(d.a_status =='1'){ }}
     启用
   {{#  } else { }}
     停用

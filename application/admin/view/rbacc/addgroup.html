@@ -1,18 +1,29 @@
 <form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
       <div class="layui-form-item">
-        <label class="layui-form-label">权限组名称:</label>
+        <label class="layui-form-label">用户组名称:</label>
         <div class="layui-input-block">
-          <input type="text" name="g_name" lay-verify="required" placeholder="权限组名称" autocomplete="off" class="layui-input" style="width:50%">
+          <input type="text" name="g_name" lay-verify="required" placeholder="用户组名称" autocomplete="off" class="layui-input" style="width:50%">
         </div>
       </div>
        <div class="layui-form-item">
-        <label class="layui-form-label">权限组描述:</label>
+        <label class="layui-form-label">用户组描述:</label>
         <div class="layui-input-block">
-          <input type="text" name="g_description" lay-verify="required" placeholder="权限组描述" autocomplete="off" class="layui-input" style="width:50%">
+          <input type="text" name="g_description" lay-verify="required" placeholder="用户组描述" autocomplete="off" class="layui-input" style="width:50%">
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">权限组状态</label>
+        <label class="layui-form-label">用户组角色:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="r_id" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                {volist name="list.data" id="vo"}
+                <option value="{$vo.r_id}">{$vo.r_name}</option>
+                {/volist}
+            </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户组状态</label>
         <div class="layui-input-block">
           <input type="radio" name="g_status" value="1" title="启用" checked="">
           <input type="radio" name="g_status" value="2" title="停用 ">
@@ -26,3 +37,4 @@
         </div>
       </div>
 </form>
+

@@ -204,6 +204,14 @@ class Rbacl extends Backend
         $rules['data']=nodeChild($rules['data'],0,$type,'a_pid','a_id');
         $this->commonHandle($rules);
     }
+
+    /**
+     * 角色权限列表
+     */
+    public function showRoleAccess($organize = [])
+    {
+        $this->commonHandle($organize);
+    }
     /**
      * 保存规则
      */
@@ -281,17 +289,23 @@ class Rbacl extends Backend
 
     /**
      * 条件判断获取
-     * @param $index  获取自定下标的值
+     * @param $index  获取指定下标的值
      * @param $flag  true ---获取的值本身就是一组条件，无需再根据$index来组装条件 , 默认false
      * @param $alias 表别名，连表查询中起作用
+     * @param $only 是否只获取指定参数
      */
-    public function getCondition($index='',$flag = false,$alias=''){
+    public function getCondition($index='',$flag = false,$alias='',$only=false){
+        $funcname=empty($only)?'request':'only';
         if($flag){
-            $condition['where']=$this->request->request($index,[]);
+            if($funcname=='request'){
+                $condition['where'] = $this->request->$funcname($index,[]);
+            }else{
+                $condition['where'] = $index;
+            }
         }else{
             $index = empty($alias)?$index:$alias.'.'.$index;
 
-            $filter_index=$this->request->request($index,'');
+            $filter_index=$this->request->$funcname($index,'');
             if(empty($filter_index))
                 outputJson('-2','No Results were found');
             $condition['where']=array($index=>$filter_index);

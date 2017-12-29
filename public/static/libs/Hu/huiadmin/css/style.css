@@ -1,3 +1,18 @@
 @charset "utf-8";
 /* 你自己的样式 */
+.top-access{
+    width:90%;
+    border-bottom: 1px solid #CCCCCC;
+    height: 35px;
+}
+
+.top-access .t-left{
+    display: block;
+    float:left;
+}
+
+.top-access .t-right{
+    display: block;
+    float:right;
+}
 

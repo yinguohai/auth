@@ -1,0 +1,51 @@
+<form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级规则:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="a_pid" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                <option value="0" {if condition="$row.a_pid eq 0"} selected {/if}>顶级规则</option>
+                {volist name="list.data" id="vo"}
+                <option value="{$vo.a_id}" {if condition="$row.a_pid eq $vo.a_id"} selected {/if}>{$vo.a_title}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规则名称:</label>
+        <div class="layui-input-block">
+            <input type="text" name="a_title" lay-verify="required" placeholder="规则名称" autocomplete="off" class="layui-input" value="{$row.a_title}" style="width:50%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规则路径:</label>
+        <div class="layui-input-block">
+            <input type="text" name="a_path" lay-verify="required" placeholder="规则路径" autocomplete="off" class="layui-input" value="{$row.a_path}" style="width:50%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">规则类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="a_class" value="1" title="页面元素" {if condition="$row.a_class eq 1"} checked {/if}>
+            <input type="radio" name="a_class" value="2" title="菜单" {if condition="$row.a_class eq 2"} checked {/if}>
+            <input type="radio" name="a_class" value="3" title="公用权限" {if condition="$row.a_class eq 3"} checked {/if}>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="a_status" value="1" title="启用" {if condition="$row.a_status eq 1"} checked {/if}>
+            <input type="radio" name="a_status" value="2" title="停用" {if condition="$row.a_status eq 2"} checked {/if}>
+        </div>
+        <input type="hidden" name="a_id" value="{$row.a_id}">
+        <input type="hidden" name="type" value="edit">
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn btn-success" lay-submit="" lay-filter="editaccess">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>

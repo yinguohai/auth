@@ -17,10 +17,16 @@ define(['jquery', 'main'], function ($, undefined) {
                     edit_organize:'/admin/rbacc/editOrganize',
                     list_organize:'/admin/rbacc/listOrganize',
                     del_organize:'/admin/rbacc/delOrganize',
-                    add_access:'/admin/rbacc/addOrganize',
-                    edit_access:'/admin/rbacc/editaccess',
-                    list_access:'/admin/rbacc/listaccess',
-                    del_access:'/admin/rbacc/delaccess',
+
+                    list_access:'/admin/rbacc/listAccess',
+                    add_access:'/admin/rbacc/addAccess',
+                    edit_access:'/admin/rbacc/editAccess',
+                    del_access:'/admin/rbacc/delAccess',
+
+                    list_role_access:'/admin/rbacc/listRoleAccess',
+                    add_role_access:'/admin/rbacc/addRoleAccess',
+                    edit_role_access:'/admin/rbacc/editRoleAccess',
+                    del_role_access:'/admin/rbacc/delRoleAccess',
                 },  
             },
             //用户列表入口函数--------------------------------------------/
@@ -162,6 +168,8 @@ define(['jquery', 'main'], function ($, undefined) {
   
                     });        
             },
+
+
             /**************************************
             权限分组页面入口js函数--------------------------------------------------------------------------------------------------------
             ********************************************/
@@ -176,6 +184,7 @@ define(['jquery', 'main'], function ($, undefined) {
                             ,{field:'g_name', title: '组名'}
                             ,{field:'g_description', title: '组描述'}
                             ,{field:'g_status', title: '状态',templet: '#sexTpl'}
+                            ,{field:'r_name', title: '组角色'}
                             ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
                         ]]
                         ,method:'POST'
@@ -241,6 +250,9 @@ define(['jquery', 'main'], function ($, undefined) {
   
                     });        
             },
+
+
+
               /**************************************
             部门组织页面入口js函数--------------------------------------------------------------------------------------------------------
             ********************************************/
@@ -321,7 +333,9 @@ define(['jquery', 'main'], function ($, undefined) {
   
                     });        
             },
-                /**************************************
+
+
+            /**************************************
             规则入口函数页面入口js函数--------------------------------------------------------------------------------------------------------
             ********************************************/
             listaccess:function(){
@@ -331,15 +345,16 @@ define(['jquery', 'main'], function ($, undefined) {
                         elem: '#tables'
                         ,url:''
                         ,cols: [[
-                            {field:'o_id', title: 'ID'}
-                            ,{field:'o_pid', title: 'PID'}
-                            ,{field:'o_name', title: '部门名称'}
-                            ,{field:'o_remark', title: '部门描述'}
-                            ,{field:'o_status', title: '状态',templet: '#sexTpl'}
+                            {field:'a_id', title: 'ID'}
+                            ,{field:'a_pid', title: 'PID'}
+                            ,{field:'a_title', title: '规则名称'}
+                            ,{field:'a_class', title: '规则类型',templet: '#classTpl'}
+                            ,{field:'a_status', title: '状态',templet: '#sexTpl'}
+                            ,{field:'a_path', title: '规则路径'}
                             ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
                         ]]
                         ,method:'POST'
-                        ,id: 'organize'/*URL 路径前置标识符*/
+                        ,id: 'access'/*URL 路径前置标识符*/
                         ,page: false
                         ,limit: 20
                         ,height: 'full-20'
@@ -354,15 +369,15 @@ define(['jquery', 'main'], function ($, undefined) {
                         ,done:function(res, curr, count){
 
                         },
-                        key:'o_id'/*当前列表数据的主键*/
+                        key:'a_id'/*当前列表数据的主键*/
                 };
-                this.config.colum.url=_this.config.options.list_organize;
+                this.config.colum.url=_this.config.options.list_access;
                 config=$.extend(true,Main.api.events,_this.events.operate);
                 Main.api.table(this.config,function(config){
                     _this.events.toolsmenu({
                             add:{
-                                    'url':_this.config.options.add_organize,
-                                    "title":'添加部门'
+                                    'url':_this.config.options.add_access,
+                                    "title":'添加规则'
                             }
                     });
                 });
@@ -377,8 +392,8 @@ define(['jquery', 'main'], function ($, undefined) {
                     })
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
-                          form.on('submit(addorganize)', function(data){
-                                Main.api.form(_self.config.options.add_organize,data.field);
+                          form.on('submit(addaccess)', function(data){
+                                Main.api.form(_self.config.options.add_access,data.field);
                                 return false;
                           });
   
@@ -394,13 +409,96 @@ define(['jquery', 'main'], function ($, undefined) {
                     })
                     layui.use(['element','form'], function(){
                           var form = layui.form,element=layui.element;
-                          form.on('submit(editorganize)', function(data){
-                                Main.api.form(_self.config.options.edit_organize,data.field);
+                          form.on('submit(editaccess)', function(data){
+                                Main.api.form(_self.config.options.edit_access,data.field);
                                 return false;
                           });
   
                     });        
             },
+
+
+            /**************************************
+             角色权限入口函数页面入口js函数--------------------------------------------------------------------------------------------------------
+             ********************************************/
+            listroleaccess:function(){
+                var _this=this;
+                this.events._self=this;
+                this.config.colum={
+                    elem: '#tables'
+                    ,url:''
+                    ,cols: [[
+                        {field:'ar_id', title: 'ID'}
+                        ,{field:'r_name', title: '角色名称'}
+                        ,{field:'a_title', title: '权限名称'}
+                        ,{field:'r_class', title: '权限类型',templet: '#classTpl'}
+                        ,{fixed: 'right', title: '操作', align:'center', toolbar: '#toolbar'}
+                    ]]
+                    ,method:'POST'
+                    ,id: 'roleaccess'/*URL 路径前置标识符*/
+                    ,page: false
+                    ,limit: 20
+                    ,height: 'full-20'
+                    ,even: true //开启隔行背景
+                    ,response: {
+                        statusName: 'code' //数据状态的字段名称，默认：code
+                        ,statusCode: 1 //成功的状态码，默认：0
+                        ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                        ,countName: 'count' //数据总数的字段名称，默认：count
+                        ,dataName: 'data' //数据列表的字段名称，默认：data
+                    }
+                    ,done:function(res, curr, count){
+
+                    },
+                    key:'ar_id'/*当前列表数据的主键*/
+                };
+                this.config.colum.url=_this.config.options.list_role_access;
+                config=$.extend(true,Main.api.events,_this.events.operate);
+                Main.api.table(this.config,function(config){
+                    _this.events.toolsmenu({
+                        add:{
+                            'url':_this.config.options.add_role_access,
+                            "title":'给角色添加权限'
+                        }
+                    });
+                });
+            },
+            //增加规则入口函数入口函数
+            addroleaccess:function(){
+                var _self=this;
+                layui.config({
+                    //加载layui 相关的类库文件路径和随机参数
+                    version:Math.random(),
+                    dir:'/static/libs/layui/',
+                })
+                layui.use(['element','form'], function(){
+                    var form = layui.form,element=layui.element;
+                    form.on('submit(addroleaccess)', function(data){
+                        Main.api.form(_self.config.options.add_role_access,data.field);
+                        return false;
+                    });
+                });
+            },
+            //编辑规则入口函数入口函数
+            editroleaccess:function(){
+                var _self=this;
+                layui.config({
+                    //加载layui 相关的类库文件路径和随机参数
+                    version:Math.random(),
+                    dir:'/static/libs/layui/',
+                })
+                layui.use(['element','form'], function(){
+                    var form = layui.form,element=layui.element;
+                    form.on('submit(editroleaccess)', function(data){
+                        Main.api.form(_self.config.options.edit_role_access,data.field);
+                        return false;
+                    });
+                });
+            },
+
+
+
+
             /************************************
             @菜单栏事件函数公共函数部分
             ***********************************
