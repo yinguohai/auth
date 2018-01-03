@@ -68,12 +68,13 @@
       <div class="layui-form-item">
         <label class="layui-form-label">用户状态</label>
         <div class="layui-input-block">
-          <input type="radio" name="u_status" value="2" title="启用" checked="">
-          <input type="radio" name="u_status" value="1" title="停用 ">
+          <input type="radio" name="u_status" value="1" title="启用" checked="">
+          <input type="radio" name="u_status" value="2" title="停用 ">
         </div>
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
+          <input type="hidden" name="type" value="add">
           <button class="layui-btn btn-success" lay-submit="" lay-filter="adduser">立即提交</button>
           <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>

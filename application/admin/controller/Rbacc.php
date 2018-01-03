@@ -84,10 +84,7 @@ class Rbacc extends Backend
         $save='save'.$modelname;
 
         $commonData=array_merge(self::getRbacl()->$method(),$attach);
-
-
-        var_dump($commonData);
-        die();
+        
         $result=self::getModel($modelname)->$save($commonData);
         if($type){
             if(empty($result))
@@ -163,15 +160,17 @@ class Rbacc extends Backend
             $this->saveCommon('User','编辑用户');
         }
         /*获取添加用户的数据*/ 
+        
+        $condition= $this->getRbacl()->getCondition('u_id');
         $allRole=self::getModel('Role')->listallRole();
         $allGroup=self::getModel('Group')->listallGroup();
         $allOrganize=self::getModel('Organize')->listallOrganize();
         $this->view->assign("allRole", $allRole['data']);
-        $this->view->assign("allGroup", $allRole['data']);
-        $this->view->assign("allOrganize", $allRole['data']);
+        $this->view->assign("allGroup", $allGroup['data']);
+        $this->view->assign("allOrganize", $allOrganize['data']);
        
         //加载用户信息
-        $data = $this->getModel('User')->listUser();
+        $data = $this->getModel('User')->listUser($condition);
         return $this->view->fetch();
     }
 

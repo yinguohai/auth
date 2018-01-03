@@ -313,13 +313,17 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
             form:function(url,data){
                 var that = this;
                 var option = {url:url,data:data};
-                debugger;
                 that.ajax(option,'iframe',function (data) {
-                    debugger;
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.Main.api.layer.close(index);
-                        parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
-                        parent.location.replace(parent.location.href);
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.Main.api.layer.close(index);
+                        if(data.code == 1){
+                            parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
+                            parent.location.replace(parent.location.href);
+                        }
+                        else{
+                            parent.Toastr.error(msg ? msg : 'Operation failed'); 
+                        }
+               
                 });    
             },
             confirm:function(msg,options){

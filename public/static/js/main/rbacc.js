@@ -4,7 +4,7 @@ define(['jquery', 'main'], function ($, undefined) {
                 options:{
                     list_user:'/admin/rbacc/listUser',
                     add_user:'/admin/rbacc/addUser',
-                    edit_user:'/admin/rbacc/addUser',
+                    edit_user:'/admin/rbacc/editUser',
                     add_role:'/admin/rbacc/addRole',
                     edit_role:'/admin/rbacc/editRole',
                     list_role:'/admin/rbacc/listRole',
@@ -55,9 +55,11 @@ define(['jquery', 'main'], function ($, undefined) {
                         } 
                         ,done:function(res, curr, count){
 
-                        }
+                        },
+                        key:'u_id'
                 }
                 this.config.colum.url=_this.config.options.list_user;
+                config=$.extend(true,Main.api.events,_this.events.operate);
                 Main.api.table(this.config,function(config){
                     _this.events.toolsmenu({
                                 add:{
@@ -81,7 +83,7 @@ define(['jquery', 'main'], function ($, undefined) {
                           form.render();
                           element.init();
                           form.verify({
-                            pass: [/(.+){6,20}$/, '密码必须6到20位']
+                            pass: [/(.+){8,30}$/, '密码必须6到20位']
                           });
                           form.on('submit(adduser)', function(data){
                                 Main.api.form(_self.config.options.add_user,data.field);
@@ -532,6 +534,7 @@ define(['jquery', 'main'], function ($, undefined) {
 
                         },
                         edit:function(config,data,obj){
+                            debugger;
                            Main.api.open(config.options['edit_'+config.colum.id]+'?'+config.colum.key+'='+data[config.colum.key],'编辑',{},function(){
                             },function(formobj){
                             });
