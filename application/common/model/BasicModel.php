@@ -119,6 +119,7 @@ class BasicModel extends \think\Model
     public function deleteInfo($table,$condition=[]){
         if(empty($condition))
             return false;
-        return $table->where($condition)->delete();
+        $r=$table->where($condition)->delete();
+        return $r;
     }
 }

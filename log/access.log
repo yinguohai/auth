@@ -1,1 +1,1 @@
-2017-12-28 15:42:31	ygh	保存用户组保存成功	UPDATE `er_group`  SET `g_name`='A组2',`g_description`='11166',`r_id`=5,`g_status`=2,`g_updatetime`=1514446951  WHERE  `g_id` = 1
+2018-01-02 14:56:03	ygh	角色规则删除成功	DELETE FROM `er_role_access`    WHERE  `a_id` = 3

@@ -130,7 +130,6 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                         var frame = Main.api.layer.getChildFrame('html', index);
                         var layerfooter = frame.find(".layer-footer");
                         Main.api.layerfooter(layero, index, that);
-
                         //绑定事件
                         if (layerfooter.size() > 0) {
                             // 监听窗口内的元素及属性变化
@@ -299,7 +298,7 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                 },
                 del:function(config,data,obj){
                     var options={
-                        url:config.options['del_'+config.colum.id]+'?ids/'+data[config.colum.key],
+                        url:config.options['del_'+config.colum.id]+'?'+config.colum.key+'='+data[config.colum.key],
                         obj:obj,
                     }
                     Main.api.confirm('确定删除当前数据吗?',options); 
@@ -324,13 +323,14 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
             confirm:function(msg,options){
                 var that = this,option = {url:options.url};
                 Main.api.layer.confirm(msg?msg:'真的要执行当前数据吗', function(index){
-                    that.ajax(options,'confirm',function(ret){
+                    that.ajax(option,'confirm',function(ret){
+                        layer.close(index);
                         if(ret.hasOwnProperty("code")) {
                                 var data = ret.hasOwnProperty("data") && ret.data != "" ? ret.data : null;
                                 var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
                                 if (ret.code === 1) {
                                     Toastr.success(msg ? msg : 'Operation completed');
-                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    options.obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                                 } else {
                                     Toastr.error(msg ? msg : 'Operation failed');                                  
                                 }
