@@ -313,7 +313,9 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
             form:function(url,data){
                 var that = this;
                 var option = {url:url,data:data};
+                debugger;
                 that.ajax(option,'iframe',function (data) {
+                    debugger;
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.Main.api.layer.close(index);
                         parent.Toastr.success(data.msg ? data.msg : 'Operation completed');

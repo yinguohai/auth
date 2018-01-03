@@ -85,6 +85,9 @@ class Rbacc extends Backend
 
         $commonData=array_merge(self::getRbacl()->$method(),$attach);
 
+
+        var_dump($commonData);
+        die();
         $result=self::getModel($modelname)->$save($commonData);
         if($type){
             if(empty($result))
@@ -145,6 +148,13 @@ class Rbacc extends Backend
         if($this->request->isPost()){
             $this->saveCommon('User','添加用户');
         }
+        /*获取添加用户的数据*/ 
+        $allRole=self::getModel('Role')->listallRole();
+        $allGroup=self::getModel('Group')->listallGroup();
+        $allOrganize=self::getModel('Organize')->listallOrganize();
+        $this->view->assign("allRole", $allRole['data']);
+        $this->view->assign("allGroup", $allGroup['data']);
+        $this->view->assign("allOrganize", $allOrganize['data']);
         return $this->view->fetch();
     }
     //编辑用户，u_id必须存在
@@ -152,6 +162,14 @@ class Rbacc extends Backend
         if($this->request->isPost()){
             $this->saveCommon('User','编辑用户');
         }
+        /*获取添加用户的数据*/ 
+        $allRole=self::getModel('Role')->listallRole();
+        $allGroup=self::getModel('Group')->listallGroup();
+        $allOrganize=self::getModel('Organize')->listallOrganize();
+        $this->view->assign("allRole", $allRole['data']);
+        $this->view->assign("allGroup", $allRole['data']);
+        $this->view->assign("allOrganize", $allRole['data']);
+       
         //加载用户信息
         $data = $this->getModel('User')->listUser();
         return $this->view->fetch();
@@ -164,7 +182,6 @@ class Rbacc extends Backend
     public function listRole(){
         if ($this->request->isPost()){
             //搜索条件参数
-
             $condition = $this->getRbacl()->getCondition('keys/a',true);
             //获取用户信息
             $limit=$this->request->request("limit", '');

@@ -84,7 +84,7 @@ define(['jquery', 'main'], function ($, undefined) {
                             pass: [/(.+){6,20}$/, '密码必须6到20位']
                           });
                           form.on('submit(adduser)', function(data){
-                                Main.api.form(_self.config.options.add_user,'iframe',data.field);
+                                Main.api.form(_self.config.options.add_user,data.field);
                                 return false;
                           });
   
