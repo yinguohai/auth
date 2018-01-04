@@ -314,7 +314,7 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                             parent.location.replace(parent.location.href);
                         }
                         else{
-                            parent.Toastr.error(msg ? msg : 'Operation failed'); 
+                            parent.Toastr.error(data.msg ? data.msg : 'Operation failed'); 
                         }
                
                 });    

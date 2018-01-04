@@ -385,7 +385,9 @@ class Rbacc extends Backend
     public function userAccessSave(){
         //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
         $auth=self::getModel('Access')->getAccess([],3);
-        $this->view->assign("auth", $auth);
+        $allAccess=self::getModel('Access')->listallAccess();
+        $data=$this->getRbacl()->getaccessdata($auth,$allAccess['data']);
+        $this->view->assign("auth", $data);
         if($this->request->isAjax()){
             $this->saveCommon('UserAccess','角色权限',true);
         }

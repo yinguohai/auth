@@ -312,4 +312,29 @@ class Rbacl extends Backend
         }
         return $condition;
     }
+
+    public function getaccessdata($authdata,$allaccessdata){
+        if(count($authdata)==0){
+            return  $allaccessdata;
+        }
+        $data=array();
+        foreach($allaccessdata as $key=>$value){
+            $d=array(
+                'a_id'=>$value['a_id'],
+                'a_pid'=>$value['a_pid'],
+                'a_title'=>$value['a_title'],
+                'a_class'=>$value['a_class'],
+                'a_status'=>$value['a_status'],
+            );
+            foreach($authdata as $k=>$v){
+                if($value['a_id']==$v['a_id']){
+                    $d['checked']=true;
+                    break;
+                }
+
+            }
+            $data[]=$d;
+        }
+        return $data;
+    }
 }
