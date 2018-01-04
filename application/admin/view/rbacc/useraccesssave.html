@@ -1,0 +1,14 @@
+<form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
+        <div style="text-indent:1.1em;">
+            <div style="display:inline-block"><span style="margin-right:20px">全部选中</span><input id="allcheck"  style="display:inline-block" type="checkbox"></div>
+            <ul class="ztree" id="first_tree"></div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block" style="margin-left:50px;">
+            <button class="layui-btn btn-success" lay-submit="" lay-filter="userauth" >立即提交</button>
+          </div>
+        </div>
+  </form>
+  <script>
+  var authdata={$auth|json_encode};
+  </script>

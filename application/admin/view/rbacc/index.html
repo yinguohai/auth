@@ -16,13 +16,28 @@
         </table>
     </div>
 </div>
+<!--  layui  模板语法    参考  link   http://www.layui.com/doc/     time:18/01/04  
+    模板语法  此项目  用于配合  js 处理 列表 菜单 栏 的操作   
+-->
 <script type="text/html" id="toolbar">
-    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-mini" lay-event="auth">设置权限</a>
     <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
-
+    {{#  if(d.u_status == 1){ }}
+        <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="status">停用</a>
+    {{#  } else { }}
+        <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="status">启用</a>
+    {{#  } }}
     <!-- 这里同样支持 laytpl 语法，如： -->
-    {{#  if(d.id >2){ }}
-    <a class="layui-btn layui-btn-mini" lay-event="check">审核</a>
+    {{#  if(d.error_times >= 5){ }}
+        <a class="layui-btn layui-btn-mini" lay-event="unlock">用户解锁</a>
+    {{#  } }}
+    <a class="layui-btn layui-btn-mini" lay-event="resetpwd">重置密码</a>
+</script>
+<!--  layui  模板语法    参考  link   http://www.layui.com/doc/     time:18/01/04       -->
+<script type="text/html" id="titleTpl">
+    {{#  if(d.u_status == 1){ }}
+        启用
+    {{#  } else { }}
+        停用
     {{#  } }}
 </script>

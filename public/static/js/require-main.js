@@ -14,6 +14,7 @@ require.config({
         'dataTables':'../libs/datatables/1.10.0/jquery.dataTables.min',
         'toastr': '../libs/toastr/toastr',
         'layui': '../libs/layui/layui',
+        'ztree':'../libs/zTree/v3/js/jquery.ztree.all-3.5'
             },
     // shim依赖配置
     shim: {
@@ -21,7 +22,8 @@ require.config({
         'layui':['css!../libs/layui/css/layui.css' ],
         'bootstrap': ['jquery'],
         'toastr':['css!../libs/toastr/toastr.css' ],
-
+        'ztree':['css!../libs/zTree/v3/css/zTreeStyle/zTreeStyle.css' ],
+        'ztree':['css!../libs/zTree/v3/css/metroStyle/metroStyle.css' ],
     },
     baseUrl:'/static/js/', //资源基础路径
     map: {

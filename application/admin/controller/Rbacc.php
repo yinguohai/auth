@@ -159,8 +159,7 @@ class Rbacc extends Backend
         if($this->request->isPost()){
             $this->saveCommon('User','编辑用户');
         }
-        /*获取添加用户的数据*/ 
-        
+        /*获取添加用户的数据*/  
         $condition= $this->getRbacl()->getCondition('u_id');
         $allRole=self::getModel('Role')->listallRole();
         $allGroup=self::getModel('Group')->listallGroup();
@@ -168,9 +167,10 @@ class Rbacc extends Backend
         $this->view->assign("allRole", $allRole['data']);
         $this->view->assign("allGroup", $allGroup['data']);
         $this->view->assign("allOrganize", $allOrganize['data']);
-       
+        $condition = $this->getRbacl()->getCondition('u_id');
         //加载用户信息
         $data = $this->getModel('User')->listUser($condition);
+        $this->view->assign("row", $data['data'][0]);
         return $this->view->fetch();
     }
 
@@ -363,16 +363,39 @@ class Rbacc extends Backend
         return $this->view->fetch('rbacc/editaccess',$data);
     }
     
-    /*
+
+
+
+    /******************************************************************************************** 
      * 角色权限分配
      */
     public function roleAccessSave(){
         //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
-        $this->saveCommon('RoleAccess','角色权限',true);
-
+        if($this->request->isAjax()){
+            $this->saveCommon('RoleAccess','角色权限',true);
+        }
+        return $this->view->fetch();
     }
 
-    /*删除规则
+
+
+    /******************************************************************************************** 
+     * 用户权限分配
+     */
+    public function userAccessSave(){
+        //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
+        $auth=self::getModel('Access')->getAccess([],3);
+        $this->view->assign("auth", $auth);
+        if($this->request->isAjax()){
+            $this->saveCommon('UserAccess','角色权限',true);
+        }
+        return $this->view->fetch();
+    }
+
+
+
+
+    /*删除规则************************************************************
     同步需要删除对应的用户权限表、用户权限表
     */
     public  function delAccess(){

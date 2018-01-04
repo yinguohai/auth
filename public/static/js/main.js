@@ -279,16 +279,9 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                                       var data = obj.data; //获得当前行数据
                                       var layEvent = obj.event; //获得 lay-event 对应的值
                                       var tr = obj.tr; //获得当前行 tr 的DOM对象
-                                      if(layEvent === 'detail'){ //查看
-                                        _self.events.detail(config,data,obj); 
-                                      } else if(layEvent === 'del'){ //删除
-                                        _self.events.del(config,data,obj);
-                                      } else if(layEvent === 'edit'){ //编辑
-                                        _self.events.edit(config,data,obj);
-                                      }
-                                      else if(layEvent === 'confirm'){ //删除
-                                        _self.events.confirm(config,data,obj);
-                                      } 
+                                      var events=config.events;
+                                    _self.events[layEvent](config,data,obj); 
+                                      
                                 })          
                     });
             },
