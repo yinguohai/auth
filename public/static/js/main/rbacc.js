@@ -304,11 +304,35 @@ define(['jquery', 'main', 'ztree'], function($, undefined) {
             this.comminit('editaccess', 'edit_access');
         },
 
-
-
-
-
-
+            /**************************************
+         角色权限入口函数页面入口js函数--------------------------------------------------------------------------------------------------------
+         ********************************************/
+        roleaccesssave: function() {
+            var _self = this,
+                zTree = this.treeinit();
+            // 加载layui 公共配置文件
+            layui.config({
+                //加载layui 相关的类库文件路径和随机参数
+                version: Math.random(),
+                dir: '/static/libs/layui/',
+            });
+            layui.use(['element', 'form'], function() {
+                var form = layui.form,
+                    element = layui.element;
+                form.render();
+                element.init();
+                form.on('submit(roleauth)', function(data) {
+                    $pars= _self.gettreedata(zTree,'r_id');
+                    var data={
+                        'type':'add',
+                        'r_id':$("#r_id").val(),
+                        "tree":$pars
+                    }
+                    Main.api.form(_self.config.options.auth_role,data);
+                    return false;
+                });
+            });
+        },
         /**************************************
          角色权限入口函数页面入口js函数--------------------------------------------------------------------------------------------------------
          ********************************************/
@@ -327,9 +351,13 @@ define(['jquery', 'main', 'ztree'], function($, undefined) {
                 form.render();
                 element.init();
                 form.on('submit(userauth)', function(data) {
-                    $pars= _self.gettreedata(zTree);
-                    debugger;
-                    Main.api.form(_self.config.options.auth_user,{tree:JSON.stringify($pars)});
+                    $pars= _self.gettreedata(zTree,'u_id');
+                    var data={
+                        'type':'add',
+                        'u_id':$("#u_id").val(),
+                        "tree":$pars
+                    }
+                    Main.api.form(_self.config.options.auth_user,data);
                     return false;
                 });
             });
@@ -365,26 +393,29 @@ define(['jquery', 'main', 'ztree'], function($, undefined) {
                     radioType: "level" //设置tree的分组
                 },
             }
-            debugger;
             var treeNodes = authdata;
             zTree = $.fn.zTree.init($("#first_tree"), setting, treeNodes);
-            debugger;
             $("#allcheck").off('click').on('click', function() {
                 var status = $(this).prop('checked')
                 _this.treeallSelect(zTree, status)
             });
             return zTree;
         },
-        gettreedata: function(Tree) {
+        gettreedata: function(Tree,key) {
             var seelctall = zTree.getCheckedNodes(true);
-            var $d = []; debugger;
+            var id=$("#"+key).val();
+            var $d = [];
             if (seelctall.length > 0) {
                 $.each(seelctall, function(i, v) {
                     m = {
                         a_class: v.a_class,
                         a_id: v.a_id,
-                        a_pid: v.a_pid,
-                        a_status: v.a_status,
+                    }
+                    if(key=='r_id'){
+                        m.r_id=id;
+                    }
+                    else{
+                        m.u_id=id;
                     }
                     $d.push(m);
                 });

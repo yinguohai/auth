@@ -90,15 +90,10 @@ class Backend extends Controller
             //检测是否登录
             if ($this->isLogin()&&$this->autologin())
             {
-                // 判断控制器和方法判断是否有对应权限
-                //if(!$this->checkPower($modulename.'/'.$controllername.'/'.$actionname))
-               // {
-                    
-               // }
+                /********权限检测******/
+                $this->checkPower($modulename.'/'.$controllername.'/'.$actionname);
             }
-            // 判断是否需要验证权限
-            else if(!in_array($actionname,$this->noNeedRight))
-            {
+            else{
                 $url =  $this->request->url();
                 $url=$url=='/'?'/admin/index':$url;
                 if(!IS_AJAX){
@@ -108,7 +103,7 @@ class Backend extends Controller
                     $this->code=-1;
                     $this->outputJson();
                 }
-            }
+            } 
         }
         // 如果有使用模板布局
         if ($this->layout)
@@ -128,8 +123,7 @@ class Backend extends Controller
             'language'       => $lang,
             'referer'        => Session::get("referer")
         ];
-        /********权限检测******/
-        //$this->checkPower($modulename.'/'.$controllername.'/'.$actionname);
+
         $this->assign('config', $config);
         // 语言加载，后期如果需要处理语言问题，此处扩展
         $this->loadlang($controllername);
@@ -172,7 +166,6 @@ class Backend extends Controller
             self::getMem()->set('ua_'.$uid,json_encode($allresult),config('Memcached.expire'));
         }
         $arr=json_decode(self::getMem()->get('ua_'.$uid),true);
-
         $publicPaths=lowFilterArray(array_column($arr['public'],'a_path'));
         $privatePaths=lowFilterArray(array_column($arr['private'],'a_path'));
         if( in_array($path,$publicPaths) or in_array($path,$privatePaths))
@@ -191,13 +184,9 @@ class Backend extends Controller
     {
         Lang::load(APP_PATH . $this->request->module() . '/lang/' . Lang::detect() . '/' . str_replace('.', '/', $name) . '.php');
     }
-
     public function outputJson(){
         die(json_encode(array('code'=>$this->code,'msg'=>$this->msg,'data'=>$this->data)));
     }
-
-
-
     /**
      * 自动登录
      * @return boolean

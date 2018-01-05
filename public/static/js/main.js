@@ -309,9 +309,10 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                 that.ajax(option,'iframe',function (data) {
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                     parent.Main.api.layer.close(index);
+                    debugger;
                         if(data.code == 1){
                             parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
-                            parent.location.replace(parent.location.href);
+                           // parent.location.replace(parent.location.href);
                         }
                         else{
                             parent.Toastr.error(data.msg ? data.msg : 'Operation failed'); 

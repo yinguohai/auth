@@ -48,22 +48,44 @@ class BasicModel extends \think\Model
      * @param $where   更新条件
      */
     public function saveInfo($table,$data,$where=[]){
-        try{
-            if(empty($where)){
-                $result=$table->save($data);
-            }else{
-                $result=$table->save($data,$where);
+        if(count($data) == count($data,1)){
+            try{
+                if(empty($where)){
+                    $result=$table->save($data);
+                }else{
+                    $result=$table->save($data,$where);
+                }
+            }catch(\Exception $e){
+                return false;
+            }catch(\Error $e){
+                return false;
             }
-        }catch(\Exception $e){
-            return false;
-        }catch(\Error $e){
-            return false;
+        }
+        /* 批量操作 */
+        else{
+            try{
+                if(empty($where)){
+                    $result=$table->saveAll($data);
+                }else{
+                    $result=$table->saveAll($data,$where);
+                }
+            }catch(\Exception $e){
+                return false;
+            }catch(\Error $e){
+                return false;
+            }
         }
         if(empty($result))
             return false;
-        $lastId=$table->getLastInsId();
-        //获取自增属性ID值或者更新的结果值
-        return empty($lastId)?$result:$lastId;
+        if(count($data) == count($data,1)){
+            $lastId=$table->getLastInsId();
+            //获取自增属性ID值或者更新的结果值
+            return empty($lastId)?$result:$lastId;
+        }
+        else{
+            return $result;
+        }
+      
     }
 
     /**

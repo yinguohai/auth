@@ -252,22 +252,22 @@ class Rbacl extends Backend
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
-        if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
-            $tmp_ids=explode(',',$data['a_ids']);
-        //拼接，组装  ‘角色-权限’对应关系映射
-        if(!empty($tmp_ids)){
-            foreach($tmp_ids as $v){
-                $data['arvalues'][]=[
-                    'r_id'=>$data['r_id'],
-                    'a_id'=>$v
-                ];
-            }
-        }else{
-            $data['arvalues'][]=[
-                'r_id'=>$data['r_id'],
-                'a_id'=>''
-            ];
-        }
+        // if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
+        //     $tmp_ids=explode(',',$data['a_ids']);
+        // //拼接，组装  ‘角色-权限’对应关系映射
+        // if(!empty($tmp_ids)){
+        //     foreach($tmp_ids as $v){
+        //         $data['arvalues'][]=[
+        //             'r_id'=>$data['r_id'],
+        //             'a_id'=>$v
+        //         ];
+        //     }
+        // }else{
+        //     $data['arvalues'][]=[
+        //         'r_id'=>$data['r_id'],
+        //         'a_id'=>''
+        //     ];
+        // }
 
         return $data;
     }

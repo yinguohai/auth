@@ -1,1 +1,1 @@
-2018-01-04 11:39:09	ygh	规则删除成功	DELETE FROM `er_access`    WHERE  `a_id` = 13
+2018-01-05 15:22:27	ygh	保存用户组保存成功	UPDATE `er_group`  SET `g_name`='A组',`g_description`='111',`r_id`=3,`g_status`=1,`g_updatetime`=1515136947  WHERE  `g_id` = 1

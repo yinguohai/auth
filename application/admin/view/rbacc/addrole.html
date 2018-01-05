@@ -5,20 +5,6 @@
           <input type="text" name="r_name" lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input" style="width:50%">
         </div>
       </div>
-
-      <div class="layui-form-item">
-        <label class="layui-form-label">权限规则</label>
-        <div class="layui-input-block">
-            {volist name="top_access.data" id="vo"}
-            <div class="top-access">
-                <span class="t-left"><input type="checkbox" name="a_ids[]" lay-skin="primary" value="{$vo.a_id}" title="{$vo.a_title}"></span>
-                <span class="t-right"><input type="checkbox" name="" lay-skin="switch" lay-text="展开|收起" checked></span>
-            </div>
-            <br>
-            {/volist}
-        </div>
-      </div>
-
       <div class="layui-form-item">
         <label class="layui-form-label">角色状态</label>
         <div class="layui-input-block">
