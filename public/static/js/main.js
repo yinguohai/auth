@@ -130,7 +130,6 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                         var frame = Main.api.layer.getChildFrame('html', index);
                         var layerfooter = frame.find(".layer-footer");
                         Main.api.layerfooter(layero, index, that);
-
                         //绑定事件
                         if (layerfooter.size() > 0) {
                             // 监听窗口内的元素及属性变化
@@ -280,16 +279,9 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                                       var data = obj.data; //获得当前行数据
                                       var layEvent = obj.event; //获得 lay-event 对应的值
                                       var tr = obj.tr; //获得当前行 tr 的DOM对象
-                                      if(layEvent === 'detail'){ //查看
-                                        _self.events.detail(config,data,obj); 
-                                      } else if(layEvent === 'del'){ //删除
-                                        _self.events.del(config,data,obj);
-                                      } else if(layEvent === 'edit'){ //编辑
-                                        _self.events.edit(config,data,obj);
-                                      }
-                                      else if(layEvent === 'confirm'){ //删除
-                                        _self.events.confirm(config,data,obj);
-                                      } 
+                                      var events=config.events;
+                                    _self.events[layEvent](config,data,obj); 
+                                      
                                 })          
                     });
             },
@@ -299,7 +291,7 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                 },
                 del:function(config,data,obj){
                     var options={
-                        url:config.options['del_'+config.colum.id]+'?ids/'+data[config.colum.key],
+                        url:config.options['del_'+config.colum.id]+'?'+config.colum.key+'='+data[config.colum.key],
                         obj:obj,
                     }
                     Main.api.confirm('确定删除当前数据吗?',options); 
@@ -315,22 +307,30 @@ define(['jquery','bootstrap','toastr','layer','layui'], function ($, undefined,T
                 var that = this;
                 var option = {url:url,data:data};
                 that.ajax(option,'iframe',function (data) {
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.Main.api.layer.close(index);
-                        parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
-                        parent.location.replace(parent.location.href);
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.Main.api.layer.close(index);
+                    debugger;
+                        if(data.code == 1){
+                            parent.Toastr.success(data.msg ? data.msg : 'Operation completed');
+                           // parent.location.replace(parent.location.href);
+                        }
+                        else{
+                            parent.Toastr.error(data.msg ? data.msg : 'Operation failed'); 
+                        }
+               
                 });    
             },
             confirm:function(msg,options){
                 var that = this,option = {url:options.url};
                 Main.api.layer.confirm(msg?msg:'真的要执行当前数据吗', function(index){
-                    that.ajax(options,'confirm',function(ret){
+                    that.ajax(option,'confirm',function(ret){
+                        layer.close(index);
                         if(ret.hasOwnProperty("code")) {
                                 var data = ret.hasOwnProperty("data") && ret.data != "" ? ret.data : null;
                                 var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
                                 if (ret.code === 1) {
                                     Toastr.success(msg ? msg : 'Operation completed');
-                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    options.obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                                 } else {
                                     Toastr.error(msg ? msg : 'Operation failed');                                  
                                 }

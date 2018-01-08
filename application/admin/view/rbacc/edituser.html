@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+  <form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户名称:</label>
+        <div class="layui-input-block">
+          <input type="text" name="u_name" value="{$row.u_name}" lay-verify="required" placeholder="请输入用户名称" autocomplete="off" class="layui-input" style="width:50%">
+        </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">用户邮箱:</label>
+          <div class="layui-input-block">
+            <input type="text" name="u_email" value="{$row.u_email}" lay-verify="email" autocomplete="off" placeholder="请输入用户邮箱" class="layui-input" style="width:50%">
+          </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户密码:</label>
+        <div class="layui-input-inline">
+          <input type="password" name="u_password" value="{$row.u_password}" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input" >
+        </div>
+        <div class="layui-form-mid layui-word-aux">请填写至少8位字符的密码</div>
+      </div>
+      <!-- 部门 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">所属部门:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="g_id" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                {volist name="allOrganize" id="vo"}
+                  {if condition="$row.o_id eq $vo.o_id"}
+                  <option value="{$vo.o_id}" selected>{$vo.o_name}</option>
+                  {else /}
+                  <option value="{$vo.o_id}">{$vo.o_name}</option>
+                  {/if}
+                {/volist}
+            </select>
+        </div>
+      </div> 
+      <!-- 角色 -->
+       <div class="layui-form-item">
+        <label class="layui-form-label">所属角色:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="r_id" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                {volist name="allRole" id="vo"}
+                  {if condition="$row.r_id eq $vo.r_id"}
+                  <option value="{$vo.r_id}" selected>{$vo.r_name}</option>
+                  {else /}
+                  <option value="{$vo.r_id}">{$vo.r_name}</option>
+                  {/if}
+                {/volist}
+            </select>
+        </div>
+      </div> 
+      <!-- 所属组 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">所属权限组:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="r_id" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                {volist name="allGroup" id="vo"}
+                  {if condition="$row.g_id eq $vo.g_id"}
+                  <option value="{$vo.g_id}" selected>{$vo.g_name}</option>
+                  {else /}
+                  <option value="{$vo.g_id}">{$vo.g_name}</option>
+                  {/if}
+                {/volist}
+            </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户状态</label>
+        <div class="layui-input-block">
+            {if condition="$row.u_status eq 1"}
+              <input type="radio" name="u_status" value="1" title="启用" checked="true">
+              <input type="radio" name="u_status" value="2" title="停用 ">
+            {else /}
+              <input type="radio" name="u_status" value="1" title="启用" >
+              <input type="radio" name="u_status" value="2" title="停用 " checked="true">
+            {/if}
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <input type="hidden" name="type" value="edit">
+          <input type="hidden" name="u_id" value="{$row.u_id}">
+          <button class="layui-btn btn-success" lay-submit="" lay-filter="edituser">立即提交</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+  </form>
+</body>
+</html>

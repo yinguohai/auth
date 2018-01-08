@@ -158,5 +158,27 @@ class Access extends BasicModel
             ->select();
         return collection($result)->toArray();
     }
+        /**
+     * 获取角色-权限
+     */
+    public function getRoleAccess($where=[],$field='*'){
+        try{
+            $where['r.r_status']=1;
+            $where['a.a_status']=1;
+            $result = Db::table('er_role')
+                ->alias('r')
+                ->field($field)
+                ->join('er_role_access ra','ra.r_id = r.r_id')
+                ->join('er_access a','ra.a_id = a.a_id')
+                ->where($where)
+                ->select();
+        }catch (\Error $e){
+            return ['code'=>$e->getCode(),'errormsg'=>$e->getMessage()];
+        }catch (\Exception $e){
+            return ['code'=>$e->getCode(),'errormsg'=>$e->getMessage()];
+        }
+
+        return collection($result)->toArray();
+    }
 
 }

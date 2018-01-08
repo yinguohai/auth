@@ -79,12 +79,9 @@ class Rbacc extends Backend
     private function saveCommon($modelname='',$msg='',$type=false,$attach=[]){
         // 获取操作方法
         $method=lcfirst($modelname).'Handle';
-
         //获取保存数据方法
         $save='save'.$modelname;
-
         $commonData=array_merge(self::getRbacl()->$method(),$attach);
-
         $result=self::getModel($modelname)->$save($commonData);
         if($type){
             if(empty($result))
@@ -99,8 +96,30 @@ class Rbacc extends Backend
         }
     }
 
+       /**公共删除方法
+     * @param string $modelname1    模型名称
+     * @param string $msg   附加信息
+     * @param boolean $type 是否返回值，默认否false ---直接exit , true----return true
+     * @return array
+     */
+    private function deleteCommon($modelname='',$msg='',$type=false,$where=array()){
+        //获取保存数据方法
+        $modelnameobj=self::getModel($modelname);
+        $result=$modelnameobj->deleteInfo($modelnameobj,$where);
+        if($type){
+            if(empty($result))
+                return false;
+            putlog($msg.'删除成功');
+            return $result;
+        }else{
+            if(empty($result))
+                outputJson('-2','删除失败');
+              putlog($msg.'删除成功');
+            outputJson('1','删除成功');
+        }
+    }
     /**
-     * 用户列表*********************************************************************
+     * 用户列表*******************************************************************************************************************
      */
     public function listUser()
     {
@@ -123,6 +142,13 @@ class Rbacc extends Backend
         if($this->request->isPost()){
             $this->saveCommon('User','添加用户');
         }
+        /*获取添加用户的数据*/ 
+        $allRole=self::getModel('Role')->listallRole();
+        $allGroup=self::getModel('Group')->listallGroup();
+        $allOrganize=self::getModel('Organize')->listallOrganize();
+        $this->view->assign("allRole", $allRole['data']);
+        $this->view->assign("allGroup", $allGroup['data']);
+        $this->view->assign("allOrganize", $allOrganize['data']);
         return $this->view->fetch();
     }
     //编辑用户，u_id必须存在
@@ -130,19 +156,28 @@ class Rbacc extends Backend
         if($this->request->isPost()){
             $this->saveCommon('User','编辑用户');
         }
+        /*获取添加用户的数据*/  
+        $condition= $this->getRbacl()->getCondition('u_id');
+        $allRole=self::getModel('Role')->listallRole();
+        $allGroup=self::getModel('Group')->listallGroup();
+        $allOrganize=self::getModel('Organize')->listallOrganize();
+        $this->view->assign("allRole", $allRole['data']);
+        $this->view->assign("allGroup", $allGroup['data']);
+        $this->view->assign("allOrganize", $allOrganize['data']);
+        $condition = $this->getRbacl()->getCondition('u_id');
         //加载用户信息
-        $data = $this->getModel('User')->listUser();
+        $data = $this->getModel('User')->listUser($condition);
+        $this->view->assign("row", $data['data'][0]);
         return $this->view->fetch();
     }
 
-    /**********************************************************************************
+    /*********************************************************************************************************
      * @角色部分代码
      ***********
      */
     public function listRole(){
         if ($this->request->isPost()){
             //搜索条件参数
-
             $condition = $this->getRbacl()->getCondition('keys/a',true);
             //获取用户信息
             $limit=$this->request->request("limit", '');
@@ -160,12 +195,7 @@ class Rbacc extends Backend
       if ($this->request->isPost()){
           $this->saveCommon('Role','添加角色');
       }
-      $condition = $this->getRbacl()->getCondition(['a_pid'=>0],true,'',true);
-      $access = self::getModel('Access')->listallAccess($condition);//获取全部全部权限p($data['access']);
-      $list = $access['data'];
-//      $lists = nodeChildAccess($list);
-//      p($lists);
-      return $this->view->fetch('rbacc/addrole',$data);
+      return $this->view->fetch('rbacc/addrole');
     }
     /*****
     @编辑角色接口
@@ -183,7 +213,7 @@ class Rbacc extends Backend
         return $this->view->fetch();
     }
 
-    /********************************************************************************
+    /******************************************************************************************************************
     @添加组织接口
      *************/
     public function addOrganize(){
@@ -225,7 +255,7 @@ class Rbacc extends Backend
     }
 
 
-    /********************************************************************************
+    /**********************************************************************************************************************
      *@用户分组列表
      */
     public function listGroup(){
@@ -277,7 +307,7 @@ class Rbacc extends Backend
     }
 
 
-    /***********************************************************
+    /***********************************************************************************************************************
      *@权限列表
      */
     public function listAccess(){
@@ -324,13 +354,107 @@ class Rbacc extends Backend
         $data['list'] = self::getModel('Access')->listallAccess();//获取全部规则
         return $this->view->fetch('rbacc/editaccess',$data);
     }
+    
 
-    /*
+    /******************************************************************************************** 
+>>>>>>> origin/master
      * 角色权限分配
      */
     public function roleAccessSave(){
+        if($this->request->post()){
+            $method=lcfirst('RoleAccess').'Handle';
+            //获取保存数据方法
+            $save='save'.'RoleAccess';
+            $result=true;
+            $commonData=array_merge(self::getRbacl()->$method(),array());
+            $result=self::getModel('RoleAccess')->$save($commonData);        
+            if($result){
+              $this->code=1;
+              $this->msg='保存成功';
+              $this->outputJson();
+            }
+            else{
+                $this->code=2;
+                $this->msg='保存失败';
+                $this->outputJson();
+            }   
+        }
         //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
-        $this->saveCommon('RoleAccess','角色权限',true);
+        $condition = $this->getRbacl()->getCondition('r_id');
+        unset($where);
+        $where['r.r_id']=$condition['where']['r_id'];
+        $auth=self::getModel('Access')->getRoleAccess($where);
+        $allAccess=self::getModel('Access')->listallAccess();
+        $data=$this->getRbacl()->getaccessdata($auth,$allAccess['data']);
+        $this->view->assign("auth", $data);
+        $this->view->assign("r_id", $condition['where']['r_id']);
+        return $this->view->fetch();
+    }
+
+
+    /******************************************************************************************** 
+     * 用户权限分配
+     */
+    public function userAccessSave(){
+        if($this->request->post()){
+            $method=lcfirst('UserAccess').'Handle';
+            //获取保存数据方法
+            $save='save'.'UserAccess';
+            $result=true;
+            $commonData=array_merge(self::getRbacl()->$method(),array());
+            $where['u_id']=$commonData['u_id'];
+            $result=self::getModel('UserAccess')->$save($commonData['tree']);
+            if($result){
+              $this->code=1;
+              $this->msg='保存成功';
+              $this->outputJson();
+            }
+            else{
+                $this->code=2;
+                $this->msg='保存失败';
+                $this->outputJson();
+            }   
+        }
+        //根据r_id 清除掉已存在的对应关系，然后重新添加新生成的角色-权限对应关系
+        $condition = $this->getRbacl()->getCondition('u_id');
+        unset($where);
+        $where['u.u_id']=$condition['where']['u_id'];
+        $auth=self::getModel('Access')->getAccess($where,3);
+        $allAccess=self::getModel('Access')->listallAccess();
+        $data=$this->getRbacl()->getaccessdata($auth,$allAccess['data']);
+        $this->view->assign("auth", $data);
+        $this->view->assign("u_id", $condition['where']['u_id']);
+        return $this->view->fetch();
+    }
+    /*删除规则************************************************************
+    同步需要删除对应的用户权限表、用户权限表
+    */
+    public  function delAccess(){
+      $condition = $this->getRbacl()->getCondition('a_id');
+      // 启动事务
+      Db::startTrans();
+      $result=true;
+      try{
+          $result=$this->deleteCommon('Access','规则',true,$condition['where'])&&$result;
+          $result=$this->deleteCommon('RoleAccess','角色规则',true,$condition['where'])&&$result;
+          $result=$this->deleteCommon('UserAccess','用户规则',true,$condition['where'])&&$result;
+          // 提交事务
+         Db::commit();    
+      } catch (\Exception $e) {
+          // 回滚事务
+          Db::rollback();
+          $result=false;
+      }
+      if($result){
+        $this->code=1;
+        $this->msg='保存成功';
+        $this->outputJson();
+      }
+      else{
+          $this->code=2;
+          $this->msg='保存失败';
+          $this->outputJson();
+      }
 
     }
 }

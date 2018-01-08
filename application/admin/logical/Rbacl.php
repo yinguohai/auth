@@ -252,22 +252,22 @@ class Rbacl extends Backend
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
-        if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
-            $tmp_ids=explode(',',$data['a_ids']);
-        //拼接，组装  ‘角色-权限’对应关系映射
-        if(!empty($tmp_ids)){
-            foreach($tmp_ids as $v){
-                $data['arvalues'][]=[
-                    'r_id'=>$data['r_id'],
-                    'a_id'=>$v
-                ];
-            }
-        }else{
-            $data['arvalues'][]=[
-                'r_id'=>$data['r_id'],
-                'a_id'=>''
-            ];
-        }
+        // if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
+        //     $tmp_ids=explode(',',$data['a_ids']);
+        // //拼接，组装  ‘角色-权限’对应关系映射
+        // if(!empty($tmp_ids)){
+        //     foreach($tmp_ids as $v){
+        //         $data['arvalues'][]=[
+        //             'r_id'=>$data['r_id'],
+        //             'a_id'=>$v
+        //         ];
+        //     }
+        // }else{
+        //     $data['arvalues'][]=[
+        //         'r_id'=>$data['r_id'],
+        //         'a_id'=>''
+        //     ];
+        // }
 
         return $data;
     }
@@ -311,5 +311,30 @@ class Rbacl extends Backend
             $condition['where']=array($index=>$filter_index);
         }
         return $condition;
+    }
+
+    public function getaccessdata($authdata,$allaccessdata){
+        if(count($authdata)==0){
+            return  $allaccessdata;
+        }
+        $data=array();
+        foreach($allaccessdata as $key=>$value){
+            $d=array(
+                'a_id'=>$value['a_id'],
+                'a_pid'=>$value['a_pid'],
+                'a_title'=>$value['a_title'],
+                'a_class'=>$value['a_class'],
+                'a_status'=>$value['a_status'],
+            );
+            foreach($authdata as $k=>$v){
+                if($value['a_id']==$v['a_id']){
+                    $d['checked']=true;
+                    break;
+                }
+
+            }
+            $data[]=$d;
+        }
+        return $data;
     }
 }

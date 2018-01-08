@@ -2,7 +2,7 @@
 namespace app\admin\model\rbac;
 use app\common\model\BasicModel;
 use think\Validate;
-
+use think\Db;
 class RoleAccess extends BasicModel
 {
     protected $table=[
@@ -32,18 +32,13 @@ class RoleAccess extends BasicModel
      * @return bool
      */
     public function saveRoleAccess($data){
-        if(empty($data['type']))
-            return false;
-        $type=$data['type'];
-        unset($data['type']);
-        //编辑，
-        if($type=='edit'){
-            return
             $flag=true;
             Db::startTrans();
+            $f = $this->deleteInfo($this,['r_id'=>$data['r_id']]) && $flag;
+            $flag =  $this->saveInfo($this,$data['tree'])&&$flag ;
             try{
                 $flag =  $this->deleteInfo($this,['r_id'=>$data['r_id']]) && $flag;
-                $flag =  $this->saveInfo($this,$data['arvalues'],['r_id'=>$data['r_id']]) && $flag;
+                $flag =  $this->saveInfo($this,$data['tree']) && $flag;
             }catch(\Error $e){
                 Db::rollback();
             }catch(\Exception $e){
@@ -54,9 +49,6 @@ class RoleAccess extends BasicModel
             }else{
                 Db::rollback();
             }
-            return $flag;
-        }
-        //新增
-        return $this->saveInfo($this,$data['arvalues']);
+            return  $flag;
     }
 }
