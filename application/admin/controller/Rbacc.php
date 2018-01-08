@@ -324,7 +324,7 @@ class Rbacc extends Backend
         $data['list'] = self::getModel('Access')->listallAccess();//获取全部规则
         return $this->view->fetch('rbacc/editaccess',$data);
     }
-    
+
     /*
      * 角色权限分配
      */
