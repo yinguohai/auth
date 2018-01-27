@@ -1,0 +1,44 @@
+<form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级部门:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="o_pid" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                <option value="0" {if condition="$row.o_pid eq 0"} selected {/if}>顶级部门</option>
+                {volist name="list.data" id="vo" empty="$empty"}
+                <option value="{$vo.o_id}" {if condition="$row.o_pid eq $vo.o_id"} selected {/if} >{$vo.o_name}</option>
+                {/volist}
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门名称:</label>
+        <div class="layui-input-block">
+            <input type="text" name="o_name" lay-verify="required" placeholder="部门名称" autocomplete="off" class="layui-input" value="{$row.o_name}" style="width:50%" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门描述:</label>
+        <div class="layui-input-block">
+            <input type="text" name="o_remark" lay-verify="required" placeholder="部门描述" autocomplete="off" class="layui-input" value="{$row.o_remark}" style="width:50%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="o_status" value="1" title="启用" {if condition="$row.o_status eq 1"} checked {/if}>
+            <input type="radio" name="o_status" value="2" title="停用" {if condition="$row.o_status eq 2"} checked {/if}>
+        </div>
+        <input type="hidden" name="o_id" value="{$row.o_id}">
+        <input type="hidden" name="type" value="edit">
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn btn-success" lay-submit="" lay-filter="editorganize">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>

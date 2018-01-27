@@ -1,4 +1,25 @@
 <?php
+
+/**
+ * 递归排序，每级都包含子节点和其权限
+ * @param array $node
+ * @param array $access 1表示此节点在表access中存在，0则不存在
+ * @param number $pid
+ * @return
+ */
+function nodeChildAccess($node,$access=array(),$pid=0){
+    if(empty($node))return ;
+    $arr=array();
+    foreach ($node as $k=>$v){
+        $v['access']=in_array($v['p_id'],$access)?1:0;
+        if($v['pid']==$pid){
+            $v['child']=nodeChildAccess($node,$access,$v['node_id']);
+            $arr[]=$v;
+        }
+    }
+    return $arr;
+}
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------

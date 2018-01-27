@@ -1,35 +1,49 @@
 <form class="layui-form" action="" style="margin:30px auto;padding:20px 0;overflow:auto;">
-      <div class="layui-form-item">
-        <label class="layui-form-label">权限组名称:</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户组名称:</label>
         <div class="layui-input-block">
-          <input type="text" name="g_name" value="{$row.g_name}" lay-verify="required" placeholder="请输入权限组名称" autocomplete="off" class="layui-input" style="width:50%">
+            <input type="text" name="g_name" value="{$row.g_name}" lay-verify="required" placeholder="用户组名称" autocomplete="off" class="layui-input" style="width:50%">
         </div>
-      </div>
-       <div class="layui-form-item">
-        <label class="layui-form-label">权限组描述:</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户组描述:</label>
         <div class="layui-input-block">
-          <input type="text" name="g_description" value="{$row.g_description}" lay-verify="required" placeholder="请输入权限组名称" autocomplete="off" class="layui-input" style="width:50%">
+            <input type="text" name="g_description" value="{$row.g_description}" lay-verify="required" placeholder="用户组描述" autocomplete="off" class="layui-input" style="width:50%">
         </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">权限组状态:</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户组角色:</label>
+        <div class="layui-input-block" style="width:50%">
+            <select name="r_id" lay-verify="required" lay-search="">
+                <option value="">直接选择或搜索选择</option>
+                {volist name="list.data" id="vo"}
+                    {if condition="$row.r_id eq $vo.r_id"}
+                    <option value="{$vo.r_id}" selected>{$vo.r_name}</option>
+                    {else /}
+                    <option value="{$vo.r_id}">{$vo.r_name}</option>
+                    {/if}
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户组状态</label>
         <div class="layui-input-block">
             {if condition="$row.g_status==2"}
-                <input type="radio" name="g_status" value="1" title="启用">
-                <input type="radio" name="g_status" value="2" title="停用 " checked>
-            {else}        
-                <input type="radio" name="g_status" value="1" title="启用" checked>
-                <input type="radio" name="g_status" value="2" title="停用 " >
+            <input type="radio" name="g_status" value="1" title="启用">
+            <input type="radio" name="g_status" value="2" title="停用 " checked>
+            {else}
+            <input type="radio" name="g_status" value="1" title="启用" checked>
+            <input type="radio" name="g_status" value="2" title="停用 " >
             {/if}
-         
         </div>
         <input type="hidden" name="type" value="edit">
         <input type="hidden" name="g_id" value="{$row.g_id}">
-      </div>
-      <div class="layui-form-item">
+    </div>
+    <div class="layui-form-item">
         <div class="layui-input-block">
-          <button class="layui-btn btn-success" lay-submit="" lay-filter="editgroup">立即提交</button>
-          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button class="layui-btn btn-success" lay-submit="" lay-filter="editgroup">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
-      </div>
+    </div>
 </form>

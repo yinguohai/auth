@@ -204,6 +204,14 @@ class Rbacl extends Backend
         $rules['data']=nodeChild($rules['data'],0,$type,'a_pid','a_id');
         $this->commonHandle($rules);
     }
+
+    /**
+     * 角色权限列表
+     */
+    public function showRoleAccess($organize = [])
+    {
+        $this->commonHandle($organize);
+    }
     /**
      * 保存规则
      */
@@ -244,22 +252,7 @@ class Rbacl extends Backend
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
-        if(!empty($data['a_ids']) && strpos($data['a_ids'],',')!==false)
-            $tmp_ids=explode(',',$data['a_ids']);
-        //拼接，组装  ‘角色-权限’对应关系映射
-        if(!empty($tmp_ids)){
-            foreach($tmp_ids as $v){
-                $data['arvalues'][]=[
-                    'r_id'=>$data['r_id'],
-                    'a_id'=>$v
-                ];
-            }
-        }else{
-            $data['arvalues'][]=[
-                'r_id'=>$data['r_id'],
-                'a_id'=>''
-            ];
-        }
+
 
         return $data;
     }

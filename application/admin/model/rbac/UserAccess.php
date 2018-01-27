@@ -2,7 +2,7 @@
 namespace app\admin\model\rbac;
 use app\common\model\BasicModel;
 use think\Validate;
-
+use think\Db;
 class UserAccess extends BasicModel
 {
     protected $table=[
@@ -32,14 +32,21 @@ class UserAccess extends BasicModel
      * @return bool
      */
     public function saveUserAccess($data){
-        if(empty($data['type']))
-            return false;
-        $type=$data['type'];
-        unset($data['type']);
-        //编辑
-        if($type=='edit')
-            return $this->saveInfo($this,$data,['ua_id'=>$data['ua_id']]);
-        //新增
-        return $this->saveInfo($this,$data);
+        $flag=true;
+        Db::startTrans();
+        try{
+            $f =  $this->deleteInfo($this,['u_id'=>$data['u_id']]) && $flag;
+            $flag =  $this->saveInfo($this,$data['tree']) && $flag;
+        }catch(\Error $e){
+            Db::rollback();
+        }catch(\Exception $e){
+            Db::rollback();
+        }
+        if($flag){
+            Db::commit();
+        }else{
+            Db::rollback();
+        }
+        return  $flag;
     }
 }
