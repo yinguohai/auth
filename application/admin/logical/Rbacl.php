@@ -244,7 +244,7 @@ class Rbacl extends Backend
         if (!isset($data['type']) or !in_array($data['type'], ['add', 'edit'])){
             $this->commonHandle();
         }
-        if(!empty($data['a_ids']) && strpos($data['a_id'],',')!==false)
+        if(!empty($data['a_ids']) && strpos($data['a_ids'],',')!==false)
             $tmp_ids=explode(',',$data['a_ids']);
         //拼接，组装  ‘角色-权限’对应关系映射
         if(!empty($tmp_ids)){
